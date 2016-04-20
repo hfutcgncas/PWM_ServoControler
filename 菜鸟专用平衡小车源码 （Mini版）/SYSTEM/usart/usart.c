@@ -1,5 +1,9 @@
 #include "usart.h"	  
 
+#define PKT_BUF_LEN 200
+static int PktBuf_index = 0;
+static char PktBuf[PKT_BUF_LEN];
+
 
 //加入以下代码,支持printf函数,而不需要选择use MicroLIB	  
 #if 1
@@ -51,11 +55,83 @@ void uart_init(u32 pclk2,u32 bound)
 	RCC->APB2ENR|=1<<14;  //使能串口时钟 
 	GPIOA->CRH&=0XFFFFF00F;//IO状态设置
 	GPIOA->CRH|=0X000008B0;//IO状态设置
-		  
+	
+GPIOA->ODR|=1<<2;	
+
 	RCC->APB2RSTR|=1<<14;   //复位串口1
 	RCC->APB2RSTR&=~(1<<14);//停止复位	   	   
 	//波特率设置
  	USART1->BRR=mantissa; // 波特率设置	 
 	USART1->CR1|=0X200C;  //1位停止,无校验位.
 
+
+//=============================
+
+	//使能接收中断
+	USART1->CR1|=1<<8;    //PE中断使能
+	USART1->CR1|=1<<5;    //接收缓冲区非空中断使能	    	
+	MY_NVIC_Init(3,3,USART1_IRQn,2);//组2，最低优先级 
+	
+
+}
+
+/**************************************************************************
+函数功能：串口1接收中断
+入口参数：无
+返回  值：无
+**************************************************************************/
+
+void USART1_IRQHandler(void)
+{
+	u8 ch;
+	static u8 ch_last;
+	static int inPacket = 0;
+	if(USART1->SR&(1<<5))//接收到数据
+	{	  
+	 static	unsigned char uart_receive=0;//串口接收相关变量
+	 uart_receive=USART1->DR; 
+	 ch = (u8)uart_receive;
+	 
+	 if(ch == '\n' || ch == '\r' || ch == '\0')printf(" \r\n"); //换行
+	 else USART1->DR = (u8) ch;   //返回显示串口发来的内容
+	 
+	 if(inPacket)
+	 {
+		 insertDataPacket(ch);
+	 }
+	 if(ch_last == '-' && ch == 'S')
+	 {
+		 inPacket = 1;
+	 }
+	 if(ch_last == '-' && ch == 'E' && inPacket == 1 )
+	 {
+		 inPacket =0;
+		 insertDataPacket('\0');
+		 openPacket();
+		 PktBuf_index = 0;
+	 }		 
+	 
+	 ch_last = ch;
+	}  	
+}
+
+
+void insertDataPacket(char ch)
+{
+	PktBuf[PktBuf_index] = ch;
+	PktBuf_index ++ ;
+	if(PktBuf_index >= PKT_BUF_LEN)PktBuf_index = 0;
+}
+void openPacket()
+{
+	float A;
+	float F;
+	float P;
+	float O;
+	
+	printf("\r\n cmd :");
+	sscanf(PktBuf,"A%f_F%f_P%f_O%f-E",&A,&F,&P,&O);	
+	printf("\r\n A%3f F%3f P%3f O%3f \n",A,F,P,O);
+	
+	
 }

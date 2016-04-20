@@ -1,5 +1,6 @@
 #include "control.h"	
 #include "filter.h"	
+#include "math.h"	
   /**************************************************************************
 作者：平衡小车之家
 我的淘宝小店：http://shop114407458.taobao.com/
@@ -8,7 +9,8 @@ int Balance_Pwm,Velocity_Pwm,Turn_Pwm;
 u8 Flag_Target;
 
 int TIM1_UP_IRQHandler(void)  
-{    
+{
+	static int SysTime = 0;
 	if(TIM1->SR&0X0001)//5ms定时中断
 	{   
 		  TIM1->SR&=~(1<<0);                                       //===清除定时器1中断标志位		 
@@ -18,22 +20,40 @@ int TIM1_UP_IRQHandler(void)
 			Get_Angle(Way_Angle);                                    //===更新姿态	
 			return 0;	
 			}                                                        //10ms控制一次，为了保证M法测速的时间基准，首先读取编码器数据
-			Encoder_Left=Read_Encoder(2);                           //===读取编码器的值，
-			Encoder_Right=Read_Encoder(3);                           //===读取编码器的值
+		//	Encoder_Left=Read_Encoder(2);                           //===读取编码器的值，
+		//	Encoder_Right=Read_Encoder(3);                           //===读取编码器的值
 	  	Get_Angle(Way_Angle);                                    //===更新姿态	
   		Led_Flash(100);                                          //===LED闪烁;指示单片机正常运行	
 			Key();                                                   //===扫描按键状态 单击双击可以改变小车运行状态
- 			Balance_Pwm =balance(Angle_Balance,Gyro_Balance);        //===平衡PID控制	
-		  Velocity_Pwm=velocity(Encoder_Left,Encoder_Right);       //===速度环PID控制	 记住，速度反馈是正反馈，就是小车快的时候要慢下来就需要再跑快一点
- 	    Turn_Pwm    =turn(Encoder_Left,Encoder_Right,Gyro_Turn); //===转向环PID控制     
- 		  Moto1=Balance_Pwm+Velocity_Pwm+Turn_Pwm;                 //===计算左轮电机最终PWM
- 	  	Moto2=Balance_Pwm+Velocity_Pwm-Turn_Pwm;                 //===计算右轮电机最终PWM
-   		Xianfu_Pwm();                                            //===PWM限幅
-      if(Turn_Off(Angle_Balance,Voltage)==0)                   //===如果不存在异常
+ 	//		Balance_Pwm =balance(Angle_Balance,Gyro_Balance);        //===平衡PID控制	
+	//	  Velocity_Pwm=velocity(Encoder_Left,Encoder_Right);       //===速度环PID控制	 记住，速度反馈是正反馈，就是小车快的时候要慢下来就需要再跑快一点
+ 	//    Turn_Pwm    =turn(Encoder_Left,Encoder_Right,Gyro_Turn); //===转向环PID控制     
+ 	//	  Moto1=Balance_Pwm+Velocity_Pwm+Turn_Pwm;                 //===计算左轮电机最终PWM
+ 	//  	Moto2=Balance_Pwm+Velocity_Pwm-Turn_Pwm;                 //===计算右轮电机最终PWM
+   		SysTime += 10;
+			Moto1 = waveOut( 0.5, 1, 0,  0, SysTime);
+			Moto2 = waveOut( 0.5, 1, (30/180*PI),  0, SysTime);
+			Xianfu_Pwm();                                            //===PWM限幅
+  //    if(Turn_Off(Angle_Balance,Voltage)==0)                   //===如果不存在异常
  			Set_Pwm(Moto1,Moto2);                                    //===赋值给PWM寄存器  
 	}       	
 	 return 0;	  
 } 
+
+/**************************************************************************
+函数功能：生成三角函数信号
+入口参数：幅值，频率，相位角，偏转角，时间
+返回  值：舵机PWM
+作    者：刘健冉
+**************************************************************************/
+int waveOut( double A, double fq, double phi,  double offset, int t)
+{
+	double w = A* sin(2*PI/fq*(t/1000.0) + phi) + offset ;
+	double fac = (w+1)/2;
+	if(fac >1)fac =1;
+	else if(fac<0)fac = 0;
+	return fac*PWM_AMP;
+}
 
 /**************************************************************************
 函数功能：直立PD控制
