@@ -5,6 +5,9 @@
 作者：平衡小车之家
 我的淘宝小店：http://shop114407458.taobao.com/
 **************************************************************************/
+extern int PWM_AMP;
+
+
 int Balance_Pwm,Velocity_Pwm,Turn_Pwm;
 u8 Flag_Target;
 
@@ -31,14 +34,18 @@ int TIM1_UP_IRQHandler(void)
  	//	  Moto1=Balance_Pwm+Velocity_Pwm+Turn_Pwm;                 //===计算左轮电机最终PWM
  	//  	Moto2=Balance_Pwm+Velocity_Pwm-Turn_Pwm;                 //===计算右轮电机最终PWM
    		SysTime += 10;
-			Moto1 = waveOut( 0.5, 1, 0,  0, SysTime);
-			Moto2 = waveOut( 0.5, 1, (30/180*PI),  0, SysTime);
+			Moto1 = PWMOut(waveOut( 0.5, 1, 0,  0, SysTime) );
+			Moto2 = PWMOut(waveOut( 0.5, 1, (30/180*PI),  0, SysTime));
 			Xianfu_Pwm();                                            //===PWM限幅
-  //    if(Turn_Off(Angle_Balance,Voltage)==0)                   //===如果不存在异常
+  //    if(Turn_Off(Angle_Balance,Voltage)==0)   //===如果不存在异常
+//printf("PWMOUT A : %d",Moto1 );	
+//printf("PWMOUT B : %d",Moto2 );	
  			Set_Pwm(Moto1,Moto2);                                    //===赋值给PWM寄存器  
 	}       	
 	 return 0;	  
 } 
+
+
 
 /**************************************************************************
 函数功能：生成三角函数信号
@@ -46,13 +53,28 @@ int TIM1_UP_IRQHandler(void)
 返回  值：舵机PWM
 作    者：刘健冉
 **************************************************************************/
-int waveOut( double A, double fq, double phi,  double offset, int t)
+double waveOut( double A, double fq, double phi,  double offset, int t)
 {
-	double w = A* sin(2*PI/fq*(t/1000.0) + phi) + offset ;
-	double fac = (w+1)/2;
+	const float unit = PWM_AMP/3000.0;  // 计数长度除以PWM周期， 得 cnt/us 
+	int PWM_w;
+	double fac = A* sin(2*PI/fq*(t/1000.0) + phi) + offset ;
 	if(fac >1)fac =1;
-	else if(fac<0)fac = 0;
-	return fac*PWM_AMP;
+	else if(fac<-1)fac = -1;
+
+	
+	return fac;
+}
+
+/**************************************************************************
+函数功能：生成PWM信号
+入口参数：偏转参数 -1~1
+返回  值：舵机PWM
+作    者：刘健冉
+**************************************************************************/
+int PWMOut( double fac)
+{
+	const float unit = PWM_AMP/3000.0;  // 计数长度除以PWM周期， 得 cnt/us 	
+	return (int)((1500 + fac*(1500-900))*unit);
 }
 
 /**************************************************************************

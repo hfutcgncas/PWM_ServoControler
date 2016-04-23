@@ -3,6 +3,8 @@
 作者：平衡小车之家
 我的淘宝小店：http://shop114407458.taobao.com/
 **************************************************************************/
+#define PWM_FQ 10000
+
 u8 Way_Angle=2;                             //获取角度的算法，1：四元数  2：卡尔曼  3：互补滤波 默认搭载卡尔曼滤波
 u8 Flag_Qian,Flag_Hou,Flag_Left,Flag_Right,Flag_sudu=2; //蓝牙遥控相关的变量
 u8 Flag_Stop=0,Flag_Show=1;                 //停止标志位和 显示标志位 默认停止 显示打开
@@ -12,6 +14,9 @@ int Temperature;                            //显示温度
 int Voltage;                                //电池电压采样相关的变量
 float Angle_Balance,Gyro_Balance,Gyro_Turn; //平衡倾角 平衡陀螺仪 转向陀螺仪
 float Show_Data_Mb;                         //全局显示变量，用于显示需要查看的数据
+
+const int PWM_AMP = 7200 ;
+
 int main(void)
 { 
 	//NVIC_SetVectorTable();
@@ -24,7 +29,7 @@ int main(void)
 	//OLED_Init();                    //OLED初始化
 	uart_init(72,115200);           //初始化串口1
   uart2_init(36,9600);            //串口2初始化
-	MiniBalance_PWM_Init(7199,0);   //=====初始化PWM 10KHZ，用于驱动电机 
+	MiniBalance_PWM_Init(PWM_AMP-1,30-1);   //=====初始化PWM ，用于驱动电机  频率72M/(7199+1)/30 = 333Hz 
 //	Encoder_Init_TIM2();            //=====编码器接口
 //	Encoder_Init_TIM3();            //初始化编码器2 
 	IIC_Init();                     //模拟IIC初始化

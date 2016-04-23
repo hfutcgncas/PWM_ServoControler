@@ -6,7 +6,7 @@
 我的淘宝小店：http://shop114407458.taobao.com/
 **************************************************************************/
 #define PI 3.14159265
-#define PWM_AMP 7200   //PWM的分辨率
+//#define PWM_AMP 7200   //PWM的分辨率
 
 
 extern	int Balance_Pwm,Velocity_Pwm,Turn_Pwm;
@@ -21,6 +21,7 @@ u8 Turn_Off(float angle, int voltage);
 void Get_Angle(u8 way);
 int myabs(int a);
 
-int waveOut( double A, double fq, double phi,  double offset, int t);
+double waveOut( double A, double fq, double phi,  double offset, int t);
+int PWMOut( double fac);
 
 #endif
