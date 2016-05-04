@@ -87,35 +87,26 @@ GPIOA->ODR|=1<<2;
 void USART1_IRQHandler(void)
 {
 	u8 ch;
-	static u8 ch_last;
-	static int inPacket = 0;
+
 	if(USART1->SR&(1<<5))//接收到数据
 	{	  
 	 static	unsigned char uart_receive=0;//串口接收相关变量
 	 uart_receive=USART1->DR; 
 	 ch = (u8)uart_receive;
 	 
-	 if(ch == '\n' || ch == '\r' || ch == '\0')printf(" \r\n"); //换行
-	 else USART1->DR = (u8) ch;   //返回显示串口发来的内容
-	 
-	 if(inPacket)
+	 if(ch == '\n' || ch == '\r' || ch == '\0') //一行输入结束
 	 {
+			insertDataPacket('\0');
+			
+			openPacket();
+			PktBuf_index = 0;
+			printf(" \r\n >>"); //换行,重新开始命令
+	 }
+	 else
+	 {
+		 USART1->DR = (u8) ch;   //返回显示串口发来的内容
 		 insertDataPacket(ch);
-	 }
-	 if(ch_last == 'S' && ch == 'T')
-	 {
-		 inPacket = 1;
-	 }
-	 if(ch_last == 'E' && ch == 'N' && inPacket == 1 )
-	 {
-		 inPacket =0;
-		 insertDataPacket('\0');
-		 openPacket();
-		 PktBuf_index = 0;
 	 }		 
-	 
-	 ch_last = ch;
-	 
 	}  	
 }
 
@@ -128,7 +119,7 @@ void insertDataPacket(char ch)
 }
 
 
-void openPacket()
+int openPacket()
 {
 	int motorNO;
 	float motorPOS;
@@ -136,48 +127,17 @@ void openPacket()
 	float A,Fq,Phi,Offset;
 	float A1,A0,Offset1,Offset0;
 	
-	switch(*PktBuf)
+	if(PktBuf[0] == '\0')return 0; //空命令
+	
+	printf(" \r\n"); //换行
+	
+	if(strcmp(PktBuf,"RESTART") == 0)
 	{
-		case('P'):  //位置控制模式
-			if(2==sscanf(PktBuf+1,"_#%d_%f_EN",&motorNO,&motorPOS))
-			{
-					if(motorNO<0 || motorNO >= NumOfMotor )break; //命令有误时跳出
-					
-					ConfigMotorCMD(&motorCMD[motorNO] , 
-													POS,
-													motorPOS, 
-													motorCMD[motorNO].A,
-													motorCMD[motorNO].Offset,
-													motorCMD[motorNO].Fq,
-													motorCMD[motorNO].phi);		
-					
-					printf("\r\n cmd :");
-					printf("\r\n P #%d %3f \n",motorNO,motorPOS);				
-			}
-			else
-			{
-				printf("\r\n Wrong cmd\n");
-			}
-			break;
-		case('W'):
-			if(5==sscanf(PktBuf+1,"_#%d_A_%f_O_%f_F_%f_P_%f_EN",&motorNO,&A,&Offset,&Fq,&Phi))
-			{
-					if(motorNO<0 || motorNO >= NumOfMotor )break; //命令有误时跳出
-					
-					ConfigMotorCMD(&motorCMD[motorNO] , WAVE, motorCMD[motorNO].Pos, A,Offset,Fq,Phi);
-					
-					printf("\r\n cmd :");
-					printf("\r\n W #%d A %f O %f F %f P %f \n",motorNO,A,Offset,Fq,Phi);
-			}
-			else
-			{
-				printf("\r\n Wrong cmd\r\n");
-			}
-			break;		
-		case('S'):
-			if( 1 == sscanf(PktBuf+1,"_#%df_EN",&motorNO) )
-			{
-					if(motorNO<0 || motorNO >= NumOfMotor )break; //命令有误时跳出
+		Sys_Soft_Reset();
+	}
+	else if(1 == sscanf(PktBuf,"STOP #%d",&motorNO) )
+	{
+					if(motorNO<0 || motorNO >= NumOfMotor )return 0; //命令有误时跳出
 					
 					ConfigMotorCMD(&motorCMD[motorNO] , 
 													STOP,
@@ -188,19 +148,40 @@ void openPacket()
 													motorCMD[motorNO].phi);		
 					printf("\r\n cmd :");
 					printf("\r\n Stop #%d \r\n",motorNO);
-			}
-			else
-			{
-				printf("\r\n Wrong cmd\r\n");
-			}
-			break;	
-		case('C'):
-			if( 6 == sscanf(PktBuf+1,"_A0_%f_O0_%f_A1_%f_O1_%f_F_%f_P_%f_EN",&A0,&Offset0,&A1,&Offset1,&Fq,&Phi) )
-			{
+		
+	}
+	else if(2 == sscanf(PktBuf,"POSE #%d -P %f",&motorNO,&motorPOS) )
+	{
+		
+					if(motorNO<0 || motorNO >= NumOfMotor )return 0; //命令有误时跳出
+					
+					ConfigMotorCMD(&motorCMD[motorNO] , 
+													POS,
+													motorPOS, 
+													motorCMD[motorNO].A,
+													motorCMD[motorNO].Offset,
+													motorCMD[motorNO].Fq,
+													motorCMD[motorNO].phi);		
+					
+					printf("\r\n cmd :");
+					printf("\r\n P #%d %3f \n",motorNO,motorPOS);
+	}
+	else if(5==sscanf(PktBuf,"WAVE #%d -A %f -O %f -F %f -P %f",&motorNO,&A,&Offset,&Fq,&Phi))
+	{
+		
+					if(motorNO<0 || motorNO >= NumOfMotor )return 0; //命令有误时跳出
+					
+					ConfigMotorCMD(&motorCMD[motorNO] , WAVE, motorCMD[motorNO].Pos, A,Offset,Fq,Phi);
+					
+					printf("\r\n cmd :");
+					printf("\r\n W #%d A %f O %f F %f P %f \n",motorNO,A,Offset,Fq,Phi);
+	}
+	else if( 6 == sscanf(PktBuf,"LINKAGE -A0 %f -O0 %f -A1 %f -O1 %f -F %f -P %f",&A0,&Offset0,&A1,&Offset1,&Fq,&Phi) )
+	{
 					if(NumOfMotor >2 || NumOfMotor <0)
 					{
 						printf("Wrong motoNO\r\n");
-						break;
+						return 0;
 					}						//电机数量有误时跳出
 					
 					
@@ -209,14 +190,11 @@ void openPacket()
 											
 					printf("\r\n cmd :");
 					printf("\r\n C \n");
-			}
-			else
-			{
-				printf("\r\n Wrong cmd\n");
-			}
-			break;
-		default:
-			printf("\r\n Wrong Mode\n");
 	}
-	
+	else
+	{
+			printf("\r\n Wrong cmd\n");
+			return 0;
+	}	
+	return 1;
 }

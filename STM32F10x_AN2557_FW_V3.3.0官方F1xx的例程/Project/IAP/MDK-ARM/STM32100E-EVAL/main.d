@@ -20,3 +20,7 @@
 .\stm32100e-eval\main.o: ..\..\..\Utilities\STM32_EVAL\stm32_eval.h
 .\stm32100e-eval\main.o: ..\..\..\Libraries\STM32F10x_StdPeriph_Driver\inc\stm32f10x_spi.h
 .\stm32100e-eval\main.o: ..\..\..\Libraries\STM32F10x_StdPeriph_Driver\inc\stm32f10x_i2c.h
+.\stm32100e-eval\main.o: .\motor\motor.h
+.\stm32100e-eval\main.o: .\motor\sys.h
+.\stm32100e-eval\main.o: D:\Program Files (x86)\Keil\ARM\ARMCC\bin\..\include\stdlib.h
+.\stm32100e-eval\main.o: D:\Program Files (x86)\Keil\ARM\ARMCC\bin\..\include\math.h

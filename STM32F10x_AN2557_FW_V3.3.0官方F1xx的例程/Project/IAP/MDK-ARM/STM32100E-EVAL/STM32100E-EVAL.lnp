@@ -19,6 +19,8 @@
 ".\stm32100e-eval\system_stm32f10x.o"
 ".\stm32100e-eval\stm32_eval.o"
 ".\stm32100e-eval\startup_stm32f10x_hd_vl.o"
+".\stm32100e-eval\motor.o"
+".\stm32100e-eval\sys.o"
 --library_type=microlib --strict --scatter ".\STM32100E-EVAL\STM32100E-EVAL.sct"
 --summary_stderr --info summarysizes --map --xref --callgraph --symbols
 --info sizes --info totals --info unused --info veneers

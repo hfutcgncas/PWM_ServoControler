@@ -517,17 +517,18 @@ ARM Macro Assembler    Page 8
   344 0000001C                 END
               00000000 
               00000000 
-Command Line: --debug --xref --cpu=Cortex-M3 --apcs=interwork --depend=.\STM321
+Command Line: --debug --xref --cpu=Cortex-M3 --apcs=interwork --depend=.\stm321
 
 
 
 ARM Macro Assembler    Page 9 
 
 
-00E-EVAL\startup_stm32f10x_hd_vl.d -o.\STM32100E-EVAL\startup_stm32f10x_hd_vl.o
- -ID:\Keil\ARM\RV31\Inc -ID:\Keil\ARM\CMSIS\Include -ID:\Keil\ARM\Inc\ST\STM32F
-100xE --predefine="__MICROLIB SETA 1" --list=.\STM32100E-EVAL\startup_stm32f10x
-_hd_vl.lst startup_stm32f10x_hd_vl.s
+00e-eval\startup_stm32f10x_hd_vl.d -o.\stm32100e-eval\startup_stm32f10x_hd_vl.o
+ -I"D:\Program Files (x86)\Keil\ARM\RV31\INC" -I"D:\Program Files (x86)\Keil\AR
+M\PACK\ARM\CMSIS\3.20.3\CMSIS\Include" -I"D:\Program Files (x86)\Keil\ARM\Inc\S
+T\STM32F100xE" --predefine="__MICROLIB SETA 1" --list=.\stm32100e-eval\startup_
+stm32f10x_hd_vl.lst startup_stm32f10x_hd_vl.s
 
 
 

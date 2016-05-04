@@ -33,9 +33,9 @@ int main(void)
 	MiniBalance_PWM_Init(PWM_AMP-1,30-1);   //=====初始化PWM ，用于驱动电机  频率72M/(7199+1)/30 = 333Hz 
 //	Encoder_Init_TIM2();            //=====编码器接口
 //	Encoder_Init_TIM3();            //初始化编码器2 
-	IIC_Init();                     //模拟IIC初始化
-  MPU6050_initialize();           //=====MPU6050初始化	
-	DMP_Init();                     //初始化DMP    
+//	IIC_Init();                     //模拟IIC初始化
+//  MPU6050_initialize();           //=====MPU6050初始化	
+//	DMP_Init();                     //初始化DMP    
   Timer1_Init(49,7199);           //=====5MS进一次中断服务函数
 	
 	MyMotorInt();  // 初始化舵机的控制参数

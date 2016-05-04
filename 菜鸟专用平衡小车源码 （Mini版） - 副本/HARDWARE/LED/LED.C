@@ -1,11 +1,13 @@
 #include "led.h"
-//初始化 PA8 为输出口.并使能PORTA口的时钟
+//初始化 PC13 为输出口.并使能PORTA口的时钟
+
 void LED_Init(void)
 {
-RCC->APB2ENR|=1<<2; //使能 PORTA 时钟  
-GPIOA->CRH&=0XFFFFFFF0;
-GPIOA->CRH|=0X00000003;//PA8 推挽输出
-GPIOA->ODR|=1<<8; //PA8 输出高
+//RCC->APB2ENR|=1<<2; //使能 PORTA 时钟  
+RCC->APB2ENR|=1<<4;     	//使能PORTC时钟
+GPIOC->CRH&=0XFFFFFFF0;
+GPIOC->CRH|=0X00000003;//PA8 推挽输出
+GPIOC->ODR|=1<<13; //PC 输出高
 }
 
 /**************************************************************************

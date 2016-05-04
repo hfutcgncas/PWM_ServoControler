@@ -25,6 +25,7 @@
 /* Includes ------------------------------------------------------------------*/
 #include "common.h"
 
+#include "motor.h"
 /* Private typedef -----------------------------------------------------------*/
 /* Private define ------------------------------------------------------------*/
 /* Private macro -------------------------------------------------------------*/
@@ -82,6 +83,8 @@ int main(void)
 	
   /* Flash unlock */
   FLASH_Unlock();
+	
+	MiniBalance_PWM_Init(7200-1,30-1);   //=====初始化PWM ，用于驱动电机  频率72M/(7199+1)/30 = 333Hz 
 
   /* Initialize Key Button mounted on STM3210X-EVAL board */       
  // STM_EVAL_PBInit(BUTTON_KEY, BUTTON_MODE_GPIO);   

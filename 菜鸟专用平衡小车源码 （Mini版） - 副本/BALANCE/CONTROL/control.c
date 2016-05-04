@@ -83,7 +83,7 @@ int ConfigMotorCMD(STmotorCMD* pMotor, t_ControlMode mode, float pos, float A, f
 **************************************************************************/
 double waveOut( double A, double fq, double phi,  double offset, int t)
 {
-	double fac = A* sin(2*PI/fq*(t/1000.0) + phi) + offset ;
+	double fac = A* sin(2*PI*fq*(t/1000.0) + phi) + offset ;
 	if(fac >1)fac =1;
 	else if(fac<-1)fac = -1;
 

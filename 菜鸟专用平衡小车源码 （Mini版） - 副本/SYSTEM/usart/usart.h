@@ -7,7 +7,7 @@ void uart_init(u32 pclk2,u32 bound);
 void USART1_IRQHandler(void);
 
 void insertDataPacket(char ch);
-void openPacket(void);
+int openPacket(void);
 #endif	   
 
 
