@@ -1,0 +1,14 @@
+.\obj\delay.o: source\wlib\delay\delay.c
+.\obj\delay.o: .\source\FWLib\inc\stm32f10x_lib.h
+.\obj\delay.o: .\source\FWLib\inc\stm32f10x_map.h
+.\obj\delay.o: .\user\stm32f10x_conf.h
+.\obj\delay.o: .\source\FWLib\inc\stm32f10x_type.h
+.\obj\delay.o: .\source\FWLib\inc\cortexm3_macro.h
+.\obj\delay.o: .\source\FWLib\inc\stm32f10x_flash.h
+.\obj\delay.o: .\source\FWLib\inc\stm32f10x_gpio.h
+.\obj\delay.o: .\source\FWLib\inc\stm32f10x_nvic.h
+.\obj\delay.o: .\source\FWLib\inc\stm32f10x_rcc.h
+.\obj\delay.o: .\source\FWLib\inc\stm32f10x_systick.h
+.\obj\delay.o: .\source\FWLib\inc\stm32f10x_tim.h
+.\obj\delay.o: .\source\FWLib\inc\stm32f10x_usart.h
+.\obj\delay.o: source\wlib\delay\delay.h

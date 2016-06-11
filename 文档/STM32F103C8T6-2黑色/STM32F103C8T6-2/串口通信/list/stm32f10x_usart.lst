@@ -1,0 +1,3181 @@
+L 1 "source\FWLib\src\stm32f10x_usart.c"
+N/******************** (C) COPYRIGHT 2008 STMicroelectronics ********************
+N* File Name          : stm32f10x_usart.c
+N* Author             : MCD Application Team
+N* Version            : V2.0.1
+N* Date               : 06/13/2008
+N* Description        : This file provides all the USART firmware functions.
+N********************************************************************************
+N* THE PRESENT FIRMWARE WHICH IS FOR GUIDANCE ONLY AIMS AT PROVIDING CUSTOMERS
+N* WITH CODING INFORMATION REGARDING THEIR PRODUCTS IN ORDER FOR THEM TO SAVE TIME.
+N* AS A RESULT, STMICROELECTRONICS SHALL NOT BE HELD LIABLE FOR ANY DIRECT,
+N* INDIRECT OR CONSEQUENTIAL DAMAGES WITH RESPECT TO ANY CLAIMS ARISING FROM THE
+N* CONTENT OF SUCH FIRMWARE AND/OR THE USE MADE BY CUSTOMERS OF THE CODING
+N* INFORMATION CONTAINED HEREIN IN CONNECTION WITH THEIR PRODUCTS.
+N*******************************************************************************/
+N
+N/* Includes ------------------------------------------------------------------*/
+N#include "stm32f10x_usart.h"
+L 1 "D:\Program Files\keil4.14\ARM\INC\ST\STM32F10x\stm32f10x_usart.h" 1
+N/******************** (C) COPYRIGHT 2008 STMicroelectronics ********************
+N* File Name          : stm32f10x_usart.h
+N* Author             : MCD Application Team
+N* Version            : V2.0.1
+N* Date               : 06/13/2008
+N* Description        : This file contains all the functions prototypes for the
+N*                      USART firmware library.
+N********************************************************************************
+N* THE PRESENT FIRMWARE WHICH IS FOR GUIDANCE ONLY AIMS AT PROVIDING CUSTOMERS
+N* WITH CODING INFORMATION REGARDING THEIR PRODUCTS IN ORDER FOR THEM TO SAVE TIME.
+N* AS A RESULT, STMICROELECTRONICS SHALL NOT BE HELD LIABLE FOR ANY DIRECT,
+N* INDIRECT OR CONSEQUENTIAL DAMAGES WITH RESPECT TO ANY CLAIMS ARISING FROM THE
+N* CONTENT OF SUCH FIRMWARE AND/OR THE USE MADE BY CUSTOMERS OF THE CODING
+N* INFORMATION CONTAINED HEREIN IN CONNECTION WITH THEIR PRODUCTS.
+N*******************************************************************************/
+N
+N/* Define to prevent recursive inclusion -------------------------------------*/
+N#ifndef __STM32F10x_USART_H
+N#define __STM32F10x_USART_H
+N
+N/* Includes ------------------------------------------------------------------*/
+N#include "stm32f10x_map.h"
+L 1 "D:\Program Files\keil4.14\ARM\INC\ST\STM32F10x\stm32f10x_map.h" 1
+N/******************** (C) COPYRIGHT 2008 STMicroelectronics ********************
+N* File Name          : stm32f10x_map.h
+N* Author             : MCD Application Team
+N* Version            : V2.0.1
+N* Date               : 06/13/2008
+N* Description        : This file contains all the peripheral register's definitions
+N*                      and memory mapping.
+N********************************************************************************
+N* THE PRESENT FIRMWARE WHICH IS FOR GUIDANCE ONLY AIMS AT PROVIDING CUSTOMERS
+N* WITH CODING INFORMATION REGARDING THEIR PRODUCTS IN ORDER FOR THEM TO SAVE TIME.
+N* AS A RESULT, STMICROELECTRONICS SHALL NOT BE HELD LIABLE FOR ANY DIRECT,
+N* INDIRECT OR CONSEQUENTIAL DAMAGES WITH RESPECT TO ANY CLAIMS ARISING FROM THE
+N* CONTENT OF SUCH FIRMWARE AND/OR THE USE MADE BY CUSTOMERS OF THE CODING
+N* INFORMATION CONTAINED HEREIN IN CONNECTION WITH THEIR PRODUCTS.
+N*******************************************************************************/
+N
+N/* Define to prevent recursive inclusion -------------------------------------*/
+N#ifndef __STM32F10x_MAP_H
+N#define __STM32F10x_MAP_H
+N
+N#ifndef EXT
+N  #define EXT extern
+N#endif /* EXT */
+N
+N/* Includes ------------------------------------------------------------------*/
+N#include "stm32f10x_conf.h"
+L 1 "D:\Program Files\keil4.14\ARM\INC\ST\STM32F10x\stm32f10x_conf.h" 1
+N/******************** (C) COPYRIGHT 2008 STMicroelectronics ********************
+N* File Name          : stm32f10x_conf.h
+N* Author             : MCD Application Team
+N* Version            : V2.0.1
+N* Date               : 06/13/2008
+N* Description        : Library configuration file.
+N********************************************************************************
+N* THE PRESENT FIRMWARE WHICH IS FOR GUIDANCE ONLY AIMS AT PROVIDING CUSTOMERS
+N* WITH CODING INFORMATION REGARDING THEIR PRODUCTS IN ORDER FOR THEM TO SAVE TIME.
+N* AS A RESULT, STMICROELECTRONICS SHALL NOT BE HELD LIABLE FOR ANY DIRECT,
+N* INDIRECT OR CONSEQUENTIAL DAMAGES WITH RESPECT TO ANY CLAIMS ARISING FROM THE
+N* CONTENT OF SUCH FIRMWARE AND/OR THE USE MADE BY CUSTOMERS OF THE CODING
+N* INFORMATION CONTAINED HEREIN IN CONNECTION WITH THEIR PRODUCTS.
+N*******************************************************************************/
+N
+N/* Define to prevent recursive inclusion -------------------------------------*/
+N#ifndef __STM32F10x_CONF_H
+N#define __STM32F10x_CONF_H
+N
+N/* Includes ------------------------------------------------------------------*/
+N#include "stm32f10x_type.h"
+L 1 "D:\Program Files\keil4.14\ARM\INC\ST\STM32F10x\stm32f10x_type.h" 1
+N/******************** (C) COPYRIGHT 2008 STMicroelectronics ********************
+N* File Name          : stm32f10x_type.h
+N* Author             : MCD Application Team
+N* Version            : V2.0.1
+N* Date               : 06/13/2008
+N* Description        : This file contains all the common data types used for the
+N*                      STM32F10x firmware library.
+N********************************************************************************
+N* THE PRESENT FIRMWARE WHICH IS FOR GUIDANCE ONLY AIMS AT PROVIDING CUSTOMERS
+N* WITH CODING INFORMATION REGARDING THEIR PRODUCTS IN ORDER FOR THEM TO SAVE TIME.
+N* AS A RESULT, STMICROELECTRONICS SHALL NOT BE HELD LIABLE FOR ANY DIRECT,
+N* INDIRECT OR CONSEQUENTIAL DAMAGES WITH RESPECT TO ANY CLAIMS ARISING FROM THE
+N* CONTENT OF SUCH FIRMWARE AND/OR THE USE MADE BY CUSTOMERS OF THE CODING
+N* INFORMATION CONTAINED HEREIN IN CONNECTION WITH THEIR PRODUCTS.
+N*******************************************************************************/
+N
+N/* Define to prevent recursive inclusion -------------------------------------*/
+N#ifndef __STM32F10x_TYPE_H
+N#define __STM32F10x_TYPE_H
+N
+N/* Includes ------------------------------------------------------------------*/
+N/* Exported types ------------------------------------------------------------*/
+Ntypedef signed long  s32;
+Ntypedef signed short s16;
+Ntypedef signed char  s8;
+N
+Ntypedef signed long  const sc32;  /* Read Only */
+Ntypedef signed short const sc16;  /* Read Only */
+Ntypedef signed char  const sc8;   /* Read Only */
+N
+Ntypedef volatile signed long  vs32;
+Ntypedef volatile signed short vs16;
+Ntypedef volatile signed char  vs8;
+N
+Ntypedef volatile signed long  const vsc32;  /* Read Only */
+Ntypedef volatile signed short const vsc16;  /* Read Only */
+Ntypedef volatile signed char  const vsc8;   /* Read Only */
+N
+Ntypedef unsigned long  u32;
+Ntypedef unsigned short u16;
+Ntypedef unsigned char  u8;
+N
+Ntypedef unsigned long  const uc32;  /* Read Only */
+Ntypedef unsigned short const uc16;  /* Read Only */
+Ntypedef unsigned char  const uc8;   /* Read Only */
+N
+Ntypedef volatile unsigned long  vu32;
+Ntypedef volatile unsigned short vu16;
+Ntypedef volatile unsigned char  vu8;
+N
+Ntypedef volatile unsigned long  const vuc32;  /* Read Only */
+Ntypedef volatile unsigned short const vuc16;  /* Read Only */
+Ntypedef volatile unsigned char  const vuc8;   /* Read Only */
+N
+Ntypedef enum {FALSE = 0, TRUE = !FALSE} bool;//假的和真的
+N
+Ntypedef enum {RESET = 0, SET = !RESET} FlagStatus, ITStatus;  //重设预设置
+N
+Ntypedef enum {DISABLE = 0, ENABLE = !DISABLE} FunctionalState;//失能预使能
+N#define IS_FUNCTIONAL_STATE(STATE) (((STATE) == DISABLE) || ((STATE) == ENABLE))
+N
+Ntypedef enum {ERROR = 0, SUCCESS = !ERROR} ErrorStatus;	//错误与成功
+N
+N#define U8_MAX     ((u8)255)
+N#define S8_MAX     ((s8)127)
+N#define S8_MIN     ((s8)-128)
+N#define U16_MAX    ((u16)65535u)
+N#define S16_MAX    ((s16)32767)
+N#define S16_MIN    ((s16)-32768)
+N#define U32_MAX    ((u32)4294967295uL)
+N#define S32_MAX    ((s32)2147483647)
+N#define S32_MIN    ((s32)-2147483648)
+N
+N/* Exported constants --------------------------------------------------------*/
+N/* Exported macro ------------------------------------------------------------*/
+N/* Exported functions ------------------------------------------------------- */
+N
+N#endif /* __STM32F10x_TYPE_H */
+N
+N/******************* (C) COPYRIGHT 2008 STMicroelectronics *****END OF FILE****/
+L 22 "D:\Program Files\keil4.14\ARM\INC\ST\STM32F10x\stm32f10x_conf.h" 2
+N
+N/* Exported types ------------------------------------------------------------*/
+N/* Exported constants --------------------------------------------------------*/
+N/* Uncomment the line below to compile the library in DEBUG mode, this will expanse
+N   the "assert_param" macro in the firmware library code (see "Exported macro"
+N   section below) */
+N/* #define DEBUG    1*/
+N
+N/* Comment the line below to disable the specific peripheral inclusion */
+N/************************************* ADC ************************************/
+N#define _ADC
+N#define _ADC1
+N#define _ADC2
+N#define _ADC3
+N
+N/************************************* BKP ************************************/
+N#define _BKP 
+N
+N/************************************* CAN ************************************/
+N#define _CAN
+N
+N/************************************* CRC ************************************/
+N#define _CRC
+N
+N/************************************* DAC ************************************/
+N#define _DAC
+N
+N/************************************* DBGMCU *********************************/
+N#define _DBGMCU
+N
+N/************************************* DMA ************************************/
+N#define _DMA
+N#define _DMA1_Channel1
+N#define _DMA1_Channel2
+N#define _DMA1_Channel3
+N#define _DMA1_Channel4
+N#define _DMA1_Channel5
+N#define _DMA1_Channel6
+N#define _DMA1_Channel7
+N#define _DMA2_Channel1
+N#define _DMA2_Channel2
+N#define _DMA2_Channel3
+N#define _DMA2_Channel4
+N#define _DMA2_Channel5
+N
+N/************************************* EXTI ***********************************/
+N#define _EXTI
+N
+N/************************************* FLASH and Option Bytes *****************/
+N#define _FLASH
+N/* Uncomment the line below to enable FLASH program/erase/protections functions,
+N   otherwise only FLASH configuration (latency, prefetch, half cycle) functions
+N   are enabled */
+N#define _FLASH_PROG
+N
+N/************************************* FSMC ***********************************/
+N#define _FSMC
+N
+N/************************************* GPIO ***********************************/
+N#define _GPIO
+N#define _GPIOA
+N#define _GPIOB
+N#define _GPIOC
+N#define _GPIOD
+N#define _GPIOE
+N#define _GPIOF
+N#define _GPIOG
+N#define _AFIO
+N
+N/************************************* I2C ************************************/
+N#define _I2C
+N#define _I2C1
+N#define _I2C2
+N
+N/************************************* IWDG ***********************************/
+N#define _IWDG
+N
+N/************************************* NVIC ***********************************/
+N#define _NVIC
+N
+N/************************************* PWR ************************************/
+N#define _PWR
+N
+N/************************************* RCC ************************************/
+N#define _RCC
+N
+N/************************************* RTC ************************************/
+N#define _RTC
+N
+N/************************************* SDIO ***********************************/
+N#define _SDIO
+N
+N/************************************* SPI ************************************/
+N#define _SPI
+N#define _SPI1
+N#define _SPI2
+N#define _SPI3
+N
+N/************************************* SysTick ********************************/
+N#define _SysTick
+N
+N/************************************* TIM ************************************/
+N#define _TIM
+N#define _TIM1
+N#define _TIM2
+N#define _TIM3
+N#define _TIM4
+N#define _TIM5
+N#define _TIM6
+N#define _TIM7
+N#define _TIM8
+N
+N/************************************* USART **********************************/
+N#define _USART
+N#define _USART1
+N#define _USART2
+N#define _USART3
+N#define _UART4
+N#define _UART5
+N
+N/************************************* WWDG ***********************************/
+N#define _WWDG
+N
+N/* In the following line adjust the value of External High Speed oscillator (HSE)
+N   used in your application */
+N#define HSE_Value    ((u32)8000000) /* Value of the External oscillator in Hz*/
+N
+N/* Exported macro ------------------------------------------------------------*/
+N#ifdef  DEBUG
+S/*******************************************************************************
+S* Macro Name     : assert_param
+S* Description    : The assert_param macro is used for function's parameters check.
+S*                  It is used only if the library is compiled in DEBUG mode. 
+S* Input          : - expr: If expr is false, it calls assert_failed function
+S*                    which reports the name of the source file and the source
+S*                    line number of the call that failed. 
+S*                    If expr is true, it returns no value.
+S* Return         : None
+S*******************************************************************************/ 
+S  #define assert_param(expr) ((expr) ? (void)0 : assert_failed((u8 *)__FILE__, __LINE__))
+S/* Exported functions ------------------------------------------------------- */
+S  void assert_failed(u8* file, u32 line);
+N#else
+N  #define assert_param(expr) ((void)0)
+N#endif /* DEBUG */
+N
+N#endif /* __STM32F10x_CONF_H */
+N
+N/******************* (C) COPYRIGHT 2008 STMicroelectronics *****END OF FILE****/
+L 27 "D:\Program Files\keil4.14\ARM\INC\ST\STM32F10x\stm32f10x_map.h" 2
+N#include "stm32f10x_type.h"
+N#include "cortexm3_macro.h"
+L 1 "D:\Program Files\keil4.14\ARM\INC\ST\STM32F10x\cortexm3_macro.h" 1
+N/******************** (C) COPYRIGHT 2008 STMicroelectronics ********************
+N* File Name          : cortexm3_macro.h
+N* Author             : MCD Application Team
+N* Version            : V2.0.1
+N* Date               : 06/13/2008
+N* Description        : Header file for cortexm3_macro.s.
+N********************************************************************************
+N* THE PRESENT FIRMWARE WHICH IS FOR GUIDANCE ONLY AIMS AT PROVIDING CUSTOMERS
+N* WITH CODING INFORMATION REGARDING THEIR PRODUCTS IN ORDER FOR THEM TO SAVE TIME.
+N* AS A RESULT, STMICROELECTRONICS SHALL NOT BE HELD LIABLE FOR ANY DIRECT,
+N* INDIRECT OR CONSEQUENTIAL DAMAGES WITH RESPECT TO ANY CLAIMS ARISING FROM THE
+N* CONTENT OF SUCH FIRMWARE AND/OR THE USE MADE BY CUSTOMERS OF THE CODING
+N* INFORMATION CONTAINED HEREIN IN CONNECTION WITH THEIR PRODUCTS.
+N*******************************************************************************/
+N
+N/* Define to prevent recursive inclusion -------------------------------------*/
+N#ifndef __CORTEXM3_MACRO_H
+N#define __CORTEXM3_MACRO_H
+N
+N/* Includes ------------------------------------------------------------------*/
+N#include "stm32f10x_type.h"
+N
+N/* Exported types ------------------------------------------------------------*/
+N/* Exported constants --------------------------------------------------------*/
+N/* Exported macro ------------------------------------------------------------*/
+N/* Exported functions ------------------------------------------------------- */
+Nvoid __WFI(void);
+Nvoid __WFE(void);
+Nvoid __SEV(void);
+Nvoid __ISB(void);
+Nvoid __DSB(void);
+Nvoid __DMB(void);
+Nvoid __SVC(void);
+Nu32 __MRS_CONTROL(void);
+Nvoid __MSR_CONTROL(u32 Control);
+Nu32 __MRS_PSP(void);
+Nvoid __MSR_PSP(u32 TopOfProcessStack);
+Nu32 __MRS_MSP(void);
+Nvoid __MSR_MSP(u32 TopOfMainStack);
+Nvoid __RESETPRIMASK(void);
+Nvoid __SETPRIMASK(void);
+Nu32 __READ_PRIMASK(void);
+Nvoid __RESETFAULTMASK(void);
+Nvoid __SETFAULTMASK(void);
+Nu32 __READ_FAULTMASK(void);
+Nvoid __BASEPRICONFIG(u32 NewPriority);
+Nu32 __GetBASEPRI(void);
+Nu16 __REV_HalfWord(u16 Data);
+Nu32 __REV_Word(u32 Data);
+N
+N#endif /* __CORTEXM3_MACRO_H */
+N
+N/******************* (C) COPYRIGHT 2008 STMicroelectronics *****END OF FILE****/
+L 29 "D:\Program Files\keil4.14\ARM\INC\ST\STM32F10x\stm32f10x_map.h" 2
+N
+N/* Exported types ------------------------------------------------------------*/
+N/******************************************************************************/
+N/*                         Peripheral registers structures                    */
+N/******************************************************************************/
+N
+N/*------------------------ Analog to Digital Converter -----------------------*/
+Ntypedef struct
+N{
+N  vu32 SR;
+N  vu32 CR1;
+N  vu32 CR2;
+N  vu32 SMPR1;
+N  vu32 SMPR2;
+N  vu32 JOFR1;
+N  vu32 JOFR2;
+N  vu32 JOFR3;
+N  vu32 JOFR4;
+N  vu32 HTR;
+N  vu32 LTR;
+N  vu32 SQR1;
+N  vu32 SQR2;
+N  vu32 SQR3;
+N  vu32 JSQR;
+N  vu32 JDR1;
+N  vu32 JDR2;
+N  vu32 JDR3;
+N  vu32 JDR4;
+N  vu32 DR;
+N} ADC_TypeDef;
+N
+N/*------------------------ Backup Registers ----------------------------------*/
+Ntypedef struct
+N{
+N  u32  RESERVED0;
+N  vu16 DR1;
+N  u16  RESERVED1;
+N  vu16 DR2;
+N  u16  RESERVED2;
+N  vu16 DR3;
+N  u16  RESERVED3;
+N  vu16 DR4;
+N  u16  RESERVED4;
+N  vu16 DR5;
+N  u16  RESERVED5;
+N  vu16 DR6;
+N  u16  RESERVED6;
+N  vu16 DR7;
+N  u16  RESERVED7;
+N  vu16 DR8;
+N  u16  RESERVED8;
+N  vu16 DR9;
+N  u16  RESERVED9;
+N  vu16 DR10;
+N  u16  RESERVED10; 
+N  vu16 RTCCR;
+N  u16  RESERVED11;
+N  vu16 CR;
+N  u16  RESERVED12;
+N  vu16 CSR;
+N  u16  RESERVED13[5];
+N  vu16 DR11;
+N  u16  RESERVED14;
+N  vu16 DR12;
+N  u16  RESERVED15;
+N  vu16 DR13;
+N  u16  RESERVED16;
+N  vu16 DR14;
+N  u16  RESERVED17;
+N  vu16 DR15;
+N  u16  RESERVED18;
+N  vu16 DR16;
+N  u16  RESERVED19;
+N  vu16 DR17;
+N  u16  RESERVED20;
+N  vu16 DR18;
+N  u16  RESERVED21;
+N  vu16 DR19;
+N  u16  RESERVED22;
+N  vu16 DR20;
+N  u16  RESERVED23;
+N  vu16 DR21;
+N  u16  RESERVED24;
+N  vu16 DR22;
+N  u16  RESERVED25;
+N  vu16 DR23;
+N  u16  RESERVED26;
+N  vu16 DR24;
+N  u16  RESERVED27;
+N  vu16 DR25;
+N  u16  RESERVED28;
+N  vu16 DR26;
+N  u16  RESERVED29;
+N  vu16 DR27;
+N  u16  RESERVED30;
+N  vu16 DR28;
+N  u16  RESERVED31;
+N  vu16 DR29;
+N  u16  RESERVED32;
+N  vu16 DR30;
+N  u16  RESERVED33; 
+N  vu16 DR31;
+N  u16  RESERVED34;
+N  vu16 DR32;
+N  u16  RESERVED35;
+N  vu16 DR33;
+N  u16  RESERVED36;
+N  vu16 DR34;
+N  u16  RESERVED37;
+N  vu16 DR35;
+N  u16  RESERVED38;
+N  vu16 DR36;
+N  u16  RESERVED39;
+N  vu16 DR37;
+N  u16  RESERVED40;
+N  vu16 DR38;
+N  u16  RESERVED41;
+N  vu16 DR39;
+N  u16  RESERVED42;
+N  vu16 DR40;
+N  u16  RESERVED43;
+N  vu16 DR41;
+N  u16  RESERVED44;
+N  vu16 DR42;
+N  u16  RESERVED45;    
+N} BKP_TypeDef;
+N
+N/*------------------------ Controller Area Network ---------------------------*/
+Ntypedef struct
+N{
+N  vu32 TIR;
+N  vu32 TDTR;
+N  vu32 TDLR;
+N  vu32 TDHR;
+N} CAN_TxMailBox_TypeDef;
+N
+Ntypedef struct
+N{
+N  vu32 RIR;
+N  vu32 RDTR;
+N  vu32 RDLR;
+N  vu32 RDHR;
+N} CAN_FIFOMailBox_TypeDef;
+N
+Ntypedef struct
+N{
+N  vu32 FR1;
+N  vu32 FR2;
+N} CAN_FilterRegister_TypeDef;
+N
+Ntypedef struct
+N{
+N  vu32 MCR;
+N  vu32 MSR;
+N  vu32 TSR;
+N  vu32 RF0R;
+N  vu32 RF1R;
+N  vu32 IER;
+N  vu32 ESR;
+N  vu32 BTR;
+N  u32  RESERVED0[88];
+N  CAN_TxMailBox_TypeDef sTxMailBox[3];
+N  CAN_FIFOMailBox_TypeDef sFIFOMailBox[2];
+N  u32  RESERVED1[12];
+N  vu32 FMR;
+N  vu32 FM1R;
+N  u32  RESERVED2;
+N  vu32 FS1R;
+N  u32  RESERVED3;
+N  vu32 FFA1R;
+N  u32  RESERVED4;
+N  vu32 FA1R;
+N  u32  RESERVED5[8];
+N  CAN_FilterRegister_TypeDef sFilterRegister[14];
+N} CAN_TypeDef;
+N
+N/*------------------------ CRC calculation unit ------------------------------*/
+Ntypedef struct
+N{
+N  vu32 DR;
+N  vu8  IDR;
+N  u8   RESERVED0;
+N  u16  RESERVED1;
+N  vu32 CR;
+N} CRC_TypeDef;
+N
+N
+N/*------------------------ Digital to Analog Converter -----------------------*/
+Ntypedef struct
+N{
+N  vu32 CR;
+N  vu32 SWTRIGR;
+N  vu32 DHR12R1;
+N  vu32 DHR12L1;
+N  vu32 DHR8R1;
+N  vu32 DHR12R2;
+N  vu32 DHR12L2;
+N  vu32 DHR8R2;
+N  vu32 DHR12RD;
+N  vu32 DHR12LD;
+N  vu32 DHR8RD;
+N  vu32 DOR1;
+N  vu32 DOR2;
+N} DAC_TypeDef;
+N
+N/*------------------------ Debug MCU -----------------------------------------*/
+Ntypedef struct
+N{
+N  vu32 IDCODE;
+N  vu32 CR;	
+N}DBGMCU_TypeDef;
+N
+N/*------------------------ DMA Controller ------------------------------------*/
+Ntypedef struct
+N{
+N  vu32 CCR;
+N  vu32 CNDTR;
+N  vu32 CPAR;
+N  vu32 CMAR;
+N} DMA_Channel_TypeDef;
+N
+Ntypedef struct
+N{
+N  vu32 ISR;
+N  vu32 IFCR;
+N} DMA_TypeDef;
+N
+N/*------------------------ External Interrupt/Event Controller ---------------*/
+Ntypedef struct
+N{
+N  vu32 IMR;
+N  vu32 EMR;
+N  vu32 RTSR;
+N  vu32 FTSR;
+N  vu32 SWIER;
+N  vu32 PR;
+N} EXTI_TypeDef;
+N
+N/*------------------------ FLASH and Option Bytes Registers ------------------*/
+Ntypedef struct
+N{
+N  vu32 ACR;
+N  vu32 KEYR;
+N  vu32 OPTKEYR;
+N  vu32 SR;
+N  vu32 CR;
+N  vu32 AR;
+N  vu32 RESERVED;
+N  vu32 OBR;
+N  vu32 WRPR;
+N} FLASH_TypeDef;
+N
+Ntypedef struct
+N{
+N  vu16 RDP;
+N  vu16 USER;
+N  vu16 Data0;
+N  vu16 Data1;
+N  vu16 WRP0;
+N  vu16 WRP1;
+N  vu16 WRP2;
+N  vu16 WRP3;
+N} OB_TypeDef;
+N
+N/*------------------------ Flexible Static Memory Controller -----------------*/
+Ntypedef struct
+N{
+N  vu32 BTCR[8];   
+N} FSMC_Bank1_TypeDef; 
+N
+Ntypedef struct
+N{
+N  vu32 BWTR[7];
+N} FSMC_Bank1E_TypeDef;
+N
+Ntypedef struct
+N{
+N  vu32 PCR2;
+N  vu32 SR2;
+N  vu32 PMEM2;
+N  vu32 PATT2;
+N  u32  RESERVED0;   
+N  vu32 ECCR2; 
+N} FSMC_Bank2_TypeDef;  
+N
+Ntypedef struct
+N{
+N  vu32 PCR3;
+N  vu32 SR3;
+N  vu32 PMEM3;
+N  vu32 PATT3;
+N  u32  RESERVED0;   
+N  vu32 ECCR3; 
+N} FSMC_Bank3_TypeDef; 
+N
+Ntypedef struct
+N{
+N  vu32 PCR4;
+N  vu32 SR4;
+N  vu32 PMEM4;
+N  vu32 PATT4;
+N  vu32 PIO4; 
+N} FSMC_Bank4_TypeDef; 
+N
+N/*------------------------ General Purpose and Alternate Function IO ---------*/
+Ntypedef struct
+N{
+N  vu32 CRL;
+N  vu32 CRH;
+N  vu32 IDR;
+N  vu32 ODR;
+N  vu32 BSRR;
+N  vu32 BRR;
+N  vu32 LCKR;
+N} GPIO_TypeDef;
+N
+Ntypedef struct
+N{
+N  vu32 EVCR;
+N  vu32 MAPR;
+N  vu32 EXTICR[4];
+N} AFIO_TypeDef;
+N
+N/*------------------------ Inter-integrated Circuit Interface ----------------*/
+Ntypedef struct
+N{
+N  vu16 CR1;
+N  u16  RESERVED0;
+N  vu16 CR2;
+N  u16  RESERVED1;
+N  vu16 OAR1;
+N  u16  RESERVED2;
+N  vu16 OAR2;
+N  u16  RESERVED3;
+N  vu16 DR;
+N  u16  RESERVED4;
+N  vu16 SR1;
+N  u16  RESERVED5;
+N  vu16 SR2;
+N  u16  RESERVED6;
+N  vu16 CCR;
+N  u16  RESERVED7;
+N  vu16 TRISE;
+N  u16  RESERVED8;
+N} I2C_TypeDef;
+N
+N/*------------------------ Independent WATCHDOG ------------------------------*/
+Ntypedef struct
+N{
+N  vu32 KR;
+N  vu32 PR;
+N  vu32 RLR;
+N  vu32 SR;
+N} IWDG_TypeDef;
+N
+N/*------------------------ Nested Vectored Interrupt Controller --------------*/
+Ntypedef struct
+N{
+N  vu32 ISER[2];
+N  u32  RESERVED0[30];
+N  vu32 ICER[2];
+N  u32  RSERVED1[30];
+N  vu32 ISPR[2];
+N  u32  RESERVED2[30];
+N  vu32 ICPR[2];
+N  u32  RESERVED3[30];
+N  vu32 IABR[2];
+N  u32  RESERVED4[62];
+N  vu32 IPR[15];
+N} NVIC_TypeDef;
+N
+Ntypedef struct
+N{
+N  vuc32 CPUID;
+N  vu32 ICSR;
+N  vu32 VTOR;
+N  vu32 AIRCR;
+N  vu32 SCR;
+N  vu32 CCR;
+N  vu32 SHPR[3];
+N  vu32 SHCSR;
+N  vu32 CFSR;
+N  vu32 HFSR;
+N  vu32 DFSR;
+N  vu32 MMFAR;
+N  vu32 BFAR;
+N  vu32 AFSR;
+N} SCB_TypeDef;
+N
+N/*------------------------ Power Control -------------------------------------*/
+Ntypedef struct
+N{
+N  vu32 CR;
+N  vu32 CSR;
+N} PWR_TypeDef;
+N
+N/*------------------------ Reset and Clock Control ---------------------------*/
+Ntypedef struct
+N{
+N  vu32 CR;
+N  vu32 CFGR;
+N  vu32 CIR;
+N  vu32 APB2RSTR;
+N  vu32 APB1RSTR;
+N  vu32 AHBENR;
+N  vu32 APB2ENR;
+N  vu32 APB1ENR;
+N  vu32 BDCR;
+N  vu32 CSR;
+N} RCC_TypeDef;
+N
+N/*------------------------ Real-Time Clock -----------------------------------*/
+Ntypedef struct
+N{
+N  vu16 CRH;
+N  u16  RESERVED0;
+N  vu16 CRL;
+N  u16  RESERVED1;
+N  vu16 PRLH;
+N  u16  RESERVED2;
+N  vu16 PRLL;
+N  u16  RESERVED3;
+N  vu16 DIVH;
+N  u16  RESERVED4;
+N  vu16 DIVL;
+N  u16  RESERVED5;
+N  vu16 CNTH;
+N  u16  RESERVED6;
+N  vu16 CNTL;
+N  u16  RESERVED7;
+N  vu16 ALRH;
+N  u16  RESERVED8;
+N  vu16 ALRL;
+N  u16  RESERVED9;
+N} RTC_TypeDef;
+N
+N/*------------------------ SD host Interface ---------------------------------*/
+Ntypedef struct
+N{
+N  vu32 POWER;
+N  vu32 CLKCR;
+N  vu32 ARG;
+N  vu32 CMD;
+N  vuc32 RESPCMD;
+N  vuc32 RESP1;
+N  vuc32 RESP2;
+N  vuc32 RESP3;
+N  vuc32 RESP4;
+N  vu32 DTIMER;
+N  vu32 DLEN;
+N  vu32 DCTRL;
+N  vuc32 DCOUNT;
+N  vuc32 STA;
+N  vu32 ICR;
+N  vu32 MASK;
+N  u32  RESERVED0[2];
+N  vuc32 FIFOCNT;
+N  u32  RESERVED1[13];
+N  vu32 FIFO;
+N} SDIO_TypeDef;
+N
+N/*------------------------ Serial Peripheral Interface -----------------------*/
+Ntypedef struct
+N{
+N  vu16 CR1;
+N  u16  RESERVED0;
+N  vu16 CR2;
+N  u16  RESERVED1;
+N  vu16 SR;
+N  u16  RESERVED2;
+N  vu16 DR;
+N  u16  RESERVED3;
+N  vu16 CRCPR;
+N  u16  RESERVED4;
+N  vu16 RXCRCR;
+N  u16  RESERVED5;
+N  vu16 TXCRCR;
+N  u16  RESERVED6;
+N  vu16 I2SCFGR;
+N  u16  RESERVED7;
+N  vu16 I2SPR;
+N  u16  RESERVED8;  
+N} SPI_TypeDef;
+N
+N/*------------------------ SystemTick ----------------------------------------*/
+Ntypedef struct
+N{
+N  vu32 CTRL;
+N  vu32 LOAD;
+N  vu32 VAL;
+N  vuc32 CALIB;
+N} SysTick_TypeDef;
+N
+N/*------------------------ TIM -----------------------------------------------*/
+Ntypedef struct
+N{
+N  vu16 CR1;
+N  u16  RESERVED0;
+N  vu16 CR2;
+N  u16  RESERVED1;
+N  vu16 SMCR;
+N  u16  RESERVED2;
+N  vu16 DIER;
+N  u16  RESERVED3;
+N  vu16 SR;
+N  u16  RESERVED4;
+N  vu16 EGR;
+N  u16  RESERVED5;
+N  vu16 CCMR1;
+N  u16  RESERVED6;
+N  vu16 CCMR2;
+N  u16  RESERVED7;
+N  vu16 CCER;
+N  u16  RESERVED8;
+N  vu16 CNT;
+N  u16  RESERVED9;
+N  vu16 PSC;
+N  u16  RESERVED10;
+N  vu16 ARR;
+N  u16  RESERVED11;
+N  vu16 RCR;
+N  u16  RESERVED12;
+N  vu16 CCR1;
+N  u16  RESERVED13;
+N  vu16 CCR2;
+N  u16  RESERVED14;
+N  vu16 CCR3;
+N  u16  RESERVED15;
+N  vu16 CCR4;
+N  u16  RESERVED16;
+N  vu16 BDTR;
+N  u16  RESERVED17;
+N  vu16 DCR;
+N  u16  RESERVED18;
+N  vu16 DMAR;
+N  u16  RESERVED19;
+N} TIM_TypeDef;
+N
+N/*----------------- Universal Synchronous Asynchronous Receiver Transmitter --*/
+Ntypedef struct
+N{
+N  vu16 SR;
+N  u16  RESERVED0;
+N  vu16 DR;
+N  u16  RESERVED1;
+N  vu16 BRR;
+N  u16  RESERVED2;
+N  vu16 CR1;
+N  u16  RESERVED3;
+N  vu16 CR2;
+N  u16  RESERVED4;
+N  vu16 CR3;
+N  u16  RESERVED5;
+N  vu16 GTPR;
+N  u16  RESERVED6;
+N} USART_TypeDef;
+N
+N/*------------------------ Window WATCHDOG -----------------------------------*/
+Ntypedef struct
+N{
+N  vu32 CR;
+N  vu32 CFR;
+N  vu32 SR;
+N} WWDG_TypeDef;
+N
+N/******************************************************************************/
+N/*                         Peripheral memory map                              */
+N/******************************************************************************/
+N/* Peripheral and SRAM base address in the alias region */
+N#define PERIPH_BB_BASE        ((u32)0x42000000)
+N#define SRAM_BB_BASE          ((u32)0x22000000)
+N
+N/* Peripheral and SRAM base address in the bit-band region */
+N#define SRAM_BASE             ((u32)0x20000000)
+N#define PERIPH_BASE           ((u32)0x40000000)
+N
+N/* FSMC registers base address */
+N#define FSMC_R_BASE           ((u32)0xA0000000)
+N
+N/* Peripheral memory map */
+N#define APB1PERIPH_BASE       PERIPH_BASE
+N#define APB2PERIPH_BASE       (PERIPH_BASE + 0x10000)
+N#define AHBPERIPH_BASE        (PERIPH_BASE + 0x20000)
+N
+N#define TIM2_BASE             (APB1PERIPH_BASE + 0x0000)
+N#define TIM3_BASE             (APB1PERIPH_BASE + 0x0400)
+N#define TIM4_BASE             (APB1PERIPH_BASE + 0x0800)
+N#define TIM5_BASE             (APB1PERIPH_BASE + 0x0C00)
+N#define TIM6_BASE             (APB1PERIPH_BASE + 0x1000)
+N#define TIM7_BASE             (APB1PERIPH_BASE + 0x1400)
+N#define RTC_BASE              (APB1PERIPH_BASE + 0x2800)
+N#define WWDG_BASE             (APB1PERIPH_BASE + 0x2C00)
+N#define IWDG_BASE             (APB1PERIPH_BASE + 0x3000)
+N#define SPI2_BASE             (APB1PERIPH_BASE + 0x3800)
+N#define SPI3_BASE             (APB1PERIPH_BASE + 0x3C00)
+N#define USART2_BASE           (APB1PERIPH_BASE + 0x4400)
+N#define USART3_BASE           (APB1PERIPH_BASE + 0x4800)
+N#define UART4_BASE            (APB1PERIPH_BASE + 0x4C00)
+N#define UART5_BASE            (APB1PERIPH_BASE + 0x5000)
+N#define I2C1_BASE             (APB1PERIPH_BASE + 0x5400)
+N#define I2C2_BASE             (APB1PERIPH_BASE + 0x5800)
+N#define CAN_BASE              (APB1PERIPH_BASE + 0x6400)
+N#define BKP_BASE              (APB1PERIPH_BASE + 0x6C00)
+N#define PWR_BASE              (APB1PERIPH_BASE + 0x7000)
+N#define DAC_BASE              (APB1PERIPH_BASE + 0x7400)
+N
+N#define AFIO_BASE             (APB2PERIPH_BASE + 0x0000)
+N#define EXTI_BASE             (APB2PERIPH_BASE + 0x0400)
+N#define GPIOA_BASE            (APB2PERIPH_BASE + 0x0800)
+N#define GPIOB_BASE            (APB2PERIPH_BASE + 0x0C00)
+N#define GPIOC_BASE            (APB2PERIPH_BASE + 0x1000)
+N#define GPIOD_BASE            (APB2PERIPH_BASE + 0x1400)
+N#define GPIOE_BASE            (APB2PERIPH_BASE + 0x1800)
+N#define GPIOF_BASE            (APB2PERIPH_BASE + 0x1C00)
+N#define GPIOG_BASE            (APB2PERIPH_BASE + 0x2000)
+N#define ADC1_BASE             (APB2PERIPH_BASE + 0x2400)
+N#define ADC2_BASE             (APB2PERIPH_BASE + 0x2800)
+N#define TIM1_BASE             (APB2PERIPH_BASE + 0x2C00)
+N#define SPI1_BASE             (APB2PERIPH_BASE + 0x3000)
+N#define TIM8_BASE             (APB2PERIPH_BASE + 0x3400)
+N#define USART1_BASE           (APB2PERIPH_BASE + 0x3800)
+N#define ADC3_BASE             (APB2PERIPH_BASE + 0x3C00)
+N
+N#define SDIO_BASE             (PERIPH_BASE + 0x18000)
+N
+N#define DMA1_BASE             (AHBPERIPH_BASE + 0x0000)
+N#define DMA1_Channel1_BASE    (AHBPERIPH_BASE + 0x0008)
+N#define DMA1_Channel2_BASE    (AHBPERIPH_BASE + 0x001C)
+N#define DMA1_Channel3_BASE    (AHBPERIPH_BASE + 0x0030)
+N#define DMA1_Channel4_BASE    (AHBPERIPH_BASE + 0x0044)
+N#define DMA1_Channel5_BASE    (AHBPERIPH_BASE + 0x0058)
+N#define DMA1_Channel6_BASE    (AHBPERIPH_BASE + 0x006C)
+N#define DMA1_Channel7_BASE    (AHBPERIPH_BASE + 0x0080)
+N#define DMA2_BASE             (AHBPERIPH_BASE + 0x0400)
+N#define DMA2_Channel1_BASE    (AHBPERIPH_BASE + 0x0408)
+N#define DMA2_Channel2_BASE    (AHBPERIPH_BASE + 0x041C)
+N#define DMA2_Channel3_BASE    (AHBPERIPH_BASE + 0x0430)
+N#define DMA2_Channel4_BASE    (AHBPERIPH_BASE + 0x0444)
+N#define DMA2_Channel5_BASE    (AHBPERIPH_BASE + 0x0458)
+N#define RCC_BASE              (AHBPERIPH_BASE + 0x1000)
+N#define CRC_BASE              (AHBPERIPH_BASE + 0x3000)
+N
+N/* Flash registers base address */
+N#define FLASH_R_BASE          (AHBPERIPH_BASE + 0x2000)
+N/* Flash Option Bytes base address */
+N#define OB_BASE               ((u32)0x1FFFF800)
+N
+N/* FSMC Bankx registers base address */
+N#define FSMC_Bank1_R_BASE     (FSMC_R_BASE + 0x0000)
+N#define FSMC_Bank1E_R_BASE    (FSMC_R_BASE + 0x0104)
+N#define FSMC_Bank2_R_BASE     (FSMC_R_BASE + 0x0060)
+N#define FSMC_Bank3_R_BASE     (FSMC_R_BASE + 0x0080)
+N#define FSMC_Bank4_R_BASE     (FSMC_R_BASE + 0x00A0)
+N
+N/* Debug MCU registers base address */
+N#define DBGMCU_BASE          ((u32)0xE0042000)
+N
+N/* System Control Space memory map */
+N#define SCS_BASE              ((u32)0xE000E000)
+N
+N#define SysTick_BASE          (SCS_BASE + 0x0010)
+N#define NVIC_BASE             (SCS_BASE + 0x0100)
+N#define SCB_BASE              (SCS_BASE + 0x0D00)
+N
+N/******************************************************************************/
+N/*                         Peripheral declaration                             */
+N/******************************************************************************/
+N
+N/*------------------------ Non Debug Mode ------------------------------------*/
+N#ifndef DEBUG
+N#ifdef _TIM2
+N  #define TIM2                ((TIM_TypeDef *) TIM2_BASE)
+N#endif /*_TIM2 */
+N
+N#ifdef _TIM3
+N  #define TIM3                ((TIM_TypeDef *) TIM3_BASE)
+N#endif /*_TIM3 */
+N
+N#ifdef _TIM4
+N  #define TIM4                ((TIM_TypeDef *) TIM4_BASE)
+N#endif /*_TIM4 */
+N
+N#ifdef _TIM5
+N  #define TIM5                ((TIM_TypeDef *) TIM5_BASE)
+N#endif /*_TIM5 */
+N
+N#ifdef _TIM6
+N  #define TIM6                ((TIM_TypeDef *) TIM6_BASE)
+N#endif /*_TIM6 */
+N
+N#ifdef _TIM7
+N  #define TIM7                ((TIM_TypeDef *) TIM7_BASE)
+N#endif /*_TIM7 */
+N
+N#ifdef _RTC
+N  #define RTC                 ((RTC_TypeDef *) RTC_BASE)
+N#endif /*_RTC */
+N
+N#ifdef _WWDG
+N  #define WWDG                ((WWDG_TypeDef *) WWDG_BASE)
+N#endif /*_WWDG */
+N
+N#ifdef _IWDG
+N  #define IWDG                ((IWDG_TypeDef *) IWDG_BASE)
+N#endif /*_IWDG */
+N
+N#ifdef _SPI2
+N  #define SPI2                ((SPI_TypeDef *) SPI2_BASE)
+N#endif /*_SPI2 */
+N
+N#ifdef _SPI3
+N  #define SPI3                ((SPI_TypeDef *) SPI3_BASE)
+N#endif /*_SPI3 */
+N
+N#ifdef _USART2
+N  #define USART2              ((USART_TypeDef *) USART2_BASE)
+N#endif /*_USART2 */
+N
+N#ifdef _USART3
+N  #define USART3              ((USART_TypeDef *) USART3_BASE)
+N#endif /*_USART3 */
+N
+N#ifdef _UART4
+N  #define UART4              ((USART_TypeDef *) UART4_BASE)
+N#endif /*_UART4 */
+N
+N#ifdef _UART5
+N  #define UART5              ((USART_TypeDef *) UART5_BASE)
+N#endif /*_USART5 */
+N
+N#ifdef _I2C1
+N  #define I2C1                ((I2C_TypeDef *) I2C1_BASE)
+N#endif /*_I2C1 */
+N
+N#ifdef _I2C2
+N  #define I2C2                ((I2C_TypeDef *) I2C2_BASE)
+N#endif /*_I2C2 */
+N
+N#ifdef _CAN
+N  #define CAN                 ((CAN_TypeDef *) CAN_BASE)
+N#endif /*_CAN */
+N
+N#ifdef _BKP
+N  #define BKP                 ((BKP_TypeDef *) BKP_BASE)
+N#endif /*_BKP */
+N
+N#ifdef _PWR
+N  #define PWR                 ((PWR_TypeDef *) PWR_BASE)
+N#endif /*_PWR */
+N
+N#ifdef _DAC
+N  #define DAC                 ((DAC_TypeDef *) DAC_BASE)
+N#endif /*_DAC */
+N
+N#ifdef _AFIO
+N  #define AFIO                ((AFIO_TypeDef *) AFIO_BASE)
+N#endif /*_AFIO */
+N
+N#ifdef _EXTI
+N  #define EXTI                ((EXTI_TypeDef *) EXTI_BASE)
+N#endif /*_EXTI */
+N
+N#ifdef _GPIOA
+N  #define GPIOA               ((GPIO_TypeDef *) GPIOA_BASE)
+N#endif /*_GPIOA */
+N
+N#ifdef _GPIOB
+N  #define GPIOB               ((GPIO_TypeDef *) GPIOB_BASE)
+N#endif /*_GPIOB */
+N
+N#ifdef _GPIOC
+N  #define GPIOC               ((GPIO_TypeDef *) GPIOC_BASE)
+N#endif /*_GPIOC */
+N
+N#ifdef _GPIOD
+N  #define GPIOD               ((GPIO_TypeDef *) GPIOD_BASE)
+N#endif /*_GPIOD */
+N
+N#ifdef _GPIOE
+N  #define GPIOE               ((GPIO_TypeDef *) GPIOE_BASE)
+N#endif /*_GPIOE */
+N
+N#ifdef _GPIOF
+N  #define GPIOF               ((GPIO_TypeDef *) GPIOF_BASE)
+N#endif /*_GPIOF */
+N
+N#ifdef _GPIOG
+N  #define GPIOG               ((GPIO_TypeDef *) GPIOG_BASE)
+N#endif /*_GPIOG */
+N
+N#ifdef _ADC1
+N  #define ADC1                ((ADC_TypeDef *) ADC1_BASE)
+N#endif /*_ADC1 */
+N
+N#ifdef _ADC2
+N  #define ADC2                ((ADC_TypeDef *) ADC2_BASE)
+N#endif /*_ADC2 */
+N
+N#ifdef _TIM1
+N  #define TIM1                ((TIM_TypeDef *) TIM1_BASE)
+N#endif /*_TIM1 */
+N
+N#ifdef _SPI1
+N  #define SPI1                ((SPI_TypeDef *) SPI1_BASE)
+N#endif /*_SPI1 */
+N
+N#ifdef _TIM8
+N  #define TIM8                ((TIM_TypeDef *) TIM8_BASE)
+N#endif /*_TIM8 */
+N
+N#ifdef _USART1
+N  #define USART1              ((USART_TypeDef *) USART1_BASE)
+N#endif /*_USART1 */
+N
+N#ifdef _ADC3
+N  #define ADC3                ((ADC_TypeDef *) ADC3_BASE)
+N#endif /*_ADC3 */
+N
+N#ifdef _SDIO
+N  #define SDIO                ((SDIO_TypeDef *) SDIO_BASE)
+N#endif /*_SDIO */
+N
+N#ifdef _DMA
+N  #define DMA1                ((DMA_TypeDef *) DMA1_BASE)
+N  #define DMA2                ((DMA_TypeDef *) DMA2_BASE)
+N#endif /*_DMA */
+N
+N#ifdef _DMA1_Channel1
+N  #define DMA1_Channel1       ((DMA_Channel_TypeDef *) DMA1_Channel1_BASE)
+N#endif /*_DMA1_Channel1 */
+N
+N#ifdef _DMA1_Channel2
+N  #define DMA1_Channel2       ((DMA_Channel_TypeDef *) DMA1_Channel2_BASE)
+N#endif /*_DMA1_Channel2 */
+N
+N#ifdef _DMA1_Channel3
+N  #define DMA1_Channel3       ((DMA_Channel_TypeDef *) DMA1_Channel3_BASE)
+N#endif /*_DMA1_Channel3 */
+N
+N#ifdef _DMA1_Channel4
+N  #define DMA1_Channel4       ((DMA_Channel_TypeDef *) DMA1_Channel4_BASE)
+N#endif /*_DMA1_Channel4 */
+N
+N#ifdef _DMA1_Channel5
+N  #define DMA1_Channel5       ((DMA_Channel_TypeDef *) DMA1_Channel5_BASE)
+N#endif /*_DMA1_Channel5 */
+N
+N#ifdef _DMA1_Channel6
+N  #define DMA1_Channel6       ((DMA_Channel_TypeDef *) DMA1_Channel6_BASE)
+N#endif /*_DMA1_Channel6 */
+N
+N#ifdef _DMA1_Channel7
+N  #define DMA1_Channel7       ((DMA_Channel_TypeDef *) DMA1_Channel7_BASE)
+N#endif /*_DMA1_Channel7 */
+N
+N#ifdef _DMA2_Channel1
+N  #define DMA2_Channel1       ((DMA_Channel_TypeDef *) DMA2_Channel1_BASE)
+N#endif /*_DMA2_Channel1 */
+N
+N#ifdef _DMA2_Channel2
+N  #define DMA2_Channel2       ((DMA_Channel_TypeDef *) DMA2_Channel2_BASE)
+N#endif /*_DMA2_Channel2 */
+N
+N#ifdef _DMA2_Channel3
+N  #define DMA2_Channel3       ((DMA_Channel_TypeDef *) DMA2_Channel3_BASE)
+N#endif /*_DMA2_Channel3 */
+N
+N#ifdef _DMA2_Channel4
+N  #define DMA2_Channel4       ((DMA_Channel_TypeDef *) DMA2_Channel4_BASE)
+N#endif /*_DMA2_Channel4 */
+N
+N#ifdef _DMA2_Channel5
+N  #define DMA2_Channel5       ((DMA_Channel_TypeDef *) DMA2_Channel5_BASE)
+N#endif /*_DMA2_Channel5 */
+N
+N#ifdef _RCC
+N  #define RCC                 ((RCC_TypeDef *) RCC_BASE)
+N#endif /*_RCC */
+N
+N#ifdef _CRC
+N  #define CRC                 ((CRC_TypeDef *) CRC_BASE)
+N#endif /*_CRC */
+N
+N#ifdef _FLASH
+N  #define FLASH               ((FLASH_TypeDef *) FLASH_R_BASE)
+N  #define OB                  ((OB_TypeDef *) OB_BASE) 
+N#endif /*_FLASH */
+N
+N#ifdef _FSMC
+N  #define FSMC_Bank1          ((FSMC_Bank1_TypeDef *) FSMC_Bank1_R_BASE)
+N  #define FSMC_Bank1E         ((FSMC_Bank1E_TypeDef *) FSMC_Bank1E_R_BASE)
+N  #define FSMC_Bank2          ((FSMC_Bank2_TypeDef *) FSMC_Bank2_R_BASE)
+N  #define FSMC_Bank3          ((FSMC_Bank3_TypeDef *) FSMC_Bank3_R_BASE)
+N  #define FSMC_Bank4          ((FSMC_Bank4_TypeDef *) FSMC_Bank4_R_BASE)
+N#endif /*_FSMC */
+N
+N#ifdef _DBGMCU
+N  #define DBGMCU              ((DBGMCU_TypeDef *) DBGMCU_BASE)
+N#endif /*_DBGMCU */
+N
+N#ifdef _SysTick
+N  #define SysTick             ((SysTick_TypeDef *) SysTick_BASE)
+N#endif /*_SysTick */
+N
+N#ifdef _NVIC
+N  #define NVIC                ((NVIC_TypeDef *) NVIC_BASE)
+N  #define SCB                 ((SCB_TypeDef *) SCB_BASE)  
+N#endif /*_NVIC */
+N
+N/*------------------------ Debug Mode ----------------------------------------*/
+N#else   /* DEBUG */
+S#ifdef _TIM2
+S  EXT TIM_TypeDef             *TIM2;
+S#endif /*_TIM2 */
+S
+S#ifdef _TIM3
+S  EXT TIM_TypeDef             *TIM3;
+S#endif /*_TIM3 */
+S
+S#ifdef _TIM4
+S  EXT TIM_TypeDef             *TIM4;
+S#endif /*_TIM4 */
+S
+S#ifdef _TIM5
+S  EXT TIM_TypeDef             *TIM5;
+S#endif /*_TIM5 */
+S
+S#ifdef _TIM6
+S  EXT TIM_TypeDef             *TIM6;
+S#endif /*_TIM6 */
+S
+S#ifdef _TIM7
+S  EXT TIM_TypeDef             *TIM7;
+S#endif /*_TIM7 */
+S
+S#ifdef _RTC
+S  EXT RTC_TypeDef             *RTC;
+S#endif /*_RTC */
+S
+S#ifdef _WWDG
+S  EXT WWDG_TypeDef            *WWDG;
+S#endif /*_WWDG */
+S
+S#ifdef _IWDG
+S  EXT IWDG_TypeDef            *IWDG;
+S#endif /*_IWDG */
+S
+S#ifdef _SPI2
+S  EXT SPI_TypeDef             *SPI2;
+S#endif /*_SPI2 */
+S
+S#ifdef _SPI3
+S  EXT SPI_TypeDef             *SPI3;
+S#endif /*_SPI3 */
+S
+S#ifdef _USART2
+S  EXT USART_TypeDef           *USART2;
+S#endif /*_USART2 */
+S
+S#ifdef _USART3
+S  EXT USART_TypeDef           *USART3;
+S#endif /*_USART3 */
+S
+S#ifdef _UART4
+S  EXT USART_TypeDef           *UART4;
+S#endif /*_UART4 */
+S
+S#ifdef _UART5
+S  EXT USART_TypeDef           *UART5;
+S#endif /*_UART5 */
+S
+S#ifdef _I2C1
+S  EXT I2C_TypeDef             *I2C1;
+S#endif /*_I2C1 */
+S
+S#ifdef _I2C2
+S  EXT I2C_TypeDef             *I2C2;
+S#endif /*_I2C2 */
+S
+S#ifdef _CAN
+S  EXT CAN_TypeDef             *CAN;
+S#endif /*_CAN */
+S
+S#ifdef _BKP
+S  EXT BKP_TypeDef             *BKP;
+S#endif /*_BKP */
+S
+S#ifdef _PWR
+S  EXT PWR_TypeDef             *PWR;
+S#endif /*_PWR */
+S
+S#ifdef _DAC
+S  EXT DAC_TypeDef             *DAC;
+S#endif /*_DAC */
+S
+S#ifdef _AFIO
+S  EXT AFIO_TypeDef            *AFIO;
+S#endif /*_AFIO */
+S
+S#ifdef _EXTI
+S  EXT EXTI_TypeDef            *EXTI;
+S#endif /*_EXTI */
+S
+S#ifdef _GPIOA
+S  EXT GPIO_TypeDef            *GPIOA;
+S#endif /*_GPIOA */
+S
+S#ifdef _GPIOB
+S  EXT GPIO_TypeDef            *GPIOB;
+S#endif /*_GPIOB */
+S
+S#ifdef _GPIOC
+S  EXT GPIO_TypeDef            *GPIOC;
+S#endif /*_GPIOC */
+S
+S#ifdef _GPIOD
+S  EXT GPIO_TypeDef            *GPIOD;
+S#endif /*_GPIOD */
+S
+S#ifdef _GPIOE
+S  EXT GPIO_TypeDef            *GPIOE;
+S#endif /*_GPIOE */
+S
+S#ifdef _GPIOF
+S  EXT GPIO_TypeDef            *GPIOF;
+S#endif /*_GPIOF */
+S
+S#ifdef _GPIOG
+S  EXT GPIO_TypeDef            *GPIOG;
+S#endif /*_GPIOG */
+S
+S#ifdef _ADC1
+S  EXT ADC_TypeDef             *ADC1;
+S#endif /*_ADC1 */
+S
+S#ifdef _ADC2
+S  EXT ADC_TypeDef             *ADC2;
+S#endif /*_ADC2 */
+S
+S#ifdef _TIM1
+S  EXT TIM_TypeDef             *TIM1;
+S#endif /*_TIM1 */
+S
+S#ifdef _SPI1
+S  EXT SPI_TypeDef             *SPI1;
+S#endif /*_SPI1 */
+S
+S#ifdef _TIM8
+S  EXT TIM_TypeDef             *TIM8;
+S#endif /*_TIM8 */
+S
+S#ifdef _USART1
+S  EXT USART_TypeDef           *USART1;
+S#endif /*_USART1 */
+S
+S#ifdef _ADC3
+S  EXT ADC_TypeDef             *ADC3;
+S#endif /*_ADC3 */
+S
+S#ifdef _SDIO
+S  EXT SDIO_TypeDef            *SDIO;
+S#endif /*_SDIO */
+S
+S#ifdef _DMA
+S  EXT DMA_TypeDef             *DMA1;
+S  EXT DMA_TypeDef             *DMA2;
+S#endif /*_DMA */
+S
+S#ifdef _DMA1_Channel1
+S  EXT DMA_Channel_TypeDef     *DMA1_Channel1;
+S#endif /*_DMA1_Channel1 */
+S
+S#ifdef _DMA1_Channel2
+S  EXT DMA_Channel_TypeDef     *DMA1_Channel2;
+S#endif /*_DMA1_Channel2 */
+S
+S#ifdef _DMA1_Channel3
+S  EXT DMA_Channel_TypeDef     *DMA1_Channel3;
+S#endif /*_DMA1_Channel3 */
+S
+S#ifdef _DMA1_Channel4
+S  EXT DMA_Channel_TypeDef     *DMA1_Channel4;
+S#endif /*_DMA1_Channel4 */
+S
+S#ifdef _DMA1_Channel5
+S  EXT DMA_Channel_TypeDef     *DMA1_Channel5;
+S#endif /*_DMA1_Channel5 */
+S
+S#ifdef _DMA1_Channel6
+S  EXT DMA_Channel_TypeDef     *DMA1_Channel6;
+S#endif /*_DMA1_Channel6 */
+S
+S#ifdef _DMA1_Channel7
+S  EXT DMA_Channel_TypeDef     *DMA1_Channel7;
+S#endif /*_DMA1_Channel7 */
+S
+S#ifdef _DMA2_Channel1
+S  EXT DMA_Channel_TypeDef     *DMA2_Channel1;
+S#endif /*_DMA2_Channel1 */
+S
+S#ifdef _DMA2_Channel2
+S  EXT DMA_Channel_TypeDef     *DMA2_Channel2;
+S#endif /*_DMA2_Channel2 */
+S
+S#ifdef _DMA2_Channel3
+S  EXT DMA_Channel_TypeDef     *DMA2_Channel3;
+S#endif /*_DMA2_Channel3 */
+S
+S#ifdef _DMA2_Channel4
+S  EXT DMA_Channel_TypeDef     *DMA2_Channel4;
+S#endif /*_DMA2_Channel4 */
+S
+S#ifdef _DMA2_Channel5
+S  EXT DMA_Channel_TypeDef     *DMA2_Channel5;
+S#endif /*_DMA2_Channel5 */
+S
+S#ifdef _RCC
+S  EXT RCC_TypeDef             *RCC;
+S#endif /*_RCC */
+S
+S#ifdef _CRC
+S  EXT CRC_TypeDef             *CRC;
+S#endif /*_CRC */
+S
+S#ifdef _FLASH
+S  EXT FLASH_TypeDef            *FLASH;
+S  EXT OB_TypeDef               *OB;  
+S#endif /*_FLASH */
+S
+S#ifdef _FSMC
+S  EXT FSMC_Bank1_TypeDef      *FSMC_Bank1;
+S  EXT FSMC_Bank1E_TypeDef     *FSMC_Bank1E;
+S  EXT FSMC_Bank2_TypeDef      *FSMC_Bank2;
+S  EXT FSMC_Bank3_TypeDef      *FSMC_Bank3;
+S  EXT FSMC_Bank4_TypeDef      *FSMC_Bank4;
+S#endif /*_FSMC */
+S
+S#ifdef _DBGMCU
+S  EXT DBGMCU_TypeDef          *DBGMCU;
+S#endif /*_DBGMCU */
+S
+S#ifdef _SysTick
+S  EXT SysTick_TypeDef         *SysTick;
+S#endif /*_SysTick */
+S
+S#ifdef _NVIC
+S  EXT NVIC_TypeDef            *NVIC;
+S  EXT SCB_TypeDef             *SCB;
+S#endif /*_NVIC */
+S
+N#endif  /* DEBUG */
+N
+N/* Exported constants --------------------------------------------------------*/
+N/* Exported macro ------------------------------------------------------------*/
+N/* Exported functions ------------------------------------------------------- */
+N
+N#endif /* __STM32F10x_MAP_H */
+N
+N/******************* (C) COPYRIGHT 2008 STMicroelectronics *****END OF FILE****/
+L 23 "D:\Program Files\keil4.14\ARM\INC\ST\STM32F10x\stm32f10x_usart.h" 2
+N
+N/* Exported types ------------------------------------------------------------*/
+N/* USART Init Structure definition */
+Ntypedef struct
+N{
+N  u32 USART_BaudRate;
+N  u16 USART_WordLength;
+N  u16 USART_StopBits;
+N  u16 USART_Parity;
+N  u16 USART_Mode;
+N  u16 USART_HardwareFlowControl;  
+N} USART_InitTypeDef;
+N
+N/* USART Clock Init Structure definition */
+Ntypedef struct
+N{
+N  u16 USART_Clock;
+N  u16 USART_CPOL;
+N  u16 USART_CPHA;
+N  u16 USART_LastBit;
+N} USART_ClockInitTypeDef;
+N
+N/* Exported constants --------------------------------------------------------*/
+N#define IS_USART_ALL_PERIPH(PERIPH) (((*(u32*)&(PERIPH)) == USART1_BASE) || \
+N                                     ((*(u32*)&(PERIPH)) == USART2_BASE) || \
+N                                     ((*(u32*)&(PERIPH)) == USART3_BASE) || \
+N                                     ((*(u32*)&(PERIPH)) == UART4_BASE) || \
+N                                     ((*(u32*)&(PERIPH)) == UART5_BASE))
+X#define IS_USART_ALL_PERIPH(PERIPH) (((*(u32*)&(PERIPH)) == USART1_BASE) ||                                      ((*(u32*)&(PERIPH)) == USART2_BASE) ||                                      ((*(u32*)&(PERIPH)) == USART3_BASE) ||                                      ((*(u32*)&(PERIPH)) == UART4_BASE) ||                                      ((*(u32*)&(PERIPH)) == UART5_BASE))
+N
+N#define IS_USART_123_PERIPH(PERIPH) (((*(u32*)&(PERIPH)) == USART1_BASE) || \
+N                                     ((*(u32*)&(PERIPH)) == USART2_BASE) || \
+N                                     ((*(u32*)&(PERIPH)) == USART3_BASE))
+X#define IS_USART_123_PERIPH(PERIPH) (((*(u32*)&(PERIPH)) == USART1_BASE) ||                                      ((*(u32*)&(PERIPH)) == USART2_BASE) ||                                      ((*(u32*)&(PERIPH)) == USART3_BASE))
+N
+N#define IS_USART_1234_PERIPH(PERIPH) (((*(u32*)&(PERIPH)) == USART1_BASE) || \
+N                                      ((*(u32*)&(PERIPH)) == USART2_BASE) || \
+N                                      ((*(u32*)&(PERIPH)) == USART3_BASE) || \
+N                                      ((*(u32*)&(PERIPH)) == UART4_BASE))
+X#define IS_USART_1234_PERIPH(PERIPH) (((*(u32*)&(PERIPH)) == USART1_BASE) ||                                       ((*(u32*)&(PERIPH)) == USART2_BASE) ||                                       ((*(u32*)&(PERIPH)) == USART3_BASE) ||                                       ((*(u32*)&(PERIPH)) == UART4_BASE))
+N
+N/* USART Word Length ---------------------------------------------------------*/
+N#define USART_WordLength_8b                  ((u16)0x0000)
+N#define USART_WordLength_9b                  ((u16)0x1000)
+N                                    
+N#define IS_USART_WORD_LENGTH(LENGTH) (((LENGTH) == USART_WordLength_8b) || \
+N                                      ((LENGTH) == USART_WordLength_9b))
+X#define IS_USART_WORD_LENGTH(LENGTH) (((LENGTH) == USART_WordLength_8b) ||                                       ((LENGTH) == USART_WordLength_9b))
+N
+N/* USART Stop Bits -----------------------------------------------------------*/
+N#define USART_StopBits_1                     ((u16)0x0000)
+N#define USART_StopBits_0_5                   ((u16)0x1000)
+N#define USART_StopBits_2                     ((u16)0x2000)
+N#define USART_StopBits_1_5                   ((u16)0x3000)
+N
+N#define IS_USART_STOPBITS(STOPBITS) (((STOPBITS) == USART_StopBits_1) || \
+N                                     ((STOPBITS) == USART_StopBits_0_5) || \
+N                                     ((STOPBITS) == USART_StopBits_2) || \
+N                                     ((STOPBITS) == USART_StopBits_1_5))
+X#define IS_USART_STOPBITS(STOPBITS) (((STOPBITS) == USART_StopBits_1) ||                                      ((STOPBITS) == USART_StopBits_0_5) ||                                      ((STOPBITS) == USART_StopBits_2) ||                                      ((STOPBITS) == USART_StopBits_1_5))
+N/* USART Parity --------------------------------------------------------------*/
+N#define USART_Parity_No                      ((u16)0x0000)
+N#define USART_Parity_Even                    ((u16)0x0400)
+N#define USART_Parity_Odd                     ((u16)0x0600) 
+N
+N#define IS_USART_PARITY(PARITY) (((PARITY) == USART_Parity_No) || \
+N                                 ((PARITY) == USART_Parity_Even) || \
+N                                 ((PARITY) == USART_Parity_Odd))
+X#define IS_USART_PARITY(PARITY) (((PARITY) == USART_Parity_No) ||                                  ((PARITY) == USART_Parity_Even) ||                                  ((PARITY) == USART_Parity_Odd))
+N
+N/* USART Mode ----------------------------------------------------------------*/
+N#define USART_Mode_Rx                        ((u16)0x0004)
+N#define USART_Mode_Tx                        ((u16)0x0008)
+N
+N#define IS_USART_MODE(MODE) ((((MODE) & (u16)0xFFF3) == 0x00) && ((MODE) != (u16)0x00))
+N
+N/* USART Hardware Flow Control -----------------------------------------------*/
+N#define USART_HardwareFlowControl_None       ((u16)0x0000)
+N#define USART_HardwareFlowControl_RTS        ((u16)0x0100)
+N#define USART_HardwareFlowControl_CTS        ((u16)0x0200)
+N#define USART_HardwareFlowControl_RTS_CTS    ((u16)0x0300)
+N
+N#define IS_USART_HARDWARE_FLOW_CONTROL(CONTROL)\
+N                              (((CONTROL) == USART_HardwareFlowControl_None) || \
+N                               ((CONTROL) == USART_HardwareFlowControl_RTS) || \
+N                               ((CONTROL) == USART_HardwareFlowControl_CTS) || \
+N                               ((CONTROL) == USART_HardwareFlowControl_RTS_CTS))
+X#define IS_USART_HARDWARE_FLOW_CONTROL(CONTROL)                              (((CONTROL) == USART_HardwareFlowControl_None) ||                                ((CONTROL) == USART_HardwareFlowControl_RTS) ||                                ((CONTROL) == USART_HardwareFlowControl_CTS) ||                                ((CONTROL) == USART_HardwareFlowControl_RTS_CTS))
+N
+N#define IS_USART_PERIPH_HFC(PERIPH, HFC) ((((*(u32*)&(PERIPH)) != UART4_BASE) && \
+N                                          ((*(u32*)&(PERIPH)) != UART5_BASE)) \
+N                                          || ((HFC) == USART_HardwareFlowControl_None))                                
+X#define IS_USART_PERIPH_HFC(PERIPH, HFC) ((((*(u32*)&(PERIPH)) != UART4_BASE) &&                                           ((*(u32*)&(PERIPH)) != UART5_BASE))                                           || ((HFC) == USART_HardwareFlowControl_None))                                
+N
+N/* USART Clock ---------------------------------------------------------------*/
+N#define USART_Clock_Disable                  ((u16)0x0000)
+N#define USART_Clock_Enable                   ((u16)0x0800)
+N
+N#define IS_USART_CLOCK(CLOCK) (((CLOCK) == USART_Clock_Disable) || \
+N                               ((CLOCK) == USART_Clock_Enable))
+X#define IS_USART_CLOCK(CLOCK) (((CLOCK) == USART_Clock_Disable) ||                                ((CLOCK) == USART_Clock_Enable))
+N
+N/* USART Clock Polarity ------------------------------------------------------*/
+N#define USART_CPOL_Low                       ((u16)0x0000)
+N#define USART_CPOL_High                      ((u16)0x0400)
+N
+N#define IS_USART_CPOL(CPOL) (((CPOL) == USART_CPOL_Low) || ((CPOL) == USART_CPOL_High))
+N                               
+N/* USART Clock Phase ---------------------------------------------------------*/
+N#define USART_CPHA_1Edge                     ((u16)0x0000)
+N#define USART_CPHA_2Edge                     ((u16)0x0200)
+N#define IS_USART_CPHA(CPHA) (((CPHA) == USART_CPHA_1Edge) || ((CPHA) == USART_CPHA_2Edge))
+N
+N/* USART Last Bit ------------------------------------------------------------*/
+N#define USART_LastBit_Disable                ((u16)0x0000)
+N#define USART_LastBit_Enable                 ((u16)0x0100)
+N
+N#define IS_USART_LASTBIT(LASTBIT) (((LASTBIT) == USART_LastBit_Disable) || \
+N                                   ((LASTBIT) == USART_LastBit_Enable))
+X#define IS_USART_LASTBIT(LASTBIT) (((LASTBIT) == USART_LastBit_Disable) ||                                    ((LASTBIT) == USART_LastBit_Enable))
+N
+N/* USART Interrupt definition ------------------------------------------------*/
+N#define USART_IT_PE                          ((u16)0x0028)
+N#define USART_IT_TXE                         ((u16)0x0727)
+N#define USART_IT_TC                          ((u16)0x0626)
+N#define USART_IT_RXNE                        ((u16)0x0525)
+N#define USART_IT_IDLE                        ((u16)0x0424)
+N#define USART_IT_LBD                         ((u16)0x0846)
+N#define USART_IT_CTS                         ((u16)0x096A)
+N#define USART_IT_ERR                         ((u16)0x0060)
+N#define USART_IT_ORE                         ((u16)0x0360)
+N#define USART_IT_NE                          ((u16)0x0260)
+N#define USART_IT_FE                          ((u16)0x0160)
+N
+N#define IS_USART_CONFIG_IT(IT) (((IT) == USART_IT_PE) || ((IT) == USART_IT_TXE) || \
+N                               ((IT) == USART_IT_TC) || ((IT) == USART_IT_RXNE) || \
+N                               ((IT) == USART_IT_IDLE) || ((IT) == USART_IT_LBD) || \
+N                               ((IT) == USART_IT_CTS) || ((IT) == USART_IT_ERR))
+X#define IS_USART_CONFIG_IT(IT) (((IT) == USART_IT_PE) || ((IT) == USART_IT_TXE) ||                                ((IT) == USART_IT_TC) || ((IT) == USART_IT_RXNE) ||                                ((IT) == USART_IT_IDLE) || ((IT) == USART_IT_LBD) ||                                ((IT) == USART_IT_CTS) || ((IT) == USART_IT_ERR))
+N
+N#define IS_USART_IT(IT) (((IT) == USART_IT_PE) || ((IT) == USART_IT_TXE) || \
+N                         ((IT) == USART_IT_TC) || ((IT) == USART_IT_RXNE) || \
+N                         ((IT) == USART_IT_IDLE) || ((IT) == USART_IT_LBD) || \
+N                         ((IT) == USART_IT_CTS) || ((IT) == USART_IT_ORE) || \
+N                         ((IT) == USART_IT_NE) || ((IT) == USART_IT_FE))
+X#define IS_USART_IT(IT) (((IT) == USART_IT_PE) || ((IT) == USART_IT_TXE) ||                          ((IT) == USART_IT_TC) || ((IT) == USART_IT_RXNE) ||                          ((IT) == USART_IT_IDLE) || ((IT) == USART_IT_LBD) ||                          ((IT) == USART_IT_CTS) || ((IT) == USART_IT_ORE) ||                          ((IT) == USART_IT_NE) || ((IT) == USART_IT_FE))
+N
+N#define IS_USART_CLEAR_IT(IT) (((IT) == USART_IT_PE) || ((IT) == USART_IT_TC) || \
+N                               ((IT) == USART_IT_RXNE) || ((IT) == USART_IT_IDLE) || \
+N                               ((IT) == USART_IT_LBD) || ((IT) == USART_IT_CTS) ||  \
+N                               ((IT) == USART_IT_ORE) || ((IT) == USART_IT_NE) || \
+N                               ((IT) == USART_IT_FE))
+X#define IS_USART_CLEAR_IT(IT) (((IT) == USART_IT_PE) || ((IT) == USART_IT_TC) ||                                ((IT) == USART_IT_RXNE) || ((IT) == USART_IT_IDLE) ||                                ((IT) == USART_IT_LBD) || ((IT) == USART_IT_CTS) ||                                 ((IT) == USART_IT_ORE) || ((IT) == USART_IT_NE) ||                                ((IT) == USART_IT_FE))
+N
+N#define IS_USART_PERIPH_IT(PERIPH, USART_IT) ((((*(u32*)&(PERIPH)) != UART4_BASE) && \
+N                                              ((*(u32*)&(PERIPH)) != UART5_BASE)) \
+N                                              || ((USART_IT) != USART_IT_CTS))                                                                           
+X#define IS_USART_PERIPH_IT(PERIPH, USART_IT) ((((*(u32*)&(PERIPH)) != UART4_BASE) &&                                               ((*(u32*)&(PERIPH)) != UART5_BASE))                                               || ((USART_IT) != USART_IT_CTS))                                                                           
+N
+N/* USART DMA Requests --------------------------------------------------------*/
+N#define USART_DMAReq_Tx                      ((u16)0x0080)
+N#define USART_DMAReq_Rx                      ((u16)0x0040)
+N
+N#define IS_USART_DMAREQ(DMAREQ) ((((DMAREQ) & (u16)0xFF3F) == 0x00) && ((DMAREQ) != (u16)0x00))
+N
+N/* USART WakeUp methods ------------------------------------------------------*/
+N#define USART_WakeUp_IdleLine                ((u16)0x0000)
+N#define USART_WakeUp_AddressMark             ((u16)0x0800)
+N
+N#define IS_USART_WAKEUP(WAKEUP) (((WAKEUP) == USART_WakeUp_IdleLine) || \
+N                                 ((WAKEUP) == USART_WakeUp_AddressMark))
+X#define IS_USART_WAKEUP(WAKEUP) (((WAKEUP) == USART_WakeUp_IdleLine) ||                                  ((WAKEUP) == USART_WakeUp_AddressMark))
+N
+N/* USART LIN Break Detection Length ------------------------------------------*/
+N#define USART_LINBreakDetectLength_10b      ((u16)0x0000)
+N#define USART_LINBreakDetectLength_11b      ((u16)0x0020)
+N
+N#define IS_USART_LIN_BREAK_DETECT_LENGTH(LENGTH) \
+N                               (((LENGTH) == USART_LINBreakDetectLength_10b) || \
+N                                ((LENGTH) == USART_LINBreakDetectLength_11b))
+X#define IS_USART_LIN_BREAK_DETECT_LENGTH(LENGTH)                                (((LENGTH) == USART_LINBreakDetectLength_10b) ||                                 ((LENGTH) == USART_LINBreakDetectLength_11b))
+N
+N/* USART IrDA Low Power ------------------------------------------------------*/
+N#define USART_IrDAMode_LowPower              ((u16)0x0004)
+N#define USART_IrDAMode_Normal                ((u16)0x0000)
+N
+N#define IS_USART_IRDA_MODE(MODE) (((MODE) == USART_IrDAMode_LowPower) || \
+N                                  ((MODE) == USART_IrDAMode_Normal))
+X#define IS_USART_IRDA_MODE(MODE) (((MODE) == USART_IrDAMode_LowPower) ||                                   ((MODE) == USART_IrDAMode_Normal))
+N
+N/* USART Flags ---------------------------------------------------------------*/
+N#define USART_FLAG_CTS                       ((u16)0x0200)
+N#define USART_FLAG_LBD                       ((u16)0x0100)
+N#define USART_FLAG_TXE                       ((u16)0x0080)
+N#define USART_FLAG_TC                        ((u16)0x0040)
+N#define USART_FLAG_RXNE                      ((u16)0x0020)
+N#define USART_FLAG_IDLE                      ((u16)0x0010)
+N#define USART_FLAG_ORE                       ((u16)0x0008)
+N#define USART_FLAG_NE                        ((u16)0x0004)
+N#define USART_FLAG_FE                        ((u16)0x0002)
+N#define USART_FLAG_PE                        ((u16)0x0001)
+N
+N#define IS_USART_FLAG(FLAG) (((FLAG) == USART_FLAG_PE) || ((FLAG) == USART_FLAG_TXE) || \
+N                             ((FLAG) == USART_FLAG_TC) || ((FLAG) == USART_FLAG_RXNE) || \
+N                             ((FLAG) == USART_FLAG_IDLE) || ((FLAG) == USART_FLAG_LBD) || \
+N                             ((FLAG) == USART_FLAG_CTS) || ((FLAG) == USART_FLAG_ORE) || \
+N                             ((FLAG) == USART_FLAG_NE) || ((FLAG) == USART_FLAG_FE))
+X#define IS_USART_FLAG(FLAG) (((FLAG) == USART_FLAG_PE) || ((FLAG) == USART_FLAG_TXE) ||                              ((FLAG) == USART_FLAG_TC) || ((FLAG) == USART_FLAG_RXNE) ||                              ((FLAG) == USART_FLAG_IDLE) || ((FLAG) == USART_FLAG_LBD) ||                              ((FLAG) == USART_FLAG_CTS) || ((FLAG) == USART_FLAG_ORE) ||                              ((FLAG) == USART_FLAG_NE) || ((FLAG) == USART_FLAG_FE))
+N                              
+N#define IS_USART_CLEAR_FLAG(FLAG) ((((FLAG) & (u16)0xFC80) == 0x00) && ((FLAG) != (u16)0x00))
+N
+N#define IS_USART_PERIPH_FLAG(PERIPH, USART_FLAG) ((((*(u32*)&(PERIPH)) != UART4_BASE) &&\
+N                                                  ((*(u32*)&(PERIPH)) != UART5_BASE)) \
+N                                                  || ((USART_FLAG) != USART_FLAG_CTS)) 
+X#define IS_USART_PERIPH_FLAG(PERIPH, USART_FLAG) ((((*(u32*)&(PERIPH)) != UART4_BASE) &&                                                  ((*(u32*)&(PERIPH)) != UART5_BASE))                                                   || ((USART_FLAG) != USART_FLAG_CTS)) 
+N
+N#define IS_USART_BAUDRATE(BAUDRATE) (((BAUDRATE) > 0) && ((BAUDRATE) < 0x0044AA21))
+N#define IS_USART_ADDRESS(ADDRESS) ((ADDRESS) <= 0xF)
+N#define IS_USART_DATA(DATA) ((DATA) <= 0x1FF)
+N
+N/* Exported macro ------------------------------------------------------------*/
+N/* Exported functions ------------------------------------------------------- */
+Nvoid USART_DeInit(USART_TypeDef* USARTx);
+Nvoid USART_Init(USART_TypeDef* USARTx, USART_InitTypeDef* USART_InitStruct);
+Nvoid USART_StructInit(USART_InitTypeDef* USART_InitStruct);
+Nvoid USART_ClockInit(USART_TypeDef* USARTx, USART_ClockInitTypeDef* USART_ClockInitStruct);
+Nvoid USART_ClockStructInit(USART_ClockInitTypeDef* USART_ClockInitStruct);
+Nvoid USART_Cmd(USART_TypeDef* USARTx, FunctionalState NewState);
+Nvoid USART_ITConfig(USART_TypeDef* USARTx, u16 USART_IT, FunctionalState NewState);
+Nvoid USART_DMACmd(USART_TypeDef* USARTx, u16 USART_DMAReq, FunctionalState NewState);
+Nvoid USART_SetAddress(USART_TypeDef* USARTx, u8 USART_Address);
+Nvoid USART_WakeUpConfig(USART_TypeDef* USARTx, u16 USART_WakeUp);
+Nvoid USART_ReceiverWakeUpCmd(USART_TypeDef* USARTx, FunctionalState NewState);
+Nvoid USART_LINBreakDetectLengthConfig(USART_TypeDef* USARTx, u16 USART_LINBreakDetectLength);
+Nvoid USART_LINCmd(USART_TypeDef* USARTx, FunctionalState NewState);
+Nvoid USART_SendData(USART_TypeDef* USARTx, u16 Data);
+Nu16 USART_ReceiveData(USART_TypeDef* USARTx);
+Nvoid USART_SendBreak(USART_TypeDef* USARTx);
+Nvoid USART_SetGuardTime(USART_TypeDef* USARTx, u8 USART_GuardTime);
+Nvoid USART_SetPrescaler(USART_TypeDef* USARTx, u8 USART_Prescaler);
+Nvoid USART_SmartCardCmd(USART_TypeDef* USARTx, FunctionalState NewState);
+Nvoid USART_SmartCardNACKCmd(USART_TypeDef* USARTx, FunctionalState NewState);
+Nvoid USART_HalfDuplexCmd(USART_TypeDef* USARTx, FunctionalState NewState);
+Nvoid USART_IrDAConfig(USART_TypeDef* USARTx, u16 USART_IrDAMode);
+Nvoid USART_IrDACmd(USART_TypeDef* USARTx, FunctionalState NewState);
+NFlagStatus USART_GetFlagStatus(USART_TypeDef* USARTx, u16 USART_FLAG);
+Nvoid USART_ClearFlag(USART_TypeDef* USARTx, u16 USART_FLAG);
+NITStatus USART_GetITStatus(USART_TypeDef* USARTx, u16 USART_IT);
+Nvoid USART_ClearITPendingBit(USART_TypeDef* USARTx, u16 USART_IT);
+N
+N#endif /* __STM32F10x_USART_H */
+N
+N/******************* (C) COPYRIGHT 2008 STMicroelectronics *****END OF FILE****/
+L 18 "source\FWLib\src\stm32f10x_usart.c" 2
+N#include "stm32f10x_rcc.h"
+L 1 "D:\Program Files\keil4.14\ARM\INC\ST\STM32F10x\stm32f10x_rcc.h" 1
+N/******************** (C) COPYRIGHT 2008 STMicroelectronics ********************
+N* File Name          : stm32f10x_rcc.h
+N* Author             : MCD Application Team
+N* Version            : V2.0.1
+N* Date               : 06/13/2008
+N* Description        : This file contains all the functions prototypes for the
+N*                      RCC firmware library.
+N********************************************************************************
+N* THE PRESENT FIRMWARE WHICH IS FOR GUIDANCE ONLY AIMS AT PROVIDING CUSTOMERS
+N* WITH CODING INFORMATION REGARDING THEIR PRODUCTS IN ORDER FOR THEM TO SAVE TIME.
+N* AS A RESULT, STMICROELECTRONICS SHALL NOT BE HELD LIABLE FOR ANY DIRECT,
+N* INDIRECT OR CONSEQUENTIAL DAMAGES WITH RESPECT TO ANY CLAIMS ARISING FROM THE
+N* CONTENT OF SUCH FIRMWARE AND/OR THE USE MADE BY CUSTOMERS OF THE CODING
+N* INFORMATION CONTAINED HEREIN IN CONNECTION WITH THEIR PRODUCTS.
+N*******************************************************************************/
+N
+N/* Define to prevent recursive inclusion -------------------------------------*/
+N#ifndef __STM32F10x_RCC_H
+N#define __STM32F10x_RCC_H
+N
+N/* Includes ------------------------------------------------------------------*/
+N#include "stm32f10x_map.h"
+N
+N/* Exported types ------------------------------------------------------------*/
+Ntypedef struct
+N{
+N  u32 SYSCLK_Frequency;
+N  u32 HCLK_Frequency;
+N  u32 PCLK1_Frequency;
+N  u32 PCLK2_Frequency;
+N  u32 ADCCLK_Frequency;
+N}RCC_ClocksTypeDef;
+N
+N/* Exported constants --------------------------------------------------------*/
+N/* HSE configuration */
+N#define RCC_HSE_OFF                      ((u32)0x00000000)
+N#define RCC_HSE_ON                       ((u32)0x00010000)
+N#define RCC_HSE_Bypass                   ((u32)0x00040000) //外部高速时钟旁路
+N
+N#define IS_RCC_HSE(HSE) (((HSE) == RCC_HSE_OFF) || ((HSE) == RCC_HSE_ON) || \
+N                         ((HSE) == RCC_HSE_Bypass))
+X#define IS_RCC_HSE(HSE) (((HSE) == RCC_HSE_OFF) || ((HSE) == RCC_HSE_ON) ||                          ((HSE) == RCC_HSE_Bypass))
+N
+N/* PLL entry clock source */
+N#define RCC_PLLSource_HSI_Div2           ((u32)0x00000000)
+N#define RCC_PLLSource_HSE_Div1           ((u32)0x00010000)
+N#define RCC_PLLSource_HSE_Div2           ((u32)0x00030000)
+N
+N#define IS_RCC_PLL_SOURCE(SOURCE) (((SOURCE) == RCC_PLLSource_HSI_Div2) || \
+N                                   ((SOURCE) == RCC_PLLSource_HSE_Div1) || \
+N                                   ((SOURCE) == RCC_PLLSource_HSE_Div2))
+X#define IS_RCC_PLL_SOURCE(SOURCE) (((SOURCE) == RCC_PLLSource_HSI_Div2) ||                                    ((SOURCE) == RCC_PLLSource_HSE_Div1) ||                                    ((SOURCE) == RCC_PLLSource_HSE_Div2))
+N
+N/* PLL multiplication factor */
+N#define RCC_PLLMul_2                     ((u32)0x00000000)
+N#define RCC_PLLMul_3                     ((u32)0x00040000)
+N#define RCC_PLLMul_4                     ((u32)0x00080000)
+N#define RCC_PLLMul_5                     ((u32)0x000C0000)
+N#define RCC_PLLMul_6                     ((u32)0x00100000)
+N#define RCC_PLLMul_7                     ((u32)0x00140000)
+N#define RCC_PLLMul_8                     ((u32)0x00180000)
+N#define RCC_PLLMul_9                     ((u32)0x001C0000)
+N#define RCC_PLLMul_10                    ((u32)0x00200000)
+N#define RCC_PLLMul_11                    ((u32)0x00240000)
+N#define RCC_PLLMul_12                    ((u32)0x00280000)
+N#define RCC_PLLMul_13                    ((u32)0x002C0000)
+N#define RCC_PLLMul_14                    ((u32)0x00300000)
+N#define RCC_PLLMul_15                    ((u32)0x00340000)
+N#define RCC_PLLMul_16                    ((u32)0x00380000)
+N
+N#define IS_RCC_PLL_MUL(MUL) (((MUL) == RCC_PLLMul_2) || ((MUL) == RCC_PLLMul_3)   || \
+N                             ((MUL) == RCC_PLLMul_4) || ((MUL) == RCC_PLLMul_5)   || \
+N                             ((MUL) == RCC_PLLMul_6) || ((MUL) == RCC_PLLMul_7)   || \
+N                             ((MUL) == RCC_PLLMul_8) || ((MUL) == RCC_PLLMul_9)   || \
+N                             ((MUL) == RCC_PLLMul_10) || ((MUL) == RCC_PLLMul_11) || \
+N                             ((MUL) == RCC_PLLMul_12) || ((MUL) == RCC_PLLMul_13) || \
+N                             ((MUL) == RCC_PLLMul_14) || ((MUL) == RCC_PLLMul_15) || \
+N                             ((MUL) == RCC_PLLMul_16))
+X#define IS_RCC_PLL_MUL(MUL) (((MUL) == RCC_PLLMul_2) || ((MUL) == RCC_PLLMul_3)   ||                              ((MUL) == RCC_PLLMul_4) || ((MUL) == RCC_PLLMul_5)   ||                              ((MUL) == RCC_PLLMul_6) || ((MUL) == RCC_PLLMul_7)   ||                              ((MUL) == RCC_PLLMul_8) || ((MUL) == RCC_PLLMul_9)   ||                              ((MUL) == RCC_PLLMul_10) || ((MUL) == RCC_PLLMul_11) ||                              ((MUL) == RCC_PLLMul_12) || ((MUL) == RCC_PLLMul_13) ||                              ((MUL) == RCC_PLLMul_14) || ((MUL) == RCC_PLLMul_15) ||                              ((MUL) == RCC_PLLMul_16))
+N
+N/* System clock source */
+N#define RCC_SYSCLKSource_HSI             ((u32)0x00000000)
+N#define RCC_SYSCLKSource_HSE             ((u32)0x00000001)
+N#define RCC_SYSCLKSource_PLLCLK          ((u32)0x00000002)
+N
+N#define IS_RCC_SYSCLK_SOURCE(SOURCE) (((SOURCE) == RCC_SYSCLKSource_HSI) || \
+N                                      ((SOURCE) == RCC_SYSCLKSource_HSE) || \
+N                                      ((SOURCE) == RCC_SYSCLKSource_PLLCLK))
+X#define IS_RCC_SYSCLK_SOURCE(SOURCE) (((SOURCE) == RCC_SYSCLKSource_HSI) ||                                       ((SOURCE) == RCC_SYSCLKSource_HSE) ||                                       ((SOURCE) == RCC_SYSCLKSource_PLLCLK))
+N
+N/* AHB clock source */
+N#define RCC_SYSCLK_Div1                  ((u32)0x00000000)
+N#define RCC_SYSCLK_Div2                  ((u32)0x00000080)
+N#define RCC_SYSCLK_Div4                  ((u32)0x00000090)
+N#define RCC_SYSCLK_Div8                  ((u32)0x000000A0)
+N#define RCC_SYSCLK_Div16                 ((u32)0x000000B0)
+N#define RCC_SYSCLK_Div64                 ((u32)0x000000C0)
+N#define RCC_SYSCLK_Div128                ((u32)0x000000D0)
+N#define RCC_SYSCLK_Div256                ((u32)0x000000E0)
+N#define RCC_SYSCLK_Div512                ((u32)0x000000F0)
+N
+N#define IS_RCC_HCLK(HCLK) (((HCLK) == RCC_SYSCLK_Div1) || ((HCLK) == RCC_SYSCLK_Div2) || \
+N                           ((HCLK) == RCC_SYSCLK_Div4) || ((HCLK) == RCC_SYSCLK_Div8) || \
+N                           ((HCLK) == RCC_SYSCLK_Div16) || ((HCLK) == RCC_SYSCLK_Div64) || \
+N                           ((HCLK) == RCC_SYSCLK_Div128) || ((HCLK) == RCC_SYSCLK_Div256) || \
+N                           ((HCLK) == RCC_SYSCLK_Div512))
+X#define IS_RCC_HCLK(HCLK) (((HCLK) == RCC_SYSCLK_Div1) || ((HCLK) == RCC_SYSCLK_Div2) ||                            ((HCLK) == RCC_SYSCLK_Div4) || ((HCLK) == RCC_SYSCLK_Div8) ||                            ((HCLK) == RCC_SYSCLK_Div16) || ((HCLK) == RCC_SYSCLK_Div64) ||                            ((HCLK) == RCC_SYSCLK_Div128) || ((HCLK) == RCC_SYSCLK_Div256) ||                            ((HCLK) == RCC_SYSCLK_Div512))
+N
+N/* APB1/APB2 clock source */
+N#define RCC_HCLK_Div1                    ((u32)0x00000000)
+N#define RCC_HCLK_Div2                    ((u32)0x00000400)
+N#define RCC_HCLK_Div4                    ((u32)0x00000500)
+N#define RCC_HCLK_Div8                    ((u32)0x00000600)
+N#define RCC_HCLK_Div16                   ((u32)0x00000700)
+N
+N#define IS_RCC_PCLK(PCLK) (((PCLK) == RCC_HCLK_Div1) || ((PCLK) == RCC_HCLK_Div2) || \
+N                           ((PCLK) == RCC_HCLK_Div4) || ((PCLK) == RCC_HCLK_Div8) || \
+N                           ((PCLK) == RCC_HCLK_Div16))
+X#define IS_RCC_PCLK(PCLK) (((PCLK) == RCC_HCLK_Div1) || ((PCLK) == RCC_HCLK_Div2) ||                            ((PCLK) == RCC_HCLK_Div4) || ((PCLK) == RCC_HCLK_Div8) ||                            ((PCLK) == RCC_HCLK_Div16))
+N
+N/* RCC Interrupt source */
+N#define RCC_IT_LSIRDY                    ((u8)0x01)
+N#define RCC_IT_LSERDY                    ((u8)0x02)
+N#define RCC_IT_HSIRDY                    ((u8)0x04)
+N#define RCC_IT_HSERDY                    ((u8)0x08)
+N#define RCC_IT_PLLRDY                    ((u8)0x10)
+N#define RCC_IT_CSS                       ((u8)0x80)
+N
+N#define IS_RCC_IT(IT) ((((IT) & (u8)0xE0) == 0x00) && ((IT) != 0x00))
+N#define IS_RCC_GET_IT(IT) (((IT) == RCC_IT_LSIRDY) || ((IT) == RCC_IT_LSERDY) || \
+N                           ((IT) == RCC_IT_HSIRDY) || ((IT) == RCC_IT_HSERDY) || \
+N                           ((IT) == RCC_IT_PLLRDY) || ((IT) == RCC_IT_CSS))
+X#define IS_RCC_GET_IT(IT) (((IT) == RCC_IT_LSIRDY) || ((IT) == RCC_IT_LSERDY) ||                            ((IT) == RCC_IT_HSIRDY) || ((IT) == RCC_IT_HSERDY) ||                            ((IT) == RCC_IT_PLLRDY) || ((IT) == RCC_IT_CSS))
+N#define IS_RCC_CLEAR_IT(IT) ((((IT) & (u8)0x60) == 0x00) && ((IT) != 0x00))
+N
+N/* USB clock source */
+N#define RCC_USBCLKSource_PLLCLK_1Div5    ((u8)0x00)
+N#define RCC_USBCLKSource_PLLCLK_Div1     ((u8)0x01)
+N
+N#define IS_RCC_USBCLK_SOURCE(SOURCE) (((SOURCE) == RCC_USBCLKSource_PLLCLK_1Div5) || \
+N                                      ((SOURCE) == RCC_USBCLKSource_PLLCLK_Div1))
+X#define IS_RCC_USBCLK_SOURCE(SOURCE) (((SOURCE) == RCC_USBCLKSource_PLLCLK_1Div5) ||                                       ((SOURCE) == RCC_USBCLKSource_PLLCLK_Div1))
+N
+N/* ADC clock source */
+N#define RCC_PCLK2_Div2                   ((u32)0x00000000)
+N#define RCC_PCLK2_Div4                   ((u32)0x00004000)
+N#define RCC_PCLK2_Div6                   ((u32)0x00008000)
+N#define RCC_PCLK2_Div8                   ((u32)0x0000C000)
+N
+N#define IS_RCC_ADCCLK(ADCCLK) (((ADCCLK) == RCC_PCLK2_Div2) || ((ADCCLK) == RCC_PCLK2_Div4) || \
+N                               ((ADCCLK) == RCC_PCLK2_Div6) || ((ADCCLK) == RCC_PCLK2_Div8))
+X#define IS_RCC_ADCCLK(ADCCLK) (((ADCCLK) == RCC_PCLK2_Div2) || ((ADCCLK) == RCC_PCLK2_Div4) ||                                ((ADCCLK) == RCC_PCLK2_Div6) || ((ADCCLK) == RCC_PCLK2_Div8))
+N
+N/* LSE configuration */
+N#define RCC_LSE_OFF                      ((u8)0x00)
+N#define RCC_LSE_ON                       ((u8)0x01)
+N#define RCC_LSE_Bypass                   ((u8)0x04)
+N
+N#define IS_RCC_LSE(LSE) (((LSE) == RCC_LSE_OFF) || ((LSE) == RCC_LSE_ON) || \
+N                         ((LSE) == RCC_LSE_Bypass))
+X#define IS_RCC_LSE(LSE) (((LSE) == RCC_LSE_OFF) || ((LSE) == RCC_LSE_ON) ||                          ((LSE) == RCC_LSE_Bypass))
+N
+N/* RTC clock source */
+N#define RCC_RTCCLKSource_LSE             ((u32)0x00000100)
+N#define RCC_RTCCLKSource_LSI             ((u32)0x00000200)
+N#define RCC_RTCCLKSource_HSE_Div128      ((u32)0x00000300)
+N
+N#define IS_RCC_RTCCLK_SOURCE(SOURCE) (((SOURCE) == RCC_RTCCLKSource_LSE) || \
+N                                      ((SOURCE) == RCC_RTCCLKSource_LSI) || \
+N                                      ((SOURCE) == RCC_RTCCLKSource_HSE_Div128))
+X#define IS_RCC_RTCCLK_SOURCE(SOURCE) (((SOURCE) == RCC_RTCCLKSource_LSE) ||                                       ((SOURCE) == RCC_RTCCLKSource_LSI) ||                                       ((SOURCE) == RCC_RTCCLKSource_HSE_Div128))
+N
+N/* AHB peripheral */
+N#define RCC_AHBPeriph_DMA1               ((u32)0x00000001)
+N#define RCC_AHBPeriph_DMA2               ((u32)0x00000002)
+N#define RCC_AHBPeriph_SRAM               ((u32)0x00000004)
+N#define RCC_AHBPeriph_FLITF              ((u32)0x00000010)
+N#define RCC_AHBPeriph_CRC                ((u32)0x00000040)
+N#define RCC_AHBPeriph_FSMC               ((u32)0x00000100)
+N#define RCC_AHBPeriph_SDIO               ((u32)0x00000400)
+N
+N#define IS_RCC_AHB_PERIPH(PERIPH) ((((PERIPH) & 0xFFFFFAA8) == 0x00) && ((PERIPH) != 0x00))
+N
+N/* APB2 peripheral */
+N#define RCC_APB2Periph_AFIO              ((u32)0x00000001)
+N#define RCC_APB2Periph_GPIOA             ((u32)0x00000004)
+N#define RCC_APB2Periph_GPIOB             ((u32)0x00000008)
+N#define RCC_APB2Periph_GPIOC             ((u32)0x00000010)
+N#define RCC_APB2Periph_GPIOD             ((u32)0x00000020)
+N#define RCC_APB2Periph_GPIOE             ((u32)0x00000040)
+N#define RCC_APB2Periph_GPIOF             ((u32)0x00000080)
+N#define RCC_APB2Periph_GPIOG             ((u32)0x00000100)
+N#define RCC_APB2Periph_ADC1              ((u32)0x00000200)
+N#define RCC_APB2Periph_ADC2              ((u32)0x00000400)
+N#define RCC_APB2Periph_TIM1              ((u32)0x00000800)
+N#define RCC_APB2Periph_SPI1              ((u32)0x00001000)
+N#define RCC_APB2Periph_TIM8              ((u32)0x00002000)
+N#define RCC_APB2Periph_USART1            ((u32)0x00004000)
+N#define RCC_APB2Periph_ADC3              ((u32)0x00008000)
+N#define RCC_APB2Periph_ALL               ((u32)0x0000FFFD)
+N
+N#define IS_RCC_APB2_PERIPH(PERIPH) ((((PERIPH) & 0xFFFF0002) == 0x00) && ((PERIPH) != 0x00))
+N
+N/* APB1 peripheral */
+N#define RCC_APB1Periph_TIM2              ((u32)0x00000001)
+N#define RCC_APB1Periph_TIM3              ((u32)0x00000002)
+N#define RCC_APB1Periph_TIM4              ((u32)0x00000004)
+N#define RCC_APB1Periph_TIM5              ((u32)0x00000008)
+N#define RCC_APB1Periph_TIM6              ((u32)0x00000010)
+N#define RCC_APB1Periph_TIM7              ((u32)0x00000020)
+N#define RCC_APB1Periph_WWDG              ((u32)0x00000800)
+N#define RCC_APB1Periph_SPI2              ((u32)0x00004000)
+N#define RCC_APB1Periph_SPI3              ((u32)0x00008000)
+N#define RCC_APB1Periph_USART2            ((u32)0x00020000)
+N#define RCC_APB1Periph_USART3            ((u32)0x00040000)
+N#define RCC_APB1Periph_UART4             ((u32)0x00080000)
+N#define RCC_APB1Periph_UART5             ((u32)0x00100000)
+N#define RCC_APB1Periph_I2C1              ((u32)0x00200000)
+N#define RCC_APB1Periph_I2C2              ((u32)0x00400000)
+N#define RCC_APB1Periph_USB               ((u32)0x00800000)
+N#define RCC_APB1Periph_CAN               ((u32)0x02000000)
+N#define RCC_APB1Periph_BKP               ((u32)0x08000000)
+N#define RCC_APB1Periph_PWR               ((u32)0x10000000)
+N#define RCC_APB1Periph_DAC               ((u32)0x20000000)
+N#define RCC_APB1Periph_ALL               ((u32)0x3AFEC83F)
+N
+N#define IS_RCC_APB1_PERIPH(PERIPH) ((((PERIPH) & 0xC50137C0) == 0x00) && ((PERIPH) != 0x00))
+N
+N/* Clock source to output on MCO pin */
+N#define RCC_MCO_NoClock                  ((u8)0x00)
+N#define RCC_MCO_SYSCLK                   ((u8)0x04)
+N#define RCC_MCO_HSI                      ((u8)0x05)
+N#define RCC_MCO_HSE                      ((u8)0x06)
+N#define RCC_MCO_PLLCLK_Div2              ((u8)0x07)
+N
+N#define IS_RCC_MCO(MCO) (((MCO) == RCC_MCO_NoClock) || ((MCO) == RCC_MCO_HSI) || \
+N                         ((MCO) == RCC_MCO_SYSCLK)  || ((MCO) == RCC_MCO_HSE) || \
+N                         ((MCO) == RCC_MCO_PLLCLK_Div2))
+X#define IS_RCC_MCO(MCO) (((MCO) == RCC_MCO_NoClock) || ((MCO) == RCC_MCO_HSI) ||                          ((MCO) == RCC_MCO_SYSCLK)  || ((MCO) == RCC_MCO_HSE) ||                          ((MCO) == RCC_MCO_PLLCLK_Div2))
+N
+N/* RCC Flag */
+N#define RCC_FLAG_HSIRDY                  ((u8)0x20)
+N#define RCC_FLAG_HSERDY                  ((u8)0x31)
+N#define RCC_FLAG_PLLRDY                  ((u8)0x39)
+N#define RCC_FLAG_LSERDY                  ((u8)0x41)
+N#define RCC_FLAG_LSIRDY                  ((u8)0x61)
+N#define RCC_FLAG_PINRST                  ((u8)0x7A)
+N#define RCC_FLAG_PORRST                  ((u8)0x7B)
+N#define RCC_FLAG_SFTRST                  ((u8)0x7C)
+N#define RCC_FLAG_IWDGRST                 ((u8)0x7D)
+N#define RCC_FLAG_WWDGRST                 ((u8)0x7E)
+N#define RCC_FLAG_LPWRRST                 ((u8)0x7F)
+N
+N#define IS_RCC_FLAG(FLAG) (((FLAG) == RCC_FLAG_HSIRDY) || ((FLAG) == RCC_FLAG_HSERDY) || \
+N                           ((FLAG) == RCC_FLAG_PLLRDY) || ((FLAG) == RCC_FLAG_LSERDY) || \
+N                           ((FLAG) == RCC_FLAG_LSIRDY) || ((FLAG) == RCC_FLAG_PINRST) || \
+N                           ((FLAG) == RCC_FLAG_PORRST) || ((FLAG) == RCC_FLAG_SFTRST) || \
+N                           ((FLAG) == RCC_FLAG_IWDGRST)|| ((FLAG) == RCC_FLAG_WWDGRST)|| \
+N                           ((FLAG) == RCC_FLAG_LPWRRST))
+X#define IS_RCC_FLAG(FLAG) (((FLAG) == RCC_FLAG_HSIRDY) || ((FLAG) == RCC_FLAG_HSERDY) ||                            ((FLAG) == RCC_FLAG_PLLRDY) || ((FLAG) == RCC_FLAG_LSERDY) ||                            ((FLAG) == RCC_FLAG_LSIRDY) || ((FLAG) == RCC_FLAG_PINRST) ||                            ((FLAG) == RCC_FLAG_PORRST) || ((FLAG) == RCC_FLAG_SFTRST) ||                            ((FLAG) == RCC_FLAG_IWDGRST)|| ((FLAG) == RCC_FLAG_WWDGRST)||                            ((FLAG) == RCC_FLAG_LPWRRST))
+N
+N#define IS_RCC_CALIBRATION_VALUE(VALUE) ((VALUE) <= 0x1F)
+N
+N/* Exported macro ------------------------------------------------------------*/
+N/* Exported functions ------------------------------------------------------- */
+Nvoid RCC_DeInit(void);
+Nvoid RCC_HSEConfig(u32 RCC_HSE);
+NErrorStatus RCC_WaitForHSEStartUp(void);
+Nvoid RCC_AdjustHSICalibrationValue(u8 HSICalibrationValue);
+Nvoid RCC_HSICmd(FunctionalState NewState);
+Nvoid RCC_PLLConfig(u32 RCC_PLLSource, u32 RCC_PLLMul);
+Nvoid RCC_PLLCmd(FunctionalState NewState);
+Nvoid RCC_SYSCLKConfig(u32 RCC_SYSCLKSource);
+Nu8 RCC_GetSYSCLKSource(void);
+Nvoid RCC_HCLKConfig(u32 RCC_SYSCLK);
+Nvoid RCC_PCLK1Config(u32 RCC_HCLK);
+Nvoid RCC_PCLK2Config(u32 RCC_HCLK);
+Nvoid RCC_ITConfig(u8 RCC_IT, FunctionalState NewState);
+Nvoid RCC_USBCLKConfig(u32 RCC_USBCLKSource);
+Nvoid RCC_ADCCLKConfig(u32 RCC_PCLK2);
+Nvoid RCC_LSEConfig(u8 RCC_LSE);
+Nvoid RCC_LSICmd(FunctionalState NewState);
+Nvoid RCC_RTCCLKConfig(u32 RCC_RTCCLKSource);
+Nvoid RCC_RTCCLKCmd(FunctionalState NewState);
+Nvoid RCC_GetClocksFreq(RCC_ClocksTypeDef* RCC_Clocks);
+Nvoid RCC_AHBPeriphClockCmd(u32 RCC_AHBPeriph, FunctionalState NewState);
+Nvoid RCC_APB2PeriphClockCmd(u32 RCC_APB2Periph, FunctionalState NewState);
+Nvoid RCC_APB1PeriphClockCmd(u32 RCC_APB1Periph, FunctionalState NewState);
+Nvoid RCC_APB2PeriphResetCmd(u32 RCC_APB2Periph, FunctionalState NewState);
+Nvoid RCC_APB1PeriphResetCmd(u32 RCC_APB1Periph, FunctionalState NewState);
+Nvoid RCC_BackupResetCmd(FunctionalState NewState);
+Nvoid RCC_ClockSecuritySystemCmd(FunctionalState NewState);
+Nvoid RCC_MCOConfig(u8 RCC_MCO);
+NFlagStatus RCC_GetFlagStatus(u8 RCC_FLAG);
+Nvoid RCC_ClearFlag(void);
+NITStatus RCC_GetITStatus(u8 RCC_IT);
+Nvoid RCC_ClearITPendingBit(u8 RCC_IT);
+N
+N#endif /* __STM32F10x_RCC_H */
+N
+N/******************* (C) COPYRIGHT 2008 STMicroelectronics *****END OF FILE****/
+L 19 "source\FWLib\src\stm32f10x_usart.c" 2
+N
+N/* Private typedef -----------------------------------------------------------*/
+N/* Private define ------------------------------------------------------------*/
+N/* USART UE Mask */
+N#define CR1_UE_Set                ((u16)0x2000)  /* USART Enable Mask */
+N#define CR1_UE_Reset              ((u16)0xDFFF)  /* USART Disable Mask */
+N
+N/* USART WakeUp Method  */
+N#define CR1_WAKE_Mask             ((u16)0xF7FF)  /* USART WakeUp Method Mask */
+N
+N/* USART RWU Mask */
+N#define CR1_RWU_Set               ((u16)0x0002)  /* USART mute mode Enable Mask */
+N#define CR1_RWU_Reset             ((u16)0xFFFD)  /* USART mute mode Enable Mask */
+N
+N#define CR1_SBK_Set               ((u16)0x0001)  /* USART Break Character send Mask */
+N
+N#define CR1_CLEAR_Mask            ((u16)0xE9F3)  /* USART CR1 Mask */
+N
+N#define CR2_Address_Mask          ((u16)0xFFF0)  /* USART address Mask */
+N
+N/* USART LIN Mask */
+N#define CR2_LINEN_Set              ((u16)0x4000)  /* USART LIN Enable Mask */
+N#define CR2_LINEN_Reset            ((u16)0xBFFF)  /* USART LIN Disable Mask */
+N
+N/* USART LIN Break detection */
+N#define CR2_LBDL_Mask             ((u16)0xFFDF)  /* USART LIN Break detection Mask */
+N
+N#define CR2_STOP_CLEAR_Mask       ((u16)0xCFFF)  /* USART CR2 STOP Bits Mask */
+N#define CR2_CLOCK_CLEAR_Mask      ((u16)0xF0FF)  /* USART CR2 Clock Mask */
+N
+N/* USART SC Mask */
+N#define CR3_SCEN_Set              ((u16)0x0020)  /* USART SC Enable Mask */
+N#define CR3_SCEN_Reset            ((u16)0xFFDF)  /* USART SC Disable Mask */
+N
+N/* USART SC NACK Mask */
+N#define CR3_NACK_Set              ((u16)0x0010)  /* USART SC NACK Enable Mask */
+N#define CR3_NACK_Reset            ((u16)0xFFEF)  /* USART SC NACK Disable Mask */
+N
+N/* USART Half-Duplex Mask */
+N#define CR3_HDSEL_Set             ((u16)0x0008)  /* USART Half-Duplex Enable Mask */
+N#define CR3_HDSEL_Reset           ((u16)0xFFF7)  /* USART Half-Duplex Disable Mask */
+N
+N/* USART IrDA Mask */
+N#define CR3_IRLP_Mask             ((u16)0xFFFB)  /* USART IrDA LowPower mode Mask */
+N
+N#define CR3_CLEAR_Mask            ((u16)0xFCFF)  /* USART CR3 Mask */
+N
+N/* USART IrDA Mask */
+N#define CR3_IREN_Set              ((u16)0x0002)  /* USART IrDA Enable Mask */
+N#define CR3_IREN_Reset            ((u16)0xFFFD)  /* USART IrDA Disable Mask */
+N
+N#define GTPR_LSB_Mask             ((u16)0x00FF)  /* Guard Time Register LSB Mask */
+N#define GTPR_MSB_Mask             ((u16)0xFF00)  /* Guard Time Register MSB Mask */
+N
+N#define IT_Mask                   ((u16)0x001F)  /* USART Interrupt Mask */
+N
+N/* Private macro -------------------------------------------------------------*/
+N/* Private variables ---------------------------------------------------------*/
+N/* Private function prototypes -----------------------------------------------*/
+N/* Private functions ---------------------------------------------------------*/
+N
+N/*******************************************************************************
+N* Function Name  : USART_DeInit
+N* Description    : Deinitializes the USARTx peripheral registers to their
+N*                  default reset values.
+N* Input          : - USARTx: Select the USART or the UART peripheral. 
+N*                    This parameter can be one of the following values:
+N*                     - USART1, USART2, USART3, UART4 or UART5.
+N* Output         : None
+N* Return         : None
+N*******************************************************************************/
+Nvoid USART_DeInit(USART_TypeDef* USARTx)
+N{
+N  /* Check the parameters */
+N  assert_param(IS_USART_ALL_PERIPH(USARTx));
+X  ((void)0);
+N
+N  switch (*(u32*)&USARTx)
+N  {
+N    case USART1_BASE:
+X    case ((((u32)0x40000000) + 0x10000) + 0x3800):
+N      RCC_APB2PeriphResetCmd(RCC_APB2Periph_USART1, ENABLE);
+X      RCC_APB2PeriphResetCmd(((u32)0x00004000), ENABLE);
+N      RCC_APB2PeriphResetCmd(RCC_APB2Periph_USART1, DISABLE);
+X      RCC_APB2PeriphResetCmd(((u32)0x00004000), DISABLE);
+N      break;
+N
+N    case USART2_BASE:
+X    case (((u32)0x40000000) + 0x4400):
+N      RCC_APB1PeriphResetCmd(RCC_APB1Periph_USART2, ENABLE);
+X      RCC_APB1PeriphResetCmd(((u32)0x00020000), ENABLE);
+N      RCC_APB1PeriphResetCmd(RCC_APB1Periph_USART2, DISABLE);
+X      RCC_APB1PeriphResetCmd(((u32)0x00020000), DISABLE);
+N      break;
+N
+N    case USART3_BASE:
+X    case (((u32)0x40000000) + 0x4800):
+N      RCC_APB1PeriphResetCmd(RCC_APB1Periph_USART3, ENABLE);
+X      RCC_APB1PeriphResetCmd(((u32)0x00040000), ENABLE);
+N      RCC_APB1PeriphResetCmd(RCC_APB1Periph_USART3, DISABLE);
+X      RCC_APB1PeriphResetCmd(((u32)0x00040000), DISABLE);
+N      break;
+N    
+N    case UART4_BASE:
+X    case (((u32)0x40000000) + 0x4C00):
+N      RCC_APB1PeriphResetCmd(RCC_APB1Periph_UART4, ENABLE);
+X      RCC_APB1PeriphResetCmd(((u32)0x00080000), ENABLE);
+N      RCC_APB1PeriphResetCmd(RCC_APB1Periph_UART4, DISABLE);
+X      RCC_APB1PeriphResetCmd(((u32)0x00080000), DISABLE);
+N      break;
+N    
+N    case UART5_BASE:
+X    case (((u32)0x40000000) + 0x5000):
+N      RCC_APB1PeriphResetCmd(RCC_APB1Periph_UART5, ENABLE);
+X      RCC_APB1PeriphResetCmd(((u32)0x00100000), ENABLE);
+N      RCC_APB1PeriphResetCmd(RCC_APB1Periph_UART5, DISABLE);
+X      RCC_APB1PeriphResetCmd(((u32)0x00100000), DISABLE);
+N      break;            
+N
+N    default:
+N      break;
+N  }
+N}
+N
+N/*******************************************************************************
+N* Function Name  : USART_Init
+N* Description    : Initializes the USARTx peripheral according to the specified
+N*                  parameters in the USART_InitStruct .
+N* Input          : - USARTx: Select the USART or the UART peripheral. 
+N*                    This parameter can be one of the following values:
+N*                     - USART1, USART2, USART3, UART4 or UART5.
+N*                  - USART_InitStruct: pointer to a USART_InitTypeDef structure
+N*                    that contains the configuration information for the
+N*                    specified USART peripheral.
+N* Output         : None
+N* Return         : None
+N*******************************************************************************/
+Nvoid USART_Init(USART_TypeDef* USARTx, USART_InitTypeDef* USART_InitStruct)
+N{
+N  u32 tmpreg = 0x00, apbclock = 0x00;
+N  u32 integerdivider = 0x00;
+N  u32 fractionaldivider = 0x00;
+N  u32 usartxbase = 0;
+N  RCC_ClocksTypeDef RCC_ClocksStatus;
+N
+N  /* Check the parameters */
+N  assert_param(IS_USART_ALL_PERIPH(USARTx));
+X  ((void)0);
+N  assert_param(IS_USART_BAUDRATE(USART_InitStruct->USART_BaudRate));  
+X  ((void)0);  
+N  assert_param(IS_USART_WORD_LENGTH(USART_InitStruct->USART_WordLength));
+X  ((void)0);
+N  assert_param(IS_USART_STOPBITS(USART_InitStruct->USART_StopBits));
+X  ((void)0);
+N  assert_param(IS_USART_PARITY(USART_InitStruct->USART_Parity));
+X  ((void)0);
+N  assert_param(IS_USART_MODE(USART_InitStruct->USART_Mode));
+X  ((void)0);
+N  assert_param(IS_USART_HARDWARE_FLOW_CONTROL(USART_InitStruct->USART_HardwareFlowControl));
+X  ((void)0);
+N  /* The hardware flow control is available only for USART1, USART2 and USART3 */          
+N  assert_param(IS_USART_PERIPH_HFC(USARTx, USART_InitStruct->USART_HardwareFlowControl));
+X  ((void)0);
+N  
+N  usartxbase = (*(u32*)&USARTx);
+N
+N/*---------------------------- USART CR2 Configuration -----------------------*/
+N  tmpreg = USARTx->CR2;
+N  /* Clear STOP[13:12] bits */
+N  tmpreg &= CR2_STOP_CLEAR_Mask;
+X  tmpreg &= ((u16)0xCFFF);
+N
+N  /* Configure the USART Stop Bits, Clock, CPOL, CPHA and LastBit ------------*/
+N  /* Set STOP[13:12] bits according to USART_StopBits value */
+N  tmpreg |= (u32)USART_InitStruct->USART_StopBits;
+N  
+N  /* Write to USART CR2 */
+N  USARTx->CR2 = (u16)tmpreg;
+N
+N/*---------------------------- USART CR1 Configuration -----------------------*/
+N  tmpreg = USARTx->CR1;
+N  /* Clear M, PCE, PS, TE and RE bits */
+N  tmpreg &= CR1_CLEAR_Mask;
+X  tmpreg &= ((u16)0xE9F3);
+N
+N  /* Configure the USART Word Length, Parity and mode ----------------------- */
+N  /* Set the M bits according to USART_WordLength value */
+N  /* Set PCE and PS bits according to USART_Parity value */
+N  /* Set TE and RE bits according to USART_Mode value */
+N  tmpreg |= (u32)USART_InitStruct->USART_WordLength | USART_InitStruct->USART_Parity |
+N            USART_InitStruct->USART_Mode;
+N
+N  /* Write to USART CR1 */
+N  USARTx->CR1 = (u16)tmpreg;
+N
+N/*---------------------------- USART CR3 Configuration -----------------------*/  
+N  tmpreg = USARTx->CR3;
+N  /* Clear CTSE and RTSE bits */
+N  tmpreg &= CR3_CLEAR_Mask;
+X  tmpreg &= ((u16)0xFCFF);
+N
+N  /* Configure the USART HFC -------------------------------------------------*/
+N  /* Set CTSE and RTSE bits according to USART_HardwareFlowControl value */
+N  tmpreg |= USART_InitStruct->USART_HardwareFlowControl;
+N
+N  /* Write to USART CR3 */
+N  USARTx->CR3 = (u16)tmpreg;
+N
+N/*---------------------------- USART BRR Configuration -----------------------*/
+N  /* Configure the USART Baud Rate -------------------------------------------*/
+N  RCC_GetClocksFreq(&RCC_ClocksStatus);
+N  if (usartxbase == USART1_BASE)
+X  if (usartxbase == ((((u32)0x40000000) + 0x10000) + 0x3800))
+N  {
+N    apbclock = RCC_ClocksStatus.PCLK2_Frequency;
+N  }
+N  else
+N  {
+N    apbclock = RCC_ClocksStatus.PCLK1_Frequency;
+N  }
+N
+N  /* Determine the integer part */
+N  integerdivider = ((0x19 * apbclock) / (0x04 * (USART_InitStruct->USART_BaudRate)));
+N  tmpreg = (integerdivider / 0x64) << 0x04;
+N
+N  /* Determine the fractional part */
+N  fractionaldivider = integerdivider - (0x64 * (tmpreg >> 0x04));
+N  tmpreg |= ((((fractionaldivider * 0x10) + 0x32) / 0x64)) & ((u8)0x0F);
+N
+N  /* Write to USART BRR */
+N  USARTx->BRR = (u16)tmpreg;
+N}
+N
+N/*******************************************************************************
+N* Function Name  : USART_StructInit
+N* Description    : Fills each USART_InitStruct member with its default value.
+N* Input          : - USART_InitStruct: pointer to a USART_InitTypeDef structure
+N*                    which will be initialized.
+N* Output         : None
+N* Return         : None
+N*******************************************************************************/
+Nvoid USART_StructInit(USART_InitTypeDef* USART_InitStruct)
+N{
+N  /* USART_InitStruct members default value */
+N  USART_InitStruct->USART_BaudRate = 9600;
+N  USART_InitStruct->USART_WordLength = USART_WordLength_8b;
+X  USART_InitStruct->USART_WordLength = ((u16)0x0000);
+N  USART_InitStruct->USART_StopBits = USART_StopBits_1;
+X  USART_InitStruct->USART_StopBits = ((u16)0x0000);
+N  USART_InitStruct->USART_Parity = USART_Parity_No ;
+X  USART_InitStruct->USART_Parity = ((u16)0x0000) ;
+N  USART_InitStruct->USART_Mode = USART_Mode_Rx | USART_Mode_Tx;
+X  USART_InitStruct->USART_Mode = ((u16)0x0004) | ((u16)0x0008);
+N  USART_InitStruct->USART_HardwareFlowControl = USART_HardwareFlowControl_None;  
+X  USART_InitStruct->USART_HardwareFlowControl = ((u16)0x0000);  
+N}
+N
+N/*******************************************************************************
+N* Function Name  : USART_ClockInit
+N* Description    : Initializes the USARTx peripheral Clock according to the 
+N*                  specified parameters in the USART_ClockInitStruct .
+N* Input          : - USARTx: where x can be 1, 2, 3 to select the USART peripheral.
+N*                    Note: The Smart Card mode is not available for UART4 and UART5.
+N*                  - USART_ClockInitStruct: pointer to a USART_ClockInitTypeDef
+N*                    structure that contains the configuration information for 
+N*                    the specified USART peripheral.
+N* Output         : None
+N* Return         : None
+N*******************************************************************************/
+Nvoid USART_ClockInit(USART_TypeDef* USARTx, USART_ClockInitTypeDef* USART_ClockInitStruct)
+N{
+N  u32 tmpreg = 0x00;
+N
+N  /* Check the parameters */
+N  assert_param(IS_USART_123_PERIPH(USARTx));
+X  ((void)0);
+N  assert_param(IS_USART_CLOCK(USART_ClockInitStruct->USART_Clock));
+X  ((void)0);
+N  assert_param(IS_USART_CPOL(USART_ClockInitStruct->USART_CPOL));
+X  ((void)0);
+N  assert_param(IS_USART_CPHA(USART_ClockInitStruct->USART_CPHA));
+X  ((void)0);
+N  assert_param(IS_USART_LASTBIT(USART_ClockInitStruct->USART_LastBit));              
+X  ((void)0);              
+N  
+N/*---------------------------- USART CR2 Configuration -----------------------*/
+N  tmpreg = USARTx->CR2;
+N  /* Clear CLKEN, CPOL, CPHA and LBCL bits */
+N  tmpreg &= CR2_CLOCK_CLEAR_Mask;
+X  tmpreg &= ((u16)0xF0FF);
+N
+N  /* Configure the USART Clock, CPOL, CPHA and LastBit ------------*/
+N  /* Set CLKEN bit according to USART_Clock value */
+N  /* Set CPOL bit according to USART_CPOL value */
+N  /* Set CPHA bit according to USART_CPHA value */
+N  /* Set LBCL bit according to USART_LastBit value */
+N  tmpreg |= (u32)USART_ClockInitStruct->USART_Clock | USART_ClockInitStruct->USART_CPOL | 
+N                 USART_ClockInitStruct->USART_CPHA | USART_ClockInitStruct->USART_LastBit;
+N
+N  /* Write to USART CR2 */
+N  USARTx->CR2 = (u16)tmpreg;
+N}
+N
+N/*******************************************************************************
+N* Function Name  : USART_ClockStructInit
+N* Description    : Fills each USART_ClockInitStruct member with its default value.
+N* Input          : - USART_ClockInitStruct: pointer to a USART_ClockInitTypeDef
+N*                    structure which will be initialized.
+N* Output         : None
+N* Return         : None
+N*******************************************************************************/
+Nvoid USART_ClockStructInit(USART_ClockInitTypeDef* USART_ClockInitStruct)
+N{
+N  /* USART_ClockInitStruct members default value */
+N  USART_ClockInitStruct->USART_Clock = USART_Clock_Disable;
+X  USART_ClockInitStruct->USART_Clock = ((u16)0x0000);
+N  USART_ClockInitStruct->USART_CPOL = USART_CPOL_Low;
+X  USART_ClockInitStruct->USART_CPOL = ((u16)0x0000);
+N  USART_ClockInitStruct->USART_CPHA = USART_CPHA_1Edge;
+X  USART_ClockInitStruct->USART_CPHA = ((u16)0x0000);
+N  USART_ClockInitStruct->USART_LastBit = USART_LastBit_Disable;
+X  USART_ClockInitStruct->USART_LastBit = ((u16)0x0000);
+N}
+N
+N/*******************************************************************************
+N* Function Name  : USART_Cmd
+N* Description    : Enables or disables the specified USART peripheral.
+N* Input          : - USARTx: Select the USART or the UART peripheral. 
+N*                    This parameter can be one of the following values:
+N*                     - USART1, USART2, USART3, UART4 or UART5.
+N*                : - NewState: new state of the USARTx peripheral.
+N*                    This parameter can be: ENABLE or DISABLE.
+N* Output         : None
+N* Return         : None
+N*******************************************************************************/
+Nvoid USART_Cmd(USART_TypeDef* USARTx, FunctionalState NewState)
+N{
+N  /* Check the parameters */
+N  assert_param(IS_USART_ALL_PERIPH(USARTx));
+X  ((void)0);
+N  assert_param(IS_FUNCTIONAL_STATE(NewState));
+X  ((void)0);
+N  
+N  if (NewState != DISABLE)
+N  {
+N    /* Enable the selected USART by setting the UE bit in the CR1 register */
+N    USARTx->CR1 |= CR1_UE_Set;
+X    USARTx->CR1 |= ((u16)0x2000);
+N  }
+N  else
+N  {
+N    /* Disable the selected USART by clearing the UE bit in the CR1 register */
+N    USARTx->CR1 &= CR1_UE_Reset;
+X    USARTx->CR1 &= ((u16)0xDFFF);
+N  }
+N}
+N
+N/*******************************************************************************
+N* Function Name  : USART_ITConfig
+N* Description    : Enables or disables the specified USART interrupts.
+N* Input          : - USARTx: Select the USART or the UART peripheral. 
+N*                    This parameter can be one of the following values:
+N*                     - USART1, USART2, USART3, UART4 or UART5.
+N*                  - USART_IT: specifies the USART interrupt sources to be
+N*                    enabled or disabled.
+N*                    This parameter can be one of the following values:
+N*                       - USART_IT_CTS:  CTS change interrupt (not available for
+N*                                        UART4 and UART5)
+N*                       - USART_IT_LBD:  LIN Break detection interrupt
+N*                       - USART_IT_TXE:  Tansmit Data Register empty interrupt
+N*                       - USART_IT_TC:   Transmission complete interrupt
+N*                       - USART_IT_RXNE: Receive Data register not empty 
+N*                                        interrupt
+N*                       - USART_IT_IDLE: Idle line detection interrupt
+N*                       - USART_IT_PE:   Parity Error interrupt
+N*                       - USART_IT_ERR:  Error interrupt(Frame error, noise
+N*                                        error, overrun error)
+N*                  - NewState: new state of the specified USARTx interrupts.
+N*                    This parameter can be: ENABLE or DISABLE.
+N* Output         : None
+N* Return         : None
+N*******************************************************************************/
+Nvoid USART_ITConfig(USART_TypeDef* USARTx, u16 USART_IT, FunctionalState NewState)
+N{
+N  u32 usartreg = 0x00, itpos = 0x00, itmask = 0x00;
+N  u32 usartxbase = 0x00;
+N
+N  /* Check the parameters */
+N  assert_param(IS_USART_ALL_PERIPH(USARTx));
+X  ((void)0);
+N  assert_param(IS_USART_CONFIG_IT(USART_IT));
+X  ((void)0);
+N  assert_param(IS_USART_PERIPH_IT(USARTx, USART_IT)); /* The CTS interrupt is not available for UART4 and UART5 */     
+X  ((void)0);       
+N  assert_param(IS_FUNCTIONAL_STATE(NewState));
+X  ((void)0);
+N
+N  usartxbase = (*(u32*)&(USARTx));
+N
+N  /* Get the USART register index */
+N  usartreg = (((u8)USART_IT) >> 0x05);
+N
+N  /* Get the interrupt position */
+N  itpos = USART_IT & IT_Mask;
+X  itpos = USART_IT & ((u16)0x001F);
+N
+N  itmask = (((u32)0x01) << itpos);
+N    
+N  if (usartreg == 0x01) /* The IT is in CR1 register */
+N  {
+N    usartxbase += 0x0C;
+N  }
+N  else if (usartreg == 0x02) /* The IT is in CR2 register */
+N  {
+N    usartxbase += 0x10;
+N  }
+N  else /* The IT is in CR3 register */
+N  {
+N    usartxbase += 0x14; 
+N  }
+N  if (NewState != DISABLE)
+N  {
+N    *(vu32*)usartxbase  |= itmask;
+N  }
+N  else
+N  {
+N    *(vu32*)usartxbase &= ~itmask;
+N  }
+N}
+N
+N/*******************************************************************************
+N* Function Name  : USART_DMACmd
+N* Description    : Enables or disables the USART抯 DMA interface.
+N* Input          : - USARTx: Select the USART or the UART peripheral. 
+N*                    This parameter can be one of the following values:
+N*                     - USART1, USART2, USART3 or UART4.
+N*                    Note: The DMA mode is not available for UART5.
+N*                  - USART_DMAReq: specifies the DMA request.
+N*                    This parameter can be any combination of the following values:
+N*                       - USART_DMAReq_Tx: USART DMA transmit request
+N*                       - USART_DMAReq_Rx: USART DMA receive request
+N*                  - NewState: new state of the DMA Request sources.
+N*                   This parameter can be: ENABLE or DISABLE.
+N* Output         : None
+N* Return         : None
+N*******************************************************************************/
+Nvoid USART_DMACmd(USART_TypeDef* USARTx, u16 USART_DMAReq, FunctionalState NewState)
+N{
+N  /* Check the parameters */
+N  assert_param(IS_USART_1234_PERIPH(USARTx));
+X  ((void)0);
+N  assert_param(IS_USART_DMAREQ(USART_DMAReq));  
+X  ((void)0);  
+N  assert_param(IS_FUNCTIONAL_STATE(NewState)); 
+X  ((void)0); 
+N
+N  if (NewState != DISABLE)
+N  {
+N    /* Enable the DMA transfer for selected requests by setting the DMAT and/or
+N       DMAR bits in the USART CR3 register */
+N    USARTx->CR3 |= USART_DMAReq;
+N  }
+N  else
+N  {
+N    /* Disable the DMA transfer for selected requests by clearing the DMAT and/or
+N       DMAR bits in the USART CR3 register */
+N    USARTx->CR3 &= (u16)~USART_DMAReq;
+N  }
+N}
+N
+N/*******************************************************************************
+N* Function Name  : USART_SetAddress
+N* Description    : Sets the address of the USART node.
+N* Input          : - USARTx: Select the USART or the UART peripheral. 
+N*                    This parameter can be one of the following values:
+N*                     - USART1, USART2, USART3, UART4 or UART5.
+N*                  - USART_Address: Indicates the address of the USART node.
+N* Output         : None
+N* Return         : None
+N*******************************************************************************/
+Nvoid USART_SetAddress(USART_TypeDef* USARTx, u8 USART_Address)
+N{
+N  /* Check the parameters */
+N  assert_param(IS_USART_ALL_PERIPH(USARTx));
+X  ((void)0);
+N  assert_param(IS_USART_ADDRESS(USART_Address)); 
+X  ((void)0); 
+N    
+N  /* Clear the USART address */
+N  USARTx->CR2 &= CR2_Address_Mask;
+X  USARTx->CR2 &= ((u16)0xFFF0);
+N  /* Set the USART address node */
+N  USARTx->CR2 |= USART_Address;
+N}
+N
+N/*******************************************************************************
+N* Function Name  : USART_WakeUpConfig
+N* Description    : Selects the USART WakeUp method.
+N* Input          : - USARTx: Select the USART or the UART peripheral. 
+N*                    This parameter can be one of the following values:
+N*                     - USART1, USART2, USART3, UART4 or UART5.
+N*                  - USART_WakeUp: specifies the USART wakeup method.
+N*                    This parameter can be one of the following values:
+N*                        - USART_WakeUp_IdleLine: WakeUp by an idle line detection
+N*                        - USART_WakeUp_AddressMark: WakeUp by an address mark
+N* Output         : None
+N* Return         : None
+N*******************************************************************************/
+Nvoid USART_WakeUpConfig(USART_TypeDef* USARTx, u16 USART_WakeUp)
+N{
+N  /* Check the parameters */
+N  assert_param(IS_USART_ALL_PERIPH(USARTx));
+X  ((void)0);
+N  assert_param(IS_USART_WAKEUP(USART_WakeUp));
+X  ((void)0);
+N  
+N  USARTx->CR1 &= CR1_WAKE_Mask;
+X  USARTx->CR1 &= ((u16)0xF7FF);
+N  USARTx->CR1 |= USART_WakeUp;
+N}
+N
+N/*******************************************************************************
+N* Function Name  : USART_ReceiverWakeUpCmd
+N* Description    : Determines if the USART is in mute mode or not.
+N* Input          : - USARTx: Select the USART or the UART peripheral. 
+N*                    This parameter can be one of the following values:
+N*                     - USART1, USART2, USART3, UART4 or UART5.
+N*                  - NewState: new state of the USART mute mode.
+N*                    This parameter can be: ENABLE or DISABLE.
+N* Output         : None
+N* Return         : None
+N*******************************************************************************/
+Nvoid USART_ReceiverWakeUpCmd(USART_TypeDef* USARTx, FunctionalState NewState)
+N{
+N  /* Check the parameters */
+N  assert_param(IS_USART_ALL_PERIPH(USARTx));
+X  ((void)0);
+N  assert_param(IS_FUNCTIONAL_STATE(NewState)); 
+X  ((void)0); 
+N  
+N  if (NewState != DISABLE)
+N  {
+N    /* Enable the USART mute mode  by setting the RWU bit in the CR1 register */
+N    USARTx->CR1 |= CR1_RWU_Set;
+X    USARTx->CR1 |= ((u16)0x0002);
+N  }
+N  else
+N  {
+N    /* Disable the USART mute mode by clearing the RWU bit in the CR1 register */
+N    USARTx->CR1 &= CR1_RWU_Reset;
+X    USARTx->CR1 &= ((u16)0xFFFD);
+N  }
+N}
+N
+N/*******************************************************************************
+N* Function Name  : USART_LINBreakDetectLengthConfig
+N* Description    : Sets the USART LIN Break detection length.
+N* Input          : - USARTx: Select the USART or the UART peripheral. 
+N*                    This parameter can be one of the following values:
+N*                     - USART1, USART2, USART3, UART4 or UART5.
+N*                  - USART_LINBreakDetectLength: specifies the LIN break
+N*                    detection length.
+N*                    This parameter can be one of the following values:
+N*                       - USART_LINBreakDetectLength_10b: 10-bit break detection
+N*                       - USART_LINBreakDetectLength_11b: 11-bit break detection
+N* Output         : None
+N* Return         : None
+N*******************************************************************************/
+Nvoid USART_LINBreakDetectLengthConfig(USART_TypeDef* USARTx, u16 USART_LINBreakDetectLength)
+N{
+N  /* Check the parameters */
+N  assert_param(IS_USART_ALL_PERIPH(USARTx));
+X  ((void)0);
+N  assert_param(IS_USART_LIN_BREAK_DETECT_LENGTH(USART_LINBreakDetectLength));
+X  ((void)0);
+N  
+N  USARTx->CR2 &= CR2_LBDL_Mask;
+X  USARTx->CR2 &= ((u16)0xFFDF);
+N  USARTx->CR2 |= USART_LINBreakDetectLength;  
+N}
+N
+N/*******************************************************************************
+N* Function Name  : USART_LINCmd
+N* Description    : Enables or disables the USART抯 LIN mode.
+N* Input          : - USARTx: Select the USART or the UART peripheral. 
+N*                    This parameter can be one of the following values:
+N*                     - USART1, USART2, USART3, UART4 or UART5.
+N*                  - NewState: new state of the USART LIN mode.
+N*                    This parameter can be: ENABLE or DISABLE.
+N* Output         : None
+N* Return         : None
+N*******************************************************************************/
+Nvoid USART_LINCmd(USART_TypeDef* USARTx, FunctionalState NewState)
+N{
+N  /* Check the parameters */
+N  assert_param(IS_USART_ALL_PERIPH(USARTx));
+X  ((void)0);
+N  assert_param(IS_FUNCTIONAL_STATE(NewState));
+X  ((void)0);
+N  
+N  if (NewState != DISABLE)
+N  {
+N    /* Enable the LIN mode by setting the LINEN bit in the CR2 register */
+N    USARTx->CR2 |= CR2_LINEN_Set;
+X    USARTx->CR2 |= ((u16)0x4000);
+N  }
+N  else
+N  {
+N    /* Disable the LIN mode by clearing the LINEN bit in the CR2 register */
+N    USARTx->CR2 &= CR2_LINEN_Reset;
+X    USARTx->CR2 &= ((u16)0xBFFF);
+N  }
+N}
+N
+N/*******************************************************************************
+N* Function Name  : USART_SendData
+N* Description    : Transmits single data through the USARTx peripheral.
+N* Input          : - USARTx: Select the USART or the UART peripheral. 
+N*                    This parameter can be one of the following values:
+N*                     - USART1, USART2, USART3, UART4 or UART5.
+N*                  - Data: the data to transmit.
+N* Output         : None
+N* Return         : None
+N*******************************************************************************/
+Nvoid USART_SendData(USART_TypeDef* USARTx, u16 Data)
+N{
+N  /* Check the parameters */
+N  assert_param(IS_USART_ALL_PERIPH(USARTx));
+X  ((void)0);
+N  assert_param(IS_USART_DATA(Data)); 
+X  ((void)0); 
+N    
+N  /* Transmit Data */
+N  USARTx->DR = (Data & (u16)0x01FF);
+N}
+N
+N/*******************************************************************************
+N* Function Name  : USART_ReceiveData
+N* Description    : Returns the most recent received data by the USARTx peripheral.
+N* Input          : - USARTx: Select the USART or the UART peripheral. 
+N*                    This parameter can be one of the following values:
+N*                     - USART1, USART2, USART3, UART4 or UART5.
+N* Output         : None
+N* Return         : The received data.
+N*******************************************************************************/
+Nu16 USART_ReceiveData(USART_TypeDef* USARTx)
+N{
+N  /* Check the parameters */
+N  assert_param(IS_USART_ALL_PERIPH(USARTx));
+X  ((void)0);
+N  
+N  /* Receive Data */
+N  return (u16)(USARTx->DR & (u16)0x01FF);
+N}
+N
+N/*******************************************************************************
+N* Function Name  : USART_SendBreak
+N* Description    : Transmits break characters.
+N* Input          : - USARTx: Select the USART or the UART peripheral. 
+N*                    This parameter can be one of the following values:
+N*                     - USART1, USART2, USART3, UART4 or UART5.
+N* Output         : None
+N* Return         : None
+N*******************************************************************************/
+Nvoid USART_SendBreak(USART_TypeDef* USARTx)
+N{
+N  /* Check the parameters */
+N  assert_param(IS_USART_ALL_PERIPH(USARTx));
+X  ((void)0);
+N  
+N  /* Send break characters */
+N  USARTx->CR1 |= CR1_SBK_Set;
+X  USARTx->CR1 |= ((u16)0x0001);
+N}
+N
+N/*******************************************************************************
+N* Function Name  : USART_SetGuardTime
+N* Description    : Sets the specified USART guard time.
+N* Input          : - USARTx: where x can be 1, 2 or 3 to select the USART
+N*                    peripheral.
+N*                  Note: The guard time bits are not available for UART4 and UART5.
+N*                  - USART_GuardTime: specifies the guard time.
+N* Output         : None
+N* Return         : None
+N*******************************************************************************/
+Nvoid USART_SetGuardTime(USART_TypeDef* USARTx, u8 USART_GuardTime)
+N{    
+N  /* Check the parameters */
+N  assert_param(IS_USART_123_PERIPH(USARTx));
+X  ((void)0);
+N  
+N  /* Clear the USART Guard time */
+N  USARTx->GTPR &= GTPR_LSB_Mask;
+X  USARTx->GTPR &= ((u16)0x00FF);
+N  /* Set the USART guard time */
+N  USARTx->GTPR |= (u16)((u16)USART_GuardTime << 0x08);
+N}
+N
+N/*******************************************************************************
+N* Function Name  : USART_SetPrescaler
+N* Description    : Sets the system clock prescaler.
+N* Input          : - USARTx: Select the USART or the UART peripheral. 
+N*                    This parameter can be one of the following values:
+N*                     - USART1, USART2, USART3, UART4 or UART5.
+N*                  Note: The function is used for IrDA mode with UART4 and UART5.
+N*                  - USART_Prescaler: specifies the prescaler clock.
+N* Output         : None
+N* Return         : None
+N*******************************************************************************/
+Nvoid USART_SetPrescaler(USART_TypeDef* USARTx, u8 USART_Prescaler)
+N{ 
+N  /* Check the parameters */
+N  assert_param(IS_USART_ALL_PERIPH(USARTx));
+X  ((void)0);
+N  
+N  /* Clear the USART prescaler */
+N  USARTx->GTPR &= GTPR_MSB_Mask;
+X  USARTx->GTPR &= ((u16)0xFF00);
+N  /* Set the USART prescaler */
+N  USARTx->GTPR |= USART_Prescaler;
+N}
+N
+N/*******************************************************************************
+N* Function Name  : USART_SmartCardCmd
+N* Description    : Enables or disables the USART抯 Smart Card mode.
+N* Input          : - USARTx: where x can be 1, 2 or 3 to select the USART
+N*                    peripheral. 
+N*                    Note: The Smart Card mode is not available for UART4 and UART5.
+N*                  - NewState: new state of the Smart Card mode.
+N*                    This parameter can be: ENABLE or DISABLE.
+N* Output         : None
+N* Return         : None
+N*******************************************************************************/
+Nvoid USART_SmartCardCmd(USART_TypeDef* USARTx, FunctionalState NewState)
+N{
+N  /* Check the parameters */
+N  assert_param(IS_USART_123_PERIPH(USARTx));
+X  ((void)0);
+N  assert_param(IS_FUNCTIONAL_STATE(NewState));
+X  ((void)0);
+N
+N  if (NewState != DISABLE)
+N  {
+N    /* Enable the SC mode by setting the SCEN bit in the CR3 register */
+N    USARTx->CR3 |= CR3_SCEN_Set;
+X    USARTx->CR3 |= ((u16)0x0020);
+N  }
+N  else
+N  {
+N    /* Disable the SC mode by clearing the SCEN bit in the CR3 register */
+N    USARTx->CR3 &= CR3_SCEN_Reset;
+X    USARTx->CR3 &= ((u16)0xFFDF);
+N  }
+N}
+N
+N/*******************************************************************************
+N* Function Name  : USART_SmartCardNACKCmd
+N* Description    : Enables or disables NACK transmission.
+N* Input          : - USARTx: where x can be 1, 2 or 3 to select the USART
+N*                    peripheral. 
+N*                    Note: The Smart Card mode is not available for UART4 and UART5.
+N*                  - NewState: new state of the NACK transmission.
+N*                    This parameter can be: ENABLE or DISABLE.
+N* Output         : None
+N* Return         : None
+N*******************************************************************************/
+Nvoid USART_SmartCardNACKCmd(USART_TypeDef* USARTx, FunctionalState NewState)
+N{
+N  /* Check the parameters */
+N  assert_param(IS_USART_123_PERIPH(USARTx));  
+X  ((void)0);  
+N  assert_param(IS_FUNCTIONAL_STATE(NewState));
+X  ((void)0);
+N
+N  if (NewState != DISABLE)
+N  {
+N    /* Enable the NACK transmission by setting the NACK bit in the CR3 register */
+N    USARTx->CR3 |= CR3_NACK_Set;
+X    USARTx->CR3 |= ((u16)0x0010);
+N  }
+N  else
+N  {
+N    /* Disable the NACK transmission by clearing the NACK bit in the CR3 register */
+N    USARTx->CR3 &= CR3_NACK_Reset;
+X    USARTx->CR3 &= ((u16)0xFFEF);
+N  }
+N}
+N
+N/*******************************************************************************
+N* Function Name  : USART_HalfDuplexCmd
+N* Description    : Enables or disables the USART抯 Half Duplex communication.
+N* Input          : - USARTx: Select the USART or the UART peripheral. 
+N*                    This parameter can be one of the following values:
+N*                     - USART1, USART2, USART3, UART4 or UART5.
+N*                  - NewState: new state of the USART Communication.
+N*                    This parameter can be: ENABLE or DISABLE.
+N* Output         : None
+N* Return         : None
+N*******************************************************************************/
+Nvoid USART_HalfDuplexCmd(USART_TypeDef* USARTx, FunctionalState NewState)
+N{
+N  /* Check the parameters */
+N  assert_param(IS_USART_ALL_PERIPH(USARTx));
+X  ((void)0);
+N  assert_param(IS_FUNCTIONAL_STATE(NewState));
+X  ((void)0);
+N  
+N  if (NewState != DISABLE)
+N  {
+N    /* Enable the Half-Duplex mode by setting the HDSEL bit in the CR3 register */
+N    USARTx->CR3 |= CR3_HDSEL_Set;
+X    USARTx->CR3 |= ((u16)0x0008);
+N  }
+N  else
+N  {
+N    /* Disable the Half-Duplex mode by clearing the HDSEL bit in the CR3 register */
+N    USARTx->CR3 &= CR3_HDSEL_Reset;
+X    USARTx->CR3 &= ((u16)0xFFF7);
+N  }
+N}
+N
+N/*******************************************************************************
+N* Function Name  : USART_IrDAConfig
+N* Description    : Configures the USART抯 IrDA interface.
+N* Input          : - USARTx: Select the USART or the UART peripheral. 
+N*                    This parameter can be one of the following values:
+N*                     - USART1, USART2, USART3, UART4 or UART5.
+N*                  - USART_IrDAMode: specifies the IrDA mode.
+N*                    This parameter can be one of the following values:
+N*                       - USART_IrDAMode_LowPower
+N*                       - USART_IrDAMode_Normal
+N* Output         : None
+N* Return         : None
+N*******************************************************************************/
+Nvoid USART_IrDAConfig(USART_TypeDef* USARTx, u16 USART_IrDAMode)
+N{
+N  /* Check the parameters */
+N  assert_param(IS_USART_ALL_PERIPH(USARTx));
+X  ((void)0);
+N  assert_param(IS_USART_IRDA_MODE(USART_IrDAMode));
+X  ((void)0);
+N    
+N  USARTx->CR3 &= CR3_IRLP_Mask;
+X  USARTx->CR3 &= ((u16)0xFFFB);
+N  USARTx->CR3 |= USART_IrDAMode;
+N}
+N
+N/*******************************************************************************
+N* Function Name  : USART_IrDACmd
+N* Description    : Enables or disables the USART抯 IrDA interface.
+N* Input          : - USARTx: Select the USART or the UART peripheral. 
+N*                    This parameter can be one of the following values:
+N*                     - USART1, USART2, USART3, UART4 or UART5.
+N*                  - NewState: new state of the IrDA mode.
+N*                    This parameter can be: ENABLE or DISABLE.
+N* Output         : None
+N* Return         : None
+N*******************************************************************************/
+Nvoid USART_IrDACmd(USART_TypeDef* USARTx, FunctionalState NewState)
+N{
+N  /* Check the parameters */
+N  assert_param(IS_USART_ALL_PERIPH(USARTx));
+X  ((void)0);
+N  assert_param(IS_FUNCTIONAL_STATE(NewState));
+X  ((void)0);
+N    
+N  if (NewState != DISABLE)
+N  {
+N    /* Enable the IrDA mode by setting the IREN bit in the CR3 register */
+N    USARTx->CR3 |= CR3_IREN_Set;
+X    USARTx->CR3 |= ((u16)0x0002);
+N  }
+N  else
+N  {
+N    /* Disable the IrDA mode by clearing the IREN bit in the CR3 register */
+N    USARTx->CR3 &= CR3_IREN_Reset;
+X    USARTx->CR3 &= ((u16)0xFFFD);
+N  }
+N}
+N
+N/*******************************************************************************
+N* Function Name  : USART_GetFlagStatus
+N* Description    : Checks whether the specified USART flag is set or not.
+N* Input          : - USARTx: Select the USART or the UART peripheral. 
+N*                    This parameter can be one of the following values:
+N*                     - USART1, USART2, USART3, UART4 or UART5.
+N*                  - USART_FLAG: specifies the flag to check.
+N*                    This parameter can be one of the following values:
+N*                       - USART_FLAG_CTS:  CTS Change flag (not available for 
+N*                                          UART4 and UART5)
+N*                       - USART_FLAG_LBD:  LIN Break detection flag
+N*                       - USART_FLAG_TXE:  Transmit data register empty flag
+N*                       - USART_FLAG_TC:   Transmission Complete flag
+N*                       - USART_FLAG_RXNE: Receive data register not empty flag
+N*                       - USART_FLAG_IDLE: Idle Line detection flag
+N*                       - USART_FLAG_ORE:  OverRun Error flag
+N*                       - USART_FLAG_NE:   Noise Error flag
+N*                       - USART_FLAG_FE:   Framing Error flag
+N*                       - USART_FLAG_PE:   Parity Error flag
+N* Output         : None
+N* Return         : The new state of USART_FLAG (SET or RESET).
+N*******************************************************************************/
+NFlagStatus USART_GetFlagStatus(USART_TypeDef* USARTx, u16 USART_FLAG)
+N{
+N  FlagStatus bitstatus = RESET;
+N
+N  /* Check the parameters */
+N  assert_param(IS_USART_ALL_PERIPH(USARTx));
+X  ((void)0);
+N  assert_param(IS_USART_FLAG(USART_FLAG));
+X  ((void)0);
+N  assert_param(IS_USART_PERIPH_FLAG(USARTx, USART_FLAG)); /* The CTS flag is not available for UART4 and UART5 */   
+X  ((void)0);     
+N
+N  if ((USARTx->SR & USART_FLAG) != (u16)RESET)
+N  {
+N    bitstatus = SET;
+N  }
+N  else
+N  {
+N    bitstatus = RESET;
+N  }
+N  return bitstatus;
+N}
+N
+N/*******************************************************************************
+N* Function Name  : USART_ClearFlag
+N* Description    : Clears the USARTx's pending flags.
+N* Input          : - USARTx: Select the USART or the UART peripheral. 
+N*                    This parameter can be one of the following values:
+N*                     - USART1, USART2, USART3, UART4 or UART5.
+N*                  - USART_FLAG: specifies the flag to clear.
+N*                    This parameter can be any combination of the following values:
+N*                       - USART_FLAG_CTS:  CTS Change flag (not available for
+N*                                          UART4 and UART5).
+N*                       - USART_FLAG_LBD:  LIN Break detection flag.
+N*                       - USART_FLAG_TC:   Transmission Complete flag.
+N*                       - USART_FLAG_RXNE: Receive data register not empty flag.
+N*                       - USART_FLAG_IDLE: Idle Line detection flag.
+N*                       - USART_FLAG_ORE:  OverRun Error flag.
+N*                       - USART_FLAG_NE:   Noise Error flag.
+N*                       - USART_FLAG_FE:   Framing Error flag.
+N*                       - USART_FLAG_PE:   Parity Error flag.
+N*
+N*                    Note: - For IDLE, ORE, NE, FE and PE flags user has to read 
+N*                          the USART DR register after calling this function.
+N*                          - TXE flag can't be cleared by this function, it's
+N*                          cleared only by a write to the USART DR register.                        
+N* Output         : None
+N* Return         : None
+N*******************************************************************************/
+Nvoid USART_ClearFlag(USART_TypeDef* USARTx, u16 USART_FLAG)
+N{
+N  /* Check the parameters */
+N  assert_param(IS_USART_ALL_PERIPH(USARTx));
+X  ((void)0);
+N  assert_param(IS_USART_CLEAR_FLAG(USART_FLAG));
+X  ((void)0);
+N  assert_param(IS_USART_PERIPH_FLAG(USARTx, USART_FLAG)); /* The CTS flag is not available for UART4 and UART5 */   
+X  ((void)0);     
+N   
+N  USARTx->SR = (u16)~USART_FLAG;
+N}
+N
+N/*******************************************************************************
+N* Function Name  : USART_GetITStatus
+N* Description    : Checks whether the specified USART interrupt has occurred or not.
+N* Input          : - USARTx: Select the USART or the UART peripheral. 
+N*                    This parameter can be one of the following values:
+N*                     - USART1, USART2, USART3, UART4 or UART5.
+N*                  - USART_IT: specifies the USART interrupt source to check.
+N*                    This parameter can be one of the following values:
+N*                       - USART_IT_CTS:  CTS change interrupt (not available for 
+N*                                        UART4 and UART5)
+N*                       - USART_IT_LBD:  LIN Break detection interrupt
+N*                       - USART_IT_TXE:  Tansmit Data Register empty interrupt
+N*                       - USART_IT_TC:   Transmission complete interrupt
+N*                       - USART_IT_RXNE: Receive Data register not empty 
+N*                                        interrupt
+N*                       - USART_IT_IDLE: Idle line detection interrupt
+N*                       - USART_IT_ORE:  OverRun Error interrupt
+N*                       - USART_IT_NE:   Noise Error interrupt
+N*                       - USART_IT_FE:   Framing Error interrupt
+N*                       - USART_IT_PE:   Parity Error interrupt
+N* Output         : None
+N* Return         : The new state of USART_IT (SET or RESET).
+N*******************************************************************************/
+NITStatus USART_GetITStatus(USART_TypeDef* USARTx, u16 USART_IT)
+N{
+N  u32 bitpos = 0x00, itmask = 0x00, usartreg = 0x00;
+N  ITStatus bitstatus = RESET;
+N
+N  /* Check the parameters */
+N  assert_param(IS_USART_ALL_PERIPH(USARTx));
+X  ((void)0);
+N  assert_param(IS_USART_IT(USART_IT));
+X  ((void)0);
+N  assert_param(IS_USART_PERIPH_IT(USARTx, USART_IT)); /* The CTS interrupt is not available for UART4 and UART5 */  
+X  ((void)0);    
+N  
+N  /* Get the USART register index */
+N  usartreg = (((u8)USART_IT) >> 0x05);
+N
+N  /* Get the interrupt position */
+N  itmask = USART_IT & IT_Mask;
+X  itmask = USART_IT & ((u16)0x001F);
+N
+N  itmask = (u32)0x01 << itmask;
+N  
+N  if (usartreg == 0x01) /* The IT  is in CR1 register */
+N  {
+N    itmask &= USARTx->CR1;
+N  }
+N  else if (usartreg == 0x02) /* The IT  is in CR2 register */
+N  {
+N    itmask &= USARTx->CR2;
+N  }
+N  else /* The IT  is in CR3 register */
+N  {
+N    itmask &= USARTx->CR3;
+N  }
+N  
+N  bitpos = USART_IT >> 0x08;
+N
+N  bitpos = (u32)0x01 << bitpos;
+N  bitpos &= USARTx->SR;
+N
+N  if ((itmask != (u16)RESET)&&(bitpos != (u16)RESET))
+N  {
+N    bitstatus = SET;
+N  }
+N  else
+N  {
+N    bitstatus = RESET;
+N  }
+N  
+N  return bitstatus;  
+N}
+N
+N/*******************************************************************************
+N* Function Name  : USART_ClearITPendingBit
+N* Description    : Clears the USARTx抯 interrupt pending bits.
+N* Input          : - USARTx: Select the USART or the UART peripheral. 
+N*                    This parameter can be one of the following values:
+N*                     - USART1, USART2, USART3, UART4 or UART5.
+N*                  - USART_IT: specifies the interrupt pending bit to clear.
+N*                    This parameter can be one of the following values:
+N*                       - USART_IT_CTS:  CTS change interrupt (not available for 
+N*                                        UART4 and UART5)
+N*                       - USART_IT_LBD:  LIN Break detection interrupt
+N*                       - USART_IT_TC:   Transmission complete interrupt. 
+N*                       - USART_IT_RXNE: Receive Data register not empty interrupt.
+N*                       - USART_IT_IDLE: Idle line detection interrupt.
+N*                       - USART_IT_ORE:  OverRun Error interrupt.
+N*                       - USART_IT_NE:   Noise Error interrupt.
+N*                       - USART_IT_FE:   Framing Error interrupt.
+N*                       - USART_IT_PE:   Parity Error interrupt.
+N*
+N*                    Note: - For IDLE, ORE, NE, FE and PE pending bits user has to 
+N*                            read the USART DR register after calling this function.
+N*                          - TXE pending bit can't be cleared by this function, it's
+N*                            cleared only by a write to the USART DR register.
+N* Output         : None
+N* Return         : None
+N*******************************************************************************/
+Nvoid USART_ClearITPendingBit(USART_TypeDef* USARTx, u16 USART_IT)
+N{
+N  u16 bitpos = 0x00, itmask = 0x00;
+N
+N  /* Check the parameters */
+N  assert_param(IS_USART_ALL_PERIPH(USARTx));
+X  ((void)0);
+N  assert_param(IS_USART_CLEAR_IT(USART_IT));
+X  ((void)0);
+N  assert_param(IS_USART_PERIPH_IT(USARTx, USART_IT)); /* The CTS interrupt is not available for UART4 and UART5 */
+X  ((void)0);  
+N  
+N  bitpos = USART_IT >> 0x08;
+N
+N  itmask = (u16)((u16)0x01 << bitpos);
+N  USARTx->SR = (u16)~itmask;
+N}
+N
+N/******************* (C) COPYRIGHT 2008 STMicroelectronics *****END OF FILE****/

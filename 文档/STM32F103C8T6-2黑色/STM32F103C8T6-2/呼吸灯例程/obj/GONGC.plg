@@ -1,0 +1,20 @@
+<html>
+<body>
+<pre>
+<h1>猩ision Build Log</h1>
+<h2>Project:</h2>
+C:\Documents and Settings\Administrator\袤醱\STM32F103C8T6-2\網柲腑瞰最\GONGC.uvproj
+Project File Date:  04/01/2014
+
+<h2>Output:</h2>
+Load "C:\\Documents and Settings\\Administrator\\袤醱\\STM32F103C8T6-2\\網柲腑瞰最\\obj\\GONGC.axf" 
+Erase Done.
+Programming Done.
+Verify OK.
+Application running ...
+Load "C:\\Documents and Settings\\Administrator\\袤醱\\STM32F103C8T6-2\\網柲腑瞰最\\obj\\GONGC.axf" 
+Erase Done.
+Programming Failed!
+Load "C:\\Documents and Settings\\Administrator\\袤醱\\STM32F103C8T6-2\\網柲腑瞰最\\obj\\GONGC.axf" 
+Erase Done.
+Programming Failed!

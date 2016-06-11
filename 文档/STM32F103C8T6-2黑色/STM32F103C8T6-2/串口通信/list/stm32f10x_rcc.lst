@@ -1,0 +1,3025 @@
+L 1 "source\FWLib\src\stm32f10x_rcc.c"
+N/******************** (C) COPYRIGHT 2008 STMicroelectronics ********************
+N* File Name          : stm32f10x_rcc.c
+N* Author             : MCD Application Team
+N* Version            : V2.0.1
+N* Date               : 06/13/2008
+N* Description        : This file provides all the RCC firmware functions.
+N********************************************************************************
+N* THE PRESENT FIRMWARE WHICH IS FOR GUIDANCE ONLY AIMS AT PROVIDING CUSTOMERS
+N* WITH CODING INFORMATION REGARDING THEIR PRODUCTS IN ORDER FOR THEM TO SAVE TIME.
+N* AS A RESULT, STMICROELECTRONICS SHALL NOT BE HELD LIABLE FOR ANY DIRECT,
+N* INDIRECT OR CONSEQUENTIAL DAMAGES WITH RESPECT TO ANY CLAIMS ARISING FROM THE
+N* CONTENT OF SUCH FIRMWARE AND/OR THE USE MADE BY CUSTOMERS OF THE CODING
+N* INFORMATION CONTAINED HEREIN IN CONNECTION WITH THEIR PRODUCTS.
+N*******************************************************************************/
+N
+N/* Includes ------------------------------------------------------------------*/
+N#include "stm32f10x_rcc.h"
+L 1 "D:\Program Files\keil4.14\ARM\INC\ST\STM32F10x\stm32f10x_rcc.h" 1
+N/******************** (C) COPYRIGHT 2008 STMicroelectronics ********************
+N* File Name          : stm32f10x_rcc.h
+N* Author             : MCD Application Team
+N* Version            : V2.0.1
+N* Date               : 06/13/2008
+N* Description        : This file contains all the functions prototypes for the
+N*                      RCC firmware library.
+N********************************************************************************
+N* THE PRESENT FIRMWARE WHICH IS FOR GUIDANCE ONLY AIMS AT PROVIDING CUSTOMERS
+N* WITH CODING INFORMATION REGARDING THEIR PRODUCTS IN ORDER FOR THEM TO SAVE TIME.
+N* AS A RESULT, STMICROELECTRONICS SHALL NOT BE HELD LIABLE FOR ANY DIRECT,
+N* INDIRECT OR CONSEQUENTIAL DAMAGES WITH RESPECT TO ANY CLAIMS ARISING FROM THE
+N* CONTENT OF SUCH FIRMWARE AND/OR THE USE MADE BY CUSTOMERS OF THE CODING
+N* INFORMATION CONTAINED HEREIN IN CONNECTION WITH THEIR PRODUCTS.
+N*******************************************************************************/
+N
+N/* Define to prevent recursive inclusion -------------------------------------*/
+N#ifndef __STM32F10x_RCC_H
+N#define __STM32F10x_RCC_H
+N
+N/* Includes ------------------------------------------------------------------*/
+N#include "stm32f10x_map.h"
+L 1 "D:\Program Files\keil4.14\ARM\INC\ST\STM32F10x\stm32f10x_map.h" 1
+N/******************** (C) COPYRIGHT 2008 STMicroelectronics ********************
+N* File Name          : stm32f10x_map.h
+N* Author             : MCD Application Team
+N* Version            : V2.0.1
+N* Date               : 06/13/2008
+N* Description        : This file contains all the peripheral register's definitions
+N*                      and memory mapping.
+N********************************************************************************
+N* THE PRESENT FIRMWARE WHICH IS FOR GUIDANCE ONLY AIMS AT PROVIDING CUSTOMERS
+N* WITH CODING INFORMATION REGARDING THEIR PRODUCTS IN ORDER FOR THEM TO SAVE TIME.
+N* AS A RESULT, STMICROELECTRONICS SHALL NOT BE HELD LIABLE FOR ANY DIRECT,
+N* INDIRECT OR CONSEQUENTIAL DAMAGES WITH RESPECT TO ANY CLAIMS ARISING FROM THE
+N* CONTENT OF SUCH FIRMWARE AND/OR THE USE MADE BY CUSTOMERS OF THE CODING
+N* INFORMATION CONTAINED HEREIN IN CONNECTION WITH THEIR PRODUCTS.
+N*******************************************************************************/
+N
+N/* Define to prevent recursive inclusion -------------------------------------*/
+N#ifndef __STM32F10x_MAP_H
+N#define __STM32F10x_MAP_H
+N
+N#ifndef EXT
+N  #define EXT extern
+N#endif /* EXT */
+N
+N/* Includes ------------------------------------------------------------------*/
+N#include "stm32f10x_conf.h"
+L 1 "D:\Program Files\keil4.14\ARM\INC\ST\STM32F10x\stm32f10x_conf.h" 1
+N/******************** (C) COPYRIGHT 2008 STMicroelectronics ********************
+N* File Name          : stm32f10x_conf.h
+N* Author             : MCD Application Team
+N* Version            : V2.0.1
+N* Date               : 06/13/2008
+N* Description        : Library configuration file.
+N********************************************************************************
+N* THE PRESENT FIRMWARE WHICH IS FOR GUIDANCE ONLY AIMS AT PROVIDING CUSTOMERS
+N* WITH CODING INFORMATION REGARDING THEIR PRODUCTS IN ORDER FOR THEM TO SAVE TIME.
+N* AS A RESULT, STMICROELECTRONICS SHALL NOT BE HELD LIABLE FOR ANY DIRECT,
+N* INDIRECT OR CONSEQUENTIAL DAMAGES WITH RESPECT TO ANY CLAIMS ARISING FROM THE
+N* CONTENT OF SUCH FIRMWARE AND/OR THE USE MADE BY CUSTOMERS OF THE CODING
+N* INFORMATION CONTAINED HEREIN IN CONNECTION WITH THEIR PRODUCTS.
+N*******************************************************************************/
+N
+N/* Define to prevent recursive inclusion -------------------------------------*/
+N#ifndef __STM32F10x_CONF_H
+N#define __STM32F10x_CONF_H
+N
+N/* Includes ------------------------------------------------------------------*/
+N#include "stm32f10x_type.h"
+L 1 "D:\Program Files\keil4.14\ARM\INC\ST\STM32F10x\stm32f10x_type.h" 1
+N/******************** (C) COPYRIGHT 2008 STMicroelectronics ********************
+N* File Name          : stm32f10x_type.h
+N* Author             : MCD Application Team
+N* Version            : V2.0.1
+N* Date               : 06/13/2008
+N* Description        : This file contains all the common data types used for the
+N*                      STM32F10x firmware library.
+N********************************************************************************
+N* THE PRESENT FIRMWARE WHICH IS FOR GUIDANCE ONLY AIMS AT PROVIDING CUSTOMERS
+N* WITH CODING INFORMATION REGARDING THEIR PRODUCTS IN ORDER FOR THEM TO SAVE TIME.
+N* AS A RESULT, STMICROELECTRONICS SHALL NOT BE HELD LIABLE FOR ANY DIRECT,
+N* INDIRECT OR CONSEQUENTIAL DAMAGES WITH RESPECT TO ANY CLAIMS ARISING FROM THE
+N* CONTENT OF SUCH FIRMWARE AND/OR THE USE MADE BY CUSTOMERS OF THE CODING
+N* INFORMATION CONTAINED HEREIN IN CONNECTION WITH THEIR PRODUCTS.
+N*******************************************************************************/
+N
+N/* Define to prevent recursive inclusion -------------------------------------*/
+N#ifndef __STM32F10x_TYPE_H
+N#define __STM32F10x_TYPE_H
+N
+N/* Includes ------------------------------------------------------------------*/
+N/* Exported types ------------------------------------------------------------*/
+Ntypedef signed long  s32;
+Ntypedef signed short s16;
+Ntypedef signed char  s8;
+N
+Ntypedef signed long  const sc32;  /* Read Only */
+Ntypedef signed short const sc16;  /* Read Only */
+Ntypedef signed char  const sc8;   /* Read Only */
+N
+Ntypedef volatile signed long  vs32;
+Ntypedef volatile signed short vs16;
+Ntypedef volatile signed char  vs8;
+N
+Ntypedef volatile signed long  const vsc32;  /* Read Only */
+Ntypedef volatile signed short const vsc16;  /* Read Only */
+Ntypedef volatile signed char  const vsc8;   /* Read Only */
+N
+Ntypedef unsigned long  u32;
+Ntypedef unsigned short u16;
+Ntypedef unsigned char  u8;
+N
+Ntypedef unsigned long  const uc32;  /* Read Only */
+Ntypedef unsigned short const uc16;  /* Read Only */
+Ntypedef unsigned char  const uc8;   /* Read Only */
+N
+Ntypedef volatile unsigned long  vu32;
+Ntypedef volatile unsigned short vu16;
+Ntypedef volatile unsigned char  vu8;
+N
+Ntypedef volatile unsigned long  const vuc32;  /* Read Only */
+Ntypedef volatile unsigned short const vuc16;  /* Read Only */
+Ntypedef volatile unsigned char  const vuc8;   /* Read Only */
+N
+Ntypedef enum {FALSE = 0, TRUE = !FALSE} bool;//假的和真的
+N
+Ntypedef enum {RESET = 0, SET = !RESET} FlagStatus, ITStatus;  //重设预设置
+N
+Ntypedef enum {DISABLE = 0, ENABLE = !DISABLE} FunctionalState;//失能预使能
+N#define IS_FUNCTIONAL_STATE(STATE) (((STATE) == DISABLE) || ((STATE) == ENABLE))
+N
+Ntypedef enum {ERROR = 0, SUCCESS = !ERROR} ErrorStatus;	//错误与成功
+N
+N#define U8_MAX     ((u8)255)
+N#define S8_MAX     ((s8)127)
+N#define S8_MIN     ((s8)-128)
+N#define U16_MAX    ((u16)65535u)
+N#define S16_MAX    ((s16)32767)
+N#define S16_MIN    ((s16)-32768)
+N#define U32_MAX    ((u32)4294967295uL)
+N#define S32_MAX    ((s32)2147483647)
+N#define S32_MIN    ((s32)-2147483648)
+N
+N/* Exported constants --------------------------------------------------------*/
+N/* Exported macro ------------------------------------------------------------*/
+N/* Exported functions ------------------------------------------------------- */
+N
+N#endif /* __STM32F10x_TYPE_H */
+N
+N/******************* (C) COPYRIGHT 2008 STMicroelectronics *****END OF FILE****/
+L 22 "D:\Program Files\keil4.14\ARM\INC\ST\STM32F10x\stm32f10x_conf.h" 2
+N
+N/* Exported types ------------------------------------------------------------*/
+N/* Exported constants --------------------------------------------------------*/
+N/* Uncomment the line below to compile the library in DEBUG mode, this will expanse
+N   the "assert_param" macro in the firmware library code (see "Exported macro"
+N   section below) */
+N/* #define DEBUG    1*/
+N
+N/* Comment the line below to disable the specific peripheral inclusion */
+N/************************************* ADC ************************************/
+N#define _ADC
+N#define _ADC1
+N#define _ADC2
+N#define _ADC3
+N
+N/************************************* BKP ************************************/
+N#define _BKP 
+N
+N/************************************* CAN ************************************/
+N#define _CAN
+N
+N/************************************* CRC ************************************/
+N#define _CRC
+N
+N/************************************* DAC ************************************/
+N#define _DAC
+N
+N/************************************* DBGMCU *********************************/
+N#define _DBGMCU
+N
+N/************************************* DMA ************************************/
+N#define _DMA
+N#define _DMA1_Channel1
+N#define _DMA1_Channel2
+N#define _DMA1_Channel3
+N#define _DMA1_Channel4
+N#define _DMA1_Channel5
+N#define _DMA1_Channel6
+N#define _DMA1_Channel7
+N#define _DMA2_Channel1
+N#define _DMA2_Channel2
+N#define _DMA2_Channel3
+N#define _DMA2_Channel4
+N#define _DMA2_Channel5
+N
+N/************************************* EXTI ***********************************/
+N#define _EXTI
+N
+N/************************************* FLASH and Option Bytes *****************/
+N#define _FLASH
+N/* Uncomment the line below to enable FLASH program/erase/protections functions,
+N   otherwise only FLASH configuration (latency, prefetch, half cycle) functions
+N   are enabled */
+N#define _FLASH_PROG
+N
+N/************************************* FSMC ***********************************/
+N#define _FSMC
+N
+N/************************************* GPIO ***********************************/
+N#define _GPIO
+N#define _GPIOA
+N#define _GPIOB
+N#define _GPIOC
+N#define _GPIOD
+N#define _GPIOE
+N#define _GPIOF
+N#define _GPIOG
+N#define _AFIO
+N
+N/************************************* I2C ************************************/
+N#define _I2C
+N#define _I2C1
+N#define _I2C2
+N
+N/************************************* IWDG ***********************************/
+N#define _IWDG
+N
+N/************************************* NVIC ***********************************/
+N#define _NVIC
+N
+N/************************************* PWR ************************************/
+N#define _PWR
+N
+N/************************************* RCC ************************************/
+N#define _RCC
+N
+N/************************************* RTC ************************************/
+N#define _RTC
+N
+N/************************************* SDIO ***********************************/
+N#define _SDIO
+N
+N/************************************* SPI ************************************/
+N#define _SPI
+N#define _SPI1
+N#define _SPI2
+N#define _SPI3
+N
+N/************************************* SysTick ********************************/
+N#define _SysTick
+N
+N/************************************* TIM ************************************/
+N#define _TIM
+N#define _TIM1
+N#define _TIM2
+N#define _TIM3
+N#define _TIM4
+N#define _TIM5
+N#define _TIM6
+N#define _TIM7
+N#define _TIM8
+N
+N/************************************* USART **********************************/
+N#define _USART
+N#define _USART1
+N#define _USART2
+N#define _USART3
+N#define _UART4
+N#define _UART5
+N
+N/************************************* WWDG ***********************************/
+N#define _WWDG
+N
+N/* In the following line adjust the value of External High Speed oscillator (HSE)
+N   used in your application */
+N#define HSE_Value    ((u32)8000000) /* Value of the External oscillator in Hz*/
+N
+N/* Exported macro ------------------------------------------------------------*/
+N#ifdef  DEBUG
+S/*******************************************************************************
+S* Macro Name     : assert_param
+S* Description    : The assert_param macro is used for function's parameters check.
+S*                  It is used only if the library is compiled in DEBUG mode. 
+S* Input          : - expr: If expr is false, it calls assert_failed function
+S*                    which reports the name of the source file and the source
+S*                    line number of the call that failed. 
+S*                    If expr is true, it returns no value.
+S* Return         : None
+S*******************************************************************************/ 
+S  #define assert_param(expr) ((expr) ? (void)0 : assert_failed((u8 *)__FILE__, __LINE__))
+S/* Exported functions ------------------------------------------------------- */
+S  void assert_failed(u8* file, u32 line);
+N#else
+N  #define assert_param(expr) ((void)0)
+N#endif /* DEBUG */
+N
+N#endif /* __STM32F10x_CONF_H */
+N
+N/******************* (C) COPYRIGHT 2008 STMicroelectronics *****END OF FILE****/
+L 27 "D:\Program Files\keil4.14\ARM\INC\ST\STM32F10x\stm32f10x_map.h" 2
+N#include "stm32f10x_type.h"
+N#include "cortexm3_macro.h"
+L 1 "D:\Program Files\keil4.14\ARM\INC\ST\STM32F10x\cortexm3_macro.h" 1
+N/******************** (C) COPYRIGHT 2008 STMicroelectronics ********************
+N* File Name          : cortexm3_macro.h
+N* Author             : MCD Application Team
+N* Version            : V2.0.1
+N* Date               : 06/13/2008
+N* Description        : Header file for cortexm3_macro.s.
+N********************************************************************************
+N* THE PRESENT FIRMWARE WHICH IS FOR GUIDANCE ONLY AIMS AT PROVIDING CUSTOMERS
+N* WITH CODING INFORMATION REGARDING THEIR PRODUCTS IN ORDER FOR THEM TO SAVE TIME.
+N* AS A RESULT, STMICROELECTRONICS SHALL NOT BE HELD LIABLE FOR ANY DIRECT,
+N* INDIRECT OR CONSEQUENTIAL DAMAGES WITH RESPECT TO ANY CLAIMS ARISING FROM THE
+N* CONTENT OF SUCH FIRMWARE AND/OR THE USE MADE BY CUSTOMERS OF THE CODING
+N* INFORMATION CONTAINED HEREIN IN CONNECTION WITH THEIR PRODUCTS.
+N*******************************************************************************/
+N
+N/* Define to prevent recursive inclusion -------------------------------------*/
+N#ifndef __CORTEXM3_MACRO_H
+N#define __CORTEXM3_MACRO_H
+N
+N/* Includes ------------------------------------------------------------------*/
+N#include "stm32f10x_type.h"
+N
+N/* Exported types ------------------------------------------------------------*/
+N/* Exported constants --------------------------------------------------------*/
+N/* Exported macro ------------------------------------------------------------*/
+N/* Exported functions ------------------------------------------------------- */
+Nvoid __WFI(void);
+Nvoid __WFE(void);
+Nvoid __SEV(void);
+Nvoid __ISB(void);
+Nvoid __DSB(void);
+Nvoid __DMB(void);
+Nvoid __SVC(void);
+Nu32 __MRS_CONTROL(void);
+Nvoid __MSR_CONTROL(u32 Control);
+Nu32 __MRS_PSP(void);
+Nvoid __MSR_PSP(u32 TopOfProcessStack);
+Nu32 __MRS_MSP(void);
+Nvoid __MSR_MSP(u32 TopOfMainStack);
+Nvoid __RESETPRIMASK(void);
+Nvoid __SETPRIMASK(void);
+Nu32 __READ_PRIMASK(void);
+Nvoid __RESETFAULTMASK(void);
+Nvoid __SETFAULTMASK(void);
+Nu32 __READ_FAULTMASK(void);
+Nvoid __BASEPRICONFIG(u32 NewPriority);
+Nu32 __GetBASEPRI(void);
+Nu16 __REV_HalfWord(u16 Data);
+Nu32 __REV_Word(u32 Data);
+N
+N#endif /* __CORTEXM3_MACRO_H */
+N
+N/******************* (C) COPYRIGHT 2008 STMicroelectronics *****END OF FILE****/
+L 29 "D:\Program Files\keil4.14\ARM\INC\ST\STM32F10x\stm32f10x_map.h" 2
+N
+N/* Exported types ------------------------------------------------------------*/
+N/******************************************************************************/
+N/*                         Peripheral registers structures                    */
+N/******************************************************************************/
+N
+N/*------------------------ Analog to Digital Converter -----------------------*/
+Ntypedef struct
+N{
+N  vu32 SR;
+N  vu32 CR1;
+N  vu32 CR2;
+N  vu32 SMPR1;
+N  vu32 SMPR2;
+N  vu32 JOFR1;
+N  vu32 JOFR2;
+N  vu32 JOFR3;
+N  vu32 JOFR4;
+N  vu32 HTR;
+N  vu32 LTR;
+N  vu32 SQR1;
+N  vu32 SQR2;
+N  vu32 SQR3;
+N  vu32 JSQR;
+N  vu32 JDR1;
+N  vu32 JDR2;
+N  vu32 JDR3;
+N  vu32 JDR4;
+N  vu32 DR;
+N} ADC_TypeDef;
+N
+N/*------------------------ Backup Registers ----------------------------------*/
+Ntypedef struct
+N{
+N  u32  RESERVED0;
+N  vu16 DR1;
+N  u16  RESERVED1;
+N  vu16 DR2;
+N  u16  RESERVED2;
+N  vu16 DR3;
+N  u16  RESERVED3;
+N  vu16 DR4;
+N  u16  RESERVED4;
+N  vu16 DR5;
+N  u16  RESERVED5;
+N  vu16 DR6;
+N  u16  RESERVED6;
+N  vu16 DR7;
+N  u16  RESERVED7;
+N  vu16 DR8;
+N  u16  RESERVED8;
+N  vu16 DR9;
+N  u16  RESERVED9;
+N  vu16 DR10;
+N  u16  RESERVED10; 
+N  vu16 RTCCR;
+N  u16  RESERVED11;
+N  vu16 CR;
+N  u16  RESERVED12;
+N  vu16 CSR;
+N  u16  RESERVED13[5];
+N  vu16 DR11;
+N  u16  RESERVED14;
+N  vu16 DR12;
+N  u16  RESERVED15;
+N  vu16 DR13;
+N  u16  RESERVED16;
+N  vu16 DR14;
+N  u16  RESERVED17;
+N  vu16 DR15;
+N  u16  RESERVED18;
+N  vu16 DR16;
+N  u16  RESERVED19;
+N  vu16 DR17;
+N  u16  RESERVED20;
+N  vu16 DR18;
+N  u16  RESERVED21;
+N  vu16 DR19;
+N  u16  RESERVED22;
+N  vu16 DR20;
+N  u16  RESERVED23;
+N  vu16 DR21;
+N  u16  RESERVED24;
+N  vu16 DR22;
+N  u16  RESERVED25;
+N  vu16 DR23;
+N  u16  RESERVED26;
+N  vu16 DR24;
+N  u16  RESERVED27;
+N  vu16 DR25;
+N  u16  RESERVED28;
+N  vu16 DR26;
+N  u16  RESERVED29;
+N  vu16 DR27;
+N  u16  RESERVED30;
+N  vu16 DR28;
+N  u16  RESERVED31;
+N  vu16 DR29;
+N  u16  RESERVED32;
+N  vu16 DR30;
+N  u16  RESERVED33; 
+N  vu16 DR31;
+N  u16  RESERVED34;
+N  vu16 DR32;
+N  u16  RESERVED35;
+N  vu16 DR33;
+N  u16  RESERVED36;
+N  vu16 DR34;
+N  u16  RESERVED37;
+N  vu16 DR35;
+N  u16  RESERVED38;
+N  vu16 DR36;
+N  u16  RESERVED39;
+N  vu16 DR37;
+N  u16  RESERVED40;
+N  vu16 DR38;
+N  u16  RESERVED41;
+N  vu16 DR39;
+N  u16  RESERVED42;
+N  vu16 DR40;
+N  u16  RESERVED43;
+N  vu16 DR41;
+N  u16  RESERVED44;
+N  vu16 DR42;
+N  u16  RESERVED45;    
+N} BKP_TypeDef;
+N
+N/*------------------------ Controller Area Network ---------------------------*/
+Ntypedef struct
+N{
+N  vu32 TIR;
+N  vu32 TDTR;
+N  vu32 TDLR;
+N  vu32 TDHR;
+N} CAN_TxMailBox_TypeDef;
+N
+Ntypedef struct
+N{
+N  vu32 RIR;
+N  vu32 RDTR;
+N  vu32 RDLR;
+N  vu32 RDHR;
+N} CAN_FIFOMailBox_TypeDef;
+N
+Ntypedef struct
+N{
+N  vu32 FR1;
+N  vu32 FR2;
+N} CAN_FilterRegister_TypeDef;
+N
+Ntypedef struct
+N{
+N  vu32 MCR;
+N  vu32 MSR;
+N  vu32 TSR;
+N  vu32 RF0R;
+N  vu32 RF1R;
+N  vu32 IER;
+N  vu32 ESR;
+N  vu32 BTR;
+N  u32  RESERVED0[88];
+N  CAN_TxMailBox_TypeDef sTxMailBox[3];
+N  CAN_FIFOMailBox_TypeDef sFIFOMailBox[2];
+N  u32  RESERVED1[12];
+N  vu32 FMR;
+N  vu32 FM1R;
+N  u32  RESERVED2;
+N  vu32 FS1R;
+N  u32  RESERVED3;
+N  vu32 FFA1R;
+N  u32  RESERVED4;
+N  vu32 FA1R;
+N  u32  RESERVED5[8];
+N  CAN_FilterRegister_TypeDef sFilterRegister[14];
+N} CAN_TypeDef;
+N
+N/*------------------------ CRC calculation unit ------------------------------*/
+Ntypedef struct
+N{
+N  vu32 DR;
+N  vu8  IDR;
+N  u8   RESERVED0;
+N  u16  RESERVED1;
+N  vu32 CR;
+N} CRC_TypeDef;
+N
+N
+N/*------------------------ Digital to Analog Converter -----------------------*/
+Ntypedef struct
+N{
+N  vu32 CR;
+N  vu32 SWTRIGR;
+N  vu32 DHR12R1;
+N  vu32 DHR12L1;
+N  vu32 DHR8R1;
+N  vu32 DHR12R2;
+N  vu32 DHR12L2;
+N  vu32 DHR8R2;
+N  vu32 DHR12RD;
+N  vu32 DHR12LD;
+N  vu32 DHR8RD;
+N  vu32 DOR1;
+N  vu32 DOR2;
+N} DAC_TypeDef;
+N
+N/*------------------------ Debug MCU -----------------------------------------*/
+Ntypedef struct
+N{
+N  vu32 IDCODE;
+N  vu32 CR;	
+N}DBGMCU_TypeDef;
+N
+N/*------------------------ DMA Controller ------------------------------------*/
+Ntypedef struct
+N{
+N  vu32 CCR;
+N  vu32 CNDTR;
+N  vu32 CPAR;
+N  vu32 CMAR;
+N} DMA_Channel_TypeDef;
+N
+Ntypedef struct
+N{
+N  vu32 ISR;
+N  vu32 IFCR;
+N} DMA_TypeDef;
+N
+N/*------------------------ External Interrupt/Event Controller ---------------*/
+Ntypedef struct
+N{
+N  vu32 IMR;
+N  vu32 EMR;
+N  vu32 RTSR;
+N  vu32 FTSR;
+N  vu32 SWIER;
+N  vu32 PR;
+N} EXTI_TypeDef;
+N
+N/*------------------------ FLASH and Option Bytes Registers ------------------*/
+Ntypedef struct
+N{
+N  vu32 ACR;
+N  vu32 KEYR;
+N  vu32 OPTKEYR;
+N  vu32 SR;
+N  vu32 CR;
+N  vu32 AR;
+N  vu32 RESERVED;
+N  vu32 OBR;
+N  vu32 WRPR;
+N} FLASH_TypeDef;
+N
+Ntypedef struct
+N{
+N  vu16 RDP;
+N  vu16 USER;
+N  vu16 Data0;
+N  vu16 Data1;
+N  vu16 WRP0;
+N  vu16 WRP1;
+N  vu16 WRP2;
+N  vu16 WRP3;
+N} OB_TypeDef;
+N
+N/*------------------------ Flexible Static Memory Controller -----------------*/
+Ntypedef struct
+N{
+N  vu32 BTCR[8];   
+N} FSMC_Bank1_TypeDef; 
+N
+Ntypedef struct
+N{
+N  vu32 BWTR[7];
+N} FSMC_Bank1E_TypeDef;
+N
+Ntypedef struct
+N{
+N  vu32 PCR2;
+N  vu32 SR2;
+N  vu32 PMEM2;
+N  vu32 PATT2;
+N  u32  RESERVED0;   
+N  vu32 ECCR2; 
+N} FSMC_Bank2_TypeDef;  
+N
+Ntypedef struct
+N{
+N  vu32 PCR3;
+N  vu32 SR3;
+N  vu32 PMEM3;
+N  vu32 PATT3;
+N  u32  RESERVED0;   
+N  vu32 ECCR3; 
+N} FSMC_Bank3_TypeDef; 
+N
+Ntypedef struct
+N{
+N  vu32 PCR4;
+N  vu32 SR4;
+N  vu32 PMEM4;
+N  vu32 PATT4;
+N  vu32 PIO4; 
+N} FSMC_Bank4_TypeDef; 
+N
+N/*------------------------ General Purpose and Alternate Function IO ---------*/
+Ntypedef struct
+N{
+N  vu32 CRL;
+N  vu32 CRH;
+N  vu32 IDR;
+N  vu32 ODR;
+N  vu32 BSRR;
+N  vu32 BRR;
+N  vu32 LCKR;
+N} GPIO_TypeDef;
+N
+Ntypedef struct
+N{
+N  vu32 EVCR;
+N  vu32 MAPR;
+N  vu32 EXTICR[4];
+N} AFIO_TypeDef;
+N
+N/*------------------------ Inter-integrated Circuit Interface ----------------*/
+Ntypedef struct
+N{
+N  vu16 CR1;
+N  u16  RESERVED0;
+N  vu16 CR2;
+N  u16  RESERVED1;
+N  vu16 OAR1;
+N  u16  RESERVED2;
+N  vu16 OAR2;
+N  u16  RESERVED3;
+N  vu16 DR;
+N  u16  RESERVED4;
+N  vu16 SR1;
+N  u16  RESERVED5;
+N  vu16 SR2;
+N  u16  RESERVED6;
+N  vu16 CCR;
+N  u16  RESERVED7;
+N  vu16 TRISE;
+N  u16  RESERVED8;
+N} I2C_TypeDef;
+N
+N/*------------------------ Independent WATCHDOG ------------------------------*/
+Ntypedef struct
+N{
+N  vu32 KR;
+N  vu32 PR;
+N  vu32 RLR;
+N  vu32 SR;
+N} IWDG_TypeDef;
+N
+N/*------------------------ Nested Vectored Interrupt Controller --------------*/
+Ntypedef struct
+N{
+N  vu32 ISER[2];
+N  u32  RESERVED0[30];
+N  vu32 ICER[2];
+N  u32  RSERVED1[30];
+N  vu32 ISPR[2];
+N  u32  RESERVED2[30];
+N  vu32 ICPR[2];
+N  u32  RESERVED3[30];
+N  vu32 IABR[2];
+N  u32  RESERVED4[62];
+N  vu32 IPR[15];
+N} NVIC_TypeDef;
+N
+Ntypedef struct
+N{
+N  vuc32 CPUID;
+N  vu32 ICSR;
+N  vu32 VTOR;
+N  vu32 AIRCR;
+N  vu32 SCR;
+N  vu32 CCR;
+N  vu32 SHPR[3];
+N  vu32 SHCSR;
+N  vu32 CFSR;
+N  vu32 HFSR;
+N  vu32 DFSR;
+N  vu32 MMFAR;
+N  vu32 BFAR;
+N  vu32 AFSR;
+N} SCB_TypeDef;
+N
+N/*------------------------ Power Control -------------------------------------*/
+Ntypedef struct
+N{
+N  vu32 CR;
+N  vu32 CSR;
+N} PWR_TypeDef;
+N
+N/*------------------------ Reset and Clock Control ---------------------------*/
+Ntypedef struct
+N{
+N  vu32 CR;
+N  vu32 CFGR;
+N  vu32 CIR;
+N  vu32 APB2RSTR;
+N  vu32 APB1RSTR;
+N  vu32 AHBENR;
+N  vu32 APB2ENR;
+N  vu32 APB1ENR;
+N  vu32 BDCR;
+N  vu32 CSR;
+N} RCC_TypeDef;
+N
+N/*------------------------ Real-Time Clock -----------------------------------*/
+Ntypedef struct
+N{
+N  vu16 CRH;
+N  u16  RESERVED0;
+N  vu16 CRL;
+N  u16  RESERVED1;
+N  vu16 PRLH;
+N  u16  RESERVED2;
+N  vu16 PRLL;
+N  u16  RESERVED3;
+N  vu16 DIVH;
+N  u16  RESERVED4;
+N  vu16 DIVL;
+N  u16  RESERVED5;
+N  vu16 CNTH;
+N  u16  RESERVED6;
+N  vu16 CNTL;
+N  u16  RESERVED7;
+N  vu16 ALRH;
+N  u16  RESERVED8;
+N  vu16 ALRL;
+N  u16  RESERVED9;
+N} RTC_TypeDef;
+N
+N/*------------------------ SD host Interface ---------------------------------*/
+Ntypedef struct
+N{
+N  vu32 POWER;
+N  vu32 CLKCR;
+N  vu32 ARG;
+N  vu32 CMD;
+N  vuc32 RESPCMD;
+N  vuc32 RESP1;
+N  vuc32 RESP2;
+N  vuc32 RESP3;
+N  vuc32 RESP4;
+N  vu32 DTIMER;
+N  vu32 DLEN;
+N  vu32 DCTRL;
+N  vuc32 DCOUNT;
+N  vuc32 STA;
+N  vu32 ICR;
+N  vu32 MASK;
+N  u32  RESERVED0[2];
+N  vuc32 FIFOCNT;
+N  u32  RESERVED1[13];
+N  vu32 FIFO;
+N} SDIO_TypeDef;
+N
+N/*------------------------ Serial Peripheral Interface -----------------------*/
+Ntypedef struct
+N{
+N  vu16 CR1;
+N  u16  RESERVED0;
+N  vu16 CR2;
+N  u16  RESERVED1;
+N  vu16 SR;
+N  u16  RESERVED2;
+N  vu16 DR;
+N  u16  RESERVED3;
+N  vu16 CRCPR;
+N  u16  RESERVED4;
+N  vu16 RXCRCR;
+N  u16  RESERVED5;
+N  vu16 TXCRCR;
+N  u16  RESERVED6;
+N  vu16 I2SCFGR;
+N  u16  RESERVED7;
+N  vu16 I2SPR;
+N  u16  RESERVED8;  
+N} SPI_TypeDef;
+N
+N/*------------------------ SystemTick ----------------------------------------*/
+Ntypedef struct
+N{
+N  vu32 CTRL;
+N  vu32 LOAD;
+N  vu32 VAL;
+N  vuc32 CALIB;
+N} SysTick_TypeDef;
+N
+N/*------------------------ TIM -----------------------------------------------*/
+Ntypedef struct
+N{
+N  vu16 CR1;
+N  u16  RESERVED0;
+N  vu16 CR2;
+N  u16  RESERVED1;
+N  vu16 SMCR;
+N  u16  RESERVED2;
+N  vu16 DIER;
+N  u16  RESERVED3;
+N  vu16 SR;
+N  u16  RESERVED4;
+N  vu16 EGR;
+N  u16  RESERVED5;
+N  vu16 CCMR1;
+N  u16  RESERVED6;
+N  vu16 CCMR2;
+N  u16  RESERVED7;
+N  vu16 CCER;
+N  u16  RESERVED8;
+N  vu16 CNT;
+N  u16  RESERVED9;
+N  vu16 PSC;
+N  u16  RESERVED10;
+N  vu16 ARR;
+N  u16  RESERVED11;
+N  vu16 RCR;
+N  u16  RESERVED12;
+N  vu16 CCR1;
+N  u16  RESERVED13;
+N  vu16 CCR2;
+N  u16  RESERVED14;
+N  vu16 CCR3;
+N  u16  RESERVED15;
+N  vu16 CCR4;
+N  u16  RESERVED16;
+N  vu16 BDTR;
+N  u16  RESERVED17;
+N  vu16 DCR;
+N  u16  RESERVED18;
+N  vu16 DMAR;
+N  u16  RESERVED19;
+N} TIM_TypeDef;
+N
+N/*----------------- Universal Synchronous Asynchronous Receiver Transmitter --*/
+Ntypedef struct
+N{
+N  vu16 SR;
+N  u16  RESERVED0;
+N  vu16 DR;
+N  u16  RESERVED1;
+N  vu16 BRR;
+N  u16  RESERVED2;
+N  vu16 CR1;
+N  u16  RESERVED3;
+N  vu16 CR2;
+N  u16  RESERVED4;
+N  vu16 CR3;
+N  u16  RESERVED5;
+N  vu16 GTPR;
+N  u16  RESERVED6;
+N} USART_TypeDef;
+N
+N/*------------------------ Window WATCHDOG -----------------------------------*/
+Ntypedef struct
+N{
+N  vu32 CR;
+N  vu32 CFR;
+N  vu32 SR;
+N} WWDG_TypeDef;
+N
+N/******************************************************************************/
+N/*                         Peripheral memory map                              */
+N/******************************************************************************/
+N/* Peripheral and SRAM base address in the alias region */
+N#define PERIPH_BB_BASE        ((u32)0x42000000)
+N#define SRAM_BB_BASE          ((u32)0x22000000)
+N
+N/* Peripheral and SRAM base address in the bit-band region */
+N#define SRAM_BASE             ((u32)0x20000000)
+N#define PERIPH_BASE           ((u32)0x40000000)
+N
+N/* FSMC registers base address */
+N#define FSMC_R_BASE           ((u32)0xA0000000)
+N
+N/* Peripheral memory map */
+N#define APB1PERIPH_BASE       PERIPH_BASE
+N#define APB2PERIPH_BASE       (PERIPH_BASE + 0x10000)
+N#define AHBPERIPH_BASE        (PERIPH_BASE + 0x20000)
+N
+N#define TIM2_BASE             (APB1PERIPH_BASE + 0x0000)
+N#define TIM3_BASE             (APB1PERIPH_BASE + 0x0400)
+N#define TIM4_BASE             (APB1PERIPH_BASE + 0x0800)
+N#define TIM5_BASE             (APB1PERIPH_BASE + 0x0C00)
+N#define TIM6_BASE             (APB1PERIPH_BASE + 0x1000)
+N#define TIM7_BASE             (APB1PERIPH_BASE + 0x1400)
+N#define RTC_BASE              (APB1PERIPH_BASE + 0x2800)
+N#define WWDG_BASE             (APB1PERIPH_BASE + 0x2C00)
+N#define IWDG_BASE             (APB1PERIPH_BASE + 0x3000)
+N#define SPI2_BASE             (APB1PERIPH_BASE + 0x3800)
+N#define SPI3_BASE             (APB1PERIPH_BASE + 0x3C00)
+N#define USART2_BASE           (APB1PERIPH_BASE + 0x4400)
+N#define USART3_BASE           (APB1PERIPH_BASE + 0x4800)
+N#define UART4_BASE            (APB1PERIPH_BASE + 0x4C00)
+N#define UART5_BASE            (APB1PERIPH_BASE + 0x5000)
+N#define I2C1_BASE             (APB1PERIPH_BASE + 0x5400)
+N#define I2C2_BASE             (APB1PERIPH_BASE + 0x5800)
+N#define CAN_BASE              (APB1PERIPH_BASE + 0x6400)
+N#define BKP_BASE              (APB1PERIPH_BASE + 0x6C00)
+N#define PWR_BASE              (APB1PERIPH_BASE + 0x7000)
+N#define DAC_BASE              (APB1PERIPH_BASE + 0x7400)
+N
+N#define AFIO_BASE             (APB2PERIPH_BASE + 0x0000)
+N#define EXTI_BASE             (APB2PERIPH_BASE + 0x0400)
+N#define GPIOA_BASE            (APB2PERIPH_BASE + 0x0800)
+N#define GPIOB_BASE            (APB2PERIPH_BASE + 0x0C00)
+N#define GPIOC_BASE            (APB2PERIPH_BASE + 0x1000)
+N#define GPIOD_BASE            (APB2PERIPH_BASE + 0x1400)
+N#define GPIOE_BASE            (APB2PERIPH_BASE + 0x1800)
+N#define GPIOF_BASE            (APB2PERIPH_BASE + 0x1C00)
+N#define GPIOG_BASE            (APB2PERIPH_BASE + 0x2000)
+N#define ADC1_BASE             (APB2PERIPH_BASE + 0x2400)
+N#define ADC2_BASE             (APB2PERIPH_BASE + 0x2800)
+N#define TIM1_BASE             (APB2PERIPH_BASE + 0x2C00)
+N#define SPI1_BASE             (APB2PERIPH_BASE + 0x3000)
+N#define TIM8_BASE             (APB2PERIPH_BASE + 0x3400)
+N#define USART1_BASE           (APB2PERIPH_BASE + 0x3800)
+N#define ADC3_BASE             (APB2PERIPH_BASE + 0x3C00)
+N
+N#define SDIO_BASE             (PERIPH_BASE + 0x18000)
+N
+N#define DMA1_BASE             (AHBPERIPH_BASE + 0x0000)
+N#define DMA1_Channel1_BASE    (AHBPERIPH_BASE + 0x0008)
+N#define DMA1_Channel2_BASE    (AHBPERIPH_BASE + 0x001C)
+N#define DMA1_Channel3_BASE    (AHBPERIPH_BASE + 0x0030)
+N#define DMA1_Channel4_BASE    (AHBPERIPH_BASE + 0x0044)
+N#define DMA1_Channel5_BASE    (AHBPERIPH_BASE + 0x0058)
+N#define DMA1_Channel6_BASE    (AHBPERIPH_BASE + 0x006C)
+N#define DMA1_Channel7_BASE    (AHBPERIPH_BASE + 0x0080)
+N#define DMA2_BASE             (AHBPERIPH_BASE + 0x0400)
+N#define DMA2_Channel1_BASE    (AHBPERIPH_BASE + 0x0408)
+N#define DMA2_Channel2_BASE    (AHBPERIPH_BASE + 0x041C)
+N#define DMA2_Channel3_BASE    (AHBPERIPH_BASE + 0x0430)
+N#define DMA2_Channel4_BASE    (AHBPERIPH_BASE + 0x0444)
+N#define DMA2_Channel5_BASE    (AHBPERIPH_BASE + 0x0458)
+N#define RCC_BASE              (AHBPERIPH_BASE + 0x1000)
+N#define CRC_BASE              (AHBPERIPH_BASE + 0x3000)
+N
+N/* Flash registers base address */
+N#define FLASH_R_BASE          (AHBPERIPH_BASE + 0x2000)
+N/* Flash Option Bytes base address */
+N#define OB_BASE               ((u32)0x1FFFF800)
+N
+N/* FSMC Bankx registers base address */
+N#define FSMC_Bank1_R_BASE     (FSMC_R_BASE + 0x0000)
+N#define FSMC_Bank1E_R_BASE    (FSMC_R_BASE + 0x0104)
+N#define FSMC_Bank2_R_BASE     (FSMC_R_BASE + 0x0060)
+N#define FSMC_Bank3_R_BASE     (FSMC_R_BASE + 0x0080)
+N#define FSMC_Bank4_R_BASE     (FSMC_R_BASE + 0x00A0)
+N
+N/* Debug MCU registers base address */
+N#define DBGMCU_BASE          ((u32)0xE0042000)
+N
+N/* System Control Space memory map */
+N#define SCS_BASE              ((u32)0xE000E000)
+N
+N#define SysTick_BASE          (SCS_BASE + 0x0010)
+N#define NVIC_BASE             (SCS_BASE + 0x0100)
+N#define SCB_BASE              (SCS_BASE + 0x0D00)
+N
+N/******************************************************************************/
+N/*                         Peripheral declaration                             */
+N/******************************************************************************/
+N
+N/*------------------------ Non Debug Mode ------------------------------------*/
+N#ifndef DEBUG
+N#ifdef _TIM2
+N  #define TIM2                ((TIM_TypeDef *) TIM2_BASE)
+N#endif /*_TIM2 */
+N
+N#ifdef _TIM3
+N  #define TIM3                ((TIM_TypeDef *) TIM3_BASE)
+N#endif /*_TIM3 */
+N
+N#ifdef _TIM4
+N  #define TIM4                ((TIM_TypeDef *) TIM4_BASE)
+N#endif /*_TIM4 */
+N
+N#ifdef _TIM5
+N  #define TIM5                ((TIM_TypeDef *) TIM5_BASE)
+N#endif /*_TIM5 */
+N
+N#ifdef _TIM6
+N  #define TIM6                ((TIM_TypeDef *) TIM6_BASE)
+N#endif /*_TIM6 */
+N
+N#ifdef _TIM7
+N  #define TIM7                ((TIM_TypeDef *) TIM7_BASE)
+N#endif /*_TIM7 */
+N
+N#ifdef _RTC
+N  #define RTC                 ((RTC_TypeDef *) RTC_BASE)
+N#endif /*_RTC */
+N
+N#ifdef _WWDG
+N  #define WWDG                ((WWDG_TypeDef *) WWDG_BASE)
+N#endif /*_WWDG */
+N
+N#ifdef _IWDG
+N  #define IWDG                ((IWDG_TypeDef *) IWDG_BASE)
+N#endif /*_IWDG */
+N
+N#ifdef _SPI2
+N  #define SPI2                ((SPI_TypeDef *) SPI2_BASE)
+N#endif /*_SPI2 */
+N
+N#ifdef _SPI3
+N  #define SPI3                ((SPI_TypeDef *) SPI3_BASE)
+N#endif /*_SPI3 */
+N
+N#ifdef _USART2
+N  #define USART2              ((USART_TypeDef *) USART2_BASE)
+N#endif /*_USART2 */
+N
+N#ifdef _USART3
+N  #define USART3              ((USART_TypeDef *) USART3_BASE)
+N#endif /*_USART3 */
+N
+N#ifdef _UART4
+N  #define UART4              ((USART_TypeDef *) UART4_BASE)
+N#endif /*_UART4 */
+N
+N#ifdef _UART5
+N  #define UART5              ((USART_TypeDef *) UART5_BASE)
+N#endif /*_USART5 */
+N
+N#ifdef _I2C1
+N  #define I2C1                ((I2C_TypeDef *) I2C1_BASE)
+N#endif /*_I2C1 */
+N
+N#ifdef _I2C2
+N  #define I2C2                ((I2C_TypeDef *) I2C2_BASE)
+N#endif /*_I2C2 */
+N
+N#ifdef _CAN
+N  #define CAN                 ((CAN_TypeDef *) CAN_BASE)
+N#endif /*_CAN */
+N
+N#ifdef _BKP
+N  #define BKP                 ((BKP_TypeDef *) BKP_BASE)
+N#endif /*_BKP */
+N
+N#ifdef _PWR
+N  #define PWR                 ((PWR_TypeDef *) PWR_BASE)
+N#endif /*_PWR */
+N
+N#ifdef _DAC
+N  #define DAC                 ((DAC_TypeDef *) DAC_BASE)
+N#endif /*_DAC */
+N
+N#ifdef _AFIO
+N  #define AFIO                ((AFIO_TypeDef *) AFIO_BASE)
+N#endif /*_AFIO */
+N
+N#ifdef _EXTI
+N  #define EXTI                ((EXTI_TypeDef *) EXTI_BASE)
+N#endif /*_EXTI */
+N
+N#ifdef _GPIOA
+N  #define GPIOA               ((GPIO_TypeDef *) GPIOA_BASE)
+N#endif /*_GPIOA */
+N
+N#ifdef _GPIOB
+N  #define GPIOB               ((GPIO_TypeDef *) GPIOB_BASE)
+N#endif /*_GPIOB */
+N
+N#ifdef _GPIOC
+N  #define GPIOC               ((GPIO_TypeDef *) GPIOC_BASE)
+N#endif /*_GPIOC */
+N
+N#ifdef _GPIOD
+N  #define GPIOD               ((GPIO_TypeDef *) GPIOD_BASE)
+N#endif /*_GPIOD */
+N
+N#ifdef _GPIOE
+N  #define GPIOE               ((GPIO_TypeDef *) GPIOE_BASE)
+N#endif /*_GPIOE */
+N
+N#ifdef _GPIOF
+N  #define GPIOF               ((GPIO_TypeDef *) GPIOF_BASE)
+N#endif /*_GPIOF */
+N
+N#ifdef _GPIOG
+N  #define GPIOG               ((GPIO_TypeDef *) GPIOG_BASE)
+N#endif /*_GPIOG */
+N
+N#ifdef _ADC1
+N  #define ADC1                ((ADC_TypeDef *) ADC1_BASE)
+N#endif /*_ADC1 */
+N
+N#ifdef _ADC2
+N  #define ADC2                ((ADC_TypeDef *) ADC2_BASE)
+N#endif /*_ADC2 */
+N
+N#ifdef _TIM1
+N  #define TIM1                ((TIM_TypeDef *) TIM1_BASE)
+N#endif /*_TIM1 */
+N
+N#ifdef _SPI1
+N  #define SPI1                ((SPI_TypeDef *) SPI1_BASE)
+N#endif /*_SPI1 */
+N
+N#ifdef _TIM8
+N  #define TIM8                ((TIM_TypeDef *) TIM8_BASE)
+N#endif /*_TIM8 */
+N
+N#ifdef _USART1
+N  #define USART1              ((USART_TypeDef *) USART1_BASE)
+N#endif /*_USART1 */
+N
+N#ifdef _ADC3
+N  #define ADC3                ((ADC_TypeDef *) ADC3_BASE)
+N#endif /*_ADC3 */
+N
+N#ifdef _SDIO
+N  #define SDIO                ((SDIO_TypeDef *) SDIO_BASE)
+N#endif /*_SDIO */
+N
+N#ifdef _DMA
+N  #define DMA1                ((DMA_TypeDef *) DMA1_BASE)
+N  #define DMA2                ((DMA_TypeDef *) DMA2_BASE)
+N#endif /*_DMA */
+N
+N#ifdef _DMA1_Channel1
+N  #define DMA1_Channel1       ((DMA_Channel_TypeDef *) DMA1_Channel1_BASE)
+N#endif /*_DMA1_Channel1 */
+N
+N#ifdef _DMA1_Channel2
+N  #define DMA1_Channel2       ((DMA_Channel_TypeDef *) DMA1_Channel2_BASE)
+N#endif /*_DMA1_Channel2 */
+N
+N#ifdef _DMA1_Channel3
+N  #define DMA1_Channel3       ((DMA_Channel_TypeDef *) DMA1_Channel3_BASE)
+N#endif /*_DMA1_Channel3 */
+N
+N#ifdef _DMA1_Channel4
+N  #define DMA1_Channel4       ((DMA_Channel_TypeDef *) DMA1_Channel4_BASE)
+N#endif /*_DMA1_Channel4 */
+N
+N#ifdef _DMA1_Channel5
+N  #define DMA1_Channel5       ((DMA_Channel_TypeDef *) DMA1_Channel5_BASE)
+N#endif /*_DMA1_Channel5 */
+N
+N#ifdef _DMA1_Channel6
+N  #define DMA1_Channel6       ((DMA_Channel_TypeDef *) DMA1_Channel6_BASE)
+N#endif /*_DMA1_Channel6 */
+N
+N#ifdef _DMA1_Channel7
+N  #define DMA1_Channel7       ((DMA_Channel_TypeDef *) DMA1_Channel7_BASE)
+N#endif /*_DMA1_Channel7 */
+N
+N#ifdef _DMA2_Channel1
+N  #define DMA2_Channel1       ((DMA_Channel_TypeDef *) DMA2_Channel1_BASE)
+N#endif /*_DMA2_Channel1 */
+N
+N#ifdef _DMA2_Channel2
+N  #define DMA2_Channel2       ((DMA_Channel_TypeDef *) DMA2_Channel2_BASE)
+N#endif /*_DMA2_Channel2 */
+N
+N#ifdef _DMA2_Channel3
+N  #define DMA2_Channel3       ((DMA_Channel_TypeDef *) DMA2_Channel3_BASE)
+N#endif /*_DMA2_Channel3 */
+N
+N#ifdef _DMA2_Channel4
+N  #define DMA2_Channel4       ((DMA_Channel_TypeDef *) DMA2_Channel4_BASE)
+N#endif /*_DMA2_Channel4 */
+N
+N#ifdef _DMA2_Channel5
+N  #define DMA2_Channel5       ((DMA_Channel_TypeDef *) DMA2_Channel5_BASE)
+N#endif /*_DMA2_Channel5 */
+N
+N#ifdef _RCC
+N  #define RCC                 ((RCC_TypeDef *) RCC_BASE)
+N#endif /*_RCC */
+N
+N#ifdef _CRC
+N  #define CRC                 ((CRC_TypeDef *) CRC_BASE)
+N#endif /*_CRC */
+N
+N#ifdef _FLASH
+N  #define FLASH               ((FLASH_TypeDef *) FLASH_R_BASE)
+N  #define OB                  ((OB_TypeDef *) OB_BASE) 
+N#endif /*_FLASH */
+N
+N#ifdef _FSMC
+N  #define FSMC_Bank1          ((FSMC_Bank1_TypeDef *) FSMC_Bank1_R_BASE)
+N  #define FSMC_Bank1E         ((FSMC_Bank1E_TypeDef *) FSMC_Bank1E_R_BASE)
+N  #define FSMC_Bank2          ((FSMC_Bank2_TypeDef *) FSMC_Bank2_R_BASE)
+N  #define FSMC_Bank3          ((FSMC_Bank3_TypeDef *) FSMC_Bank3_R_BASE)
+N  #define FSMC_Bank4          ((FSMC_Bank4_TypeDef *) FSMC_Bank4_R_BASE)
+N#endif /*_FSMC */
+N
+N#ifdef _DBGMCU
+N  #define DBGMCU              ((DBGMCU_TypeDef *) DBGMCU_BASE)
+N#endif /*_DBGMCU */
+N
+N#ifdef _SysTick
+N  #define SysTick             ((SysTick_TypeDef *) SysTick_BASE)
+N#endif /*_SysTick */
+N
+N#ifdef _NVIC
+N  #define NVIC                ((NVIC_TypeDef *) NVIC_BASE)
+N  #define SCB                 ((SCB_TypeDef *) SCB_BASE)  
+N#endif /*_NVIC */
+N
+N/*------------------------ Debug Mode ----------------------------------------*/
+N#else   /* DEBUG */
+S#ifdef _TIM2
+S  EXT TIM_TypeDef             *TIM2;
+S#endif /*_TIM2 */
+S
+S#ifdef _TIM3
+S  EXT TIM_TypeDef             *TIM3;
+S#endif /*_TIM3 */
+S
+S#ifdef _TIM4
+S  EXT TIM_TypeDef             *TIM4;
+S#endif /*_TIM4 */
+S
+S#ifdef _TIM5
+S  EXT TIM_TypeDef             *TIM5;
+S#endif /*_TIM5 */
+S
+S#ifdef _TIM6
+S  EXT TIM_TypeDef             *TIM6;
+S#endif /*_TIM6 */
+S
+S#ifdef _TIM7
+S  EXT TIM_TypeDef             *TIM7;
+S#endif /*_TIM7 */
+S
+S#ifdef _RTC
+S  EXT RTC_TypeDef             *RTC;
+S#endif /*_RTC */
+S
+S#ifdef _WWDG
+S  EXT WWDG_TypeDef            *WWDG;
+S#endif /*_WWDG */
+S
+S#ifdef _IWDG
+S  EXT IWDG_TypeDef            *IWDG;
+S#endif /*_IWDG */
+S
+S#ifdef _SPI2
+S  EXT SPI_TypeDef             *SPI2;
+S#endif /*_SPI2 */
+S
+S#ifdef _SPI3
+S  EXT SPI_TypeDef             *SPI3;
+S#endif /*_SPI3 */
+S
+S#ifdef _USART2
+S  EXT USART_TypeDef           *USART2;
+S#endif /*_USART2 */
+S
+S#ifdef _USART3
+S  EXT USART_TypeDef           *USART3;
+S#endif /*_USART3 */
+S
+S#ifdef _UART4
+S  EXT USART_TypeDef           *UART4;
+S#endif /*_UART4 */
+S
+S#ifdef _UART5
+S  EXT USART_TypeDef           *UART5;
+S#endif /*_UART5 */
+S
+S#ifdef _I2C1
+S  EXT I2C_TypeDef             *I2C1;
+S#endif /*_I2C1 */
+S
+S#ifdef _I2C2
+S  EXT I2C_TypeDef             *I2C2;
+S#endif /*_I2C2 */
+S
+S#ifdef _CAN
+S  EXT CAN_TypeDef             *CAN;
+S#endif /*_CAN */
+S
+S#ifdef _BKP
+S  EXT BKP_TypeDef             *BKP;
+S#endif /*_BKP */
+S
+S#ifdef _PWR
+S  EXT PWR_TypeDef             *PWR;
+S#endif /*_PWR */
+S
+S#ifdef _DAC
+S  EXT DAC_TypeDef             *DAC;
+S#endif /*_DAC */
+S
+S#ifdef _AFIO
+S  EXT AFIO_TypeDef            *AFIO;
+S#endif /*_AFIO */
+S
+S#ifdef _EXTI
+S  EXT EXTI_TypeDef            *EXTI;
+S#endif /*_EXTI */
+S
+S#ifdef _GPIOA
+S  EXT GPIO_TypeDef            *GPIOA;
+S#endif /*_GPIOA */
+S
+S#ifdef _GPIOB
+S  EXT GPIO_TypeDef            *GPIOB;
+S#endif /*_GPIOB */
+S
+S#ifdef _GPIOC
+S  EXT GPIO_TypeDef            *GPIOC;
+S#endif /*_GPIOC */
+S
+S#ifdef _GPIOD
+S  EXT GPIO_TypeDef            *GPIOD;
+S#endif /*_GPIOD */
+S
+S#ifdef _GPIOE
+S  EXT GPIO_TypeDef            *GPIOE;
+S#endif /*_GPIOE */
+S
+S#ifdef _GPIOF
+S  EXT GPIO_TypeDef            *GPIOF;
+S#endif /*_GPIOF */
+S
+S#ifdef _GPIOG
+S  EXT GPIO_TypeDef            *GPIOG;
+S#endif /*_GPIOG */
+S
+S#ifdef _ADC1
+S  EXT ADC_TypeDef             *ADC1;
+S#endif /*_ADC1 */
+S
+S#ifdef _ADC2
+S  EXT ADC_TypeDef             *ADC2;
+S#endif /*_ADC2 */
+S
+S#ifdef _TIM1
+S  EXT TIM_TypeDef             *TIM1;
+S#endif /*_TIM1 */
+S
+S#ifdef _SPI1
+S  EXT SPI_TypeDef             *SPI1;
+S#endif /*_SPI1 */
+S
+S#ifdef _TIM8
+S  EXT TIM_TypeDef             *TIM8;
+S#endif /*_TIM8 */
+S
+S#ifdef _USART1
+S  EXT USART_TypeDef           *USART1;
+S#endif /*_USART1 */
+S
+S#ifdef _ADC3
+S  EXT ADC_TypeDef             *ADC3;
+S#endif /*_ADC3 */
+S
+S#ifdef _SDIO
+S  EXT SDIO_TypeDef            *SDIO;
+S#endif /*_SDIO */
+S
+S#ifdef _DMA
+S  EXT DMA_TypeDef             *DMA1;
+S  EXT DMA_TypeDef             *DMA2;
+S#endif /*_DMA */
+S
+S#ifdef _DMA1_Channel1
+S  EXT DMA_Channel_TypeDef     *DMA1_Channel1;
+S#endif /*_DMA1_Channel1 */
+S
+S#ifdef _DMA1_Channel2
+S  EXT DMA_Channel_TypeDef     *DMA1_Channel2;
+S#endif /*_DMA1_Channel2 */
+S
+S#ifdef _DMA1_Channel3
+S  EXT DMA_Channel_TypeDef     *DMA1_Channel3;
+S#endif /*_DMA1_Channel3 */
+S
+S#ifdef _DMA1_Channel4
+S  EXT DMA_Channel_TypeDef     *DMA1_Channel4;
+S#endif /*_DMA1_Channel4 */
+S
+S#ifdef _DMA1_Channel5
+S  EXT DMA_Channel_TypeDef     *DMA1_Channel5;
+S#endif /*_DMA1_Channel5 */
+S
+S#ifdef _DMA1_Channel6
+S  EXT DMA_Channel_TypeDef     *DMA1_Channel6;
+S#endif /*_DMA1_Channel6 */
+S
+S#ifdef _DMA1_Channel7
+S  EXT DMA_Channel_TypeDef     *DMA1_Channel7;
+S#endif /*_DMA1_Channel7 */
+S
+S#ifdef _DMA2_Channel1
+S  EXT DMA_Channel_TypeDef     *DMA2_Channel1;
+S#endif /*_DMA2_Channel1 */
+S
+S#ifdef _DMA2_Channel2
+S  EXT DMA_Channel_TypeDef     *DMA2_Channel2;
+S#endif /*_DMA2_Channel2 */
+S
+S#ifdef _DMA2_Channel3
+S  EXT DMA_Channel_TypeDef     *DMA2_Channel3;
+S#endif /*_DMA2_Channel3 */
+S
+S#ifdef _DMA2_Channel4
+S  EXT DMA_Channel_TypeDef     *DMA2_Channel4;
+S#endif /*_DMA2_Channel4 */
+S
+S#ifdef _DMA2_Channel5
+S  EXT DMA_Channel_TypeDef     *DMA2_Channel5;
+S#endif /*_DMA2_Channel5 */
+S
+S#ifdef _RCC
+S  EXT RCC_TypeDef             *RCC;
+S#endif /*_RCC */
+S
+S#ifdef _CRC
+S  EXT CRC_TypeDef             *CRC;
+S#endif /*_CRC */
+S
+S#ifdef _FLASH
+S  EXT FLASH_TypeDef            *FLASH;
+S  EXT OB_TypeDef               *OB;  
+S#endif /*_FLASH */
+S
+S#ifdef _FSMC
+S  EXT FSMC_Bank1_TypeDef      *FSMC_Bank1;
+S  EXT FSMC_Bank1E_TypeDef     *FSMC_Bank1E;
+S  EXT FSMC_Bank2_TypeDef      *FSMC_Bank2;
+S  EXT FSMC_Bank3_TypeDef      *FSMC_Bank3;
+S  EXT FSMC_Bank4_TypeDef      *FSMC_Bank4;
+S#endif /*_FSMC */
+S
+S#ifdef _DBGMCU
+S  EXT DBGMCU_TypeDef          *DBGMCU;
+S#endif /*_DBGMCU */
+S
+S#ifdef _SysTick
+S  EXT SysTick_TypeDef         *SysTick;
+S#endif /*_SysTick */
+S
+S#ifdef _NVIC
+S  EXT NVIC_TypeDef            *NVIC;
+S  EXT SCB_TypeDef             *SCB;
+S#endif /*_NVIC */
+S
+N#endif  /* DEBUG */
+N
+N/* Exported constants --------------------------------------------------------*/
+N/* Exported macro ------------------------------------------------------------*/
+N/* Exported functions ------------------------------------------------------- */
+N
+N#endif /* __STM32F10x_MAP_H */
+N
+N/******************* (C) COPYRIGHT 2008 STMicroelectronics *****END OF FILE****/
+L 23 "D:\Program Files\keil4.14\ARM\INC\ST\STM32F10x\stm32f10x_rcc.h" 2
+N
+N/* Exported types ------------------------------------------------------------*/
+Ntypedef struct
+N{
+N  u32 SYSCLK_Frequency;
+N  u32 HCLK_Frequency;
+N  u32 PCLK1_Frequency;
+N  u32 PCLK2_Frequency;
+N  u32 ADCCLK_Frequency;
+N}RCC_ClocksTypeDef;
+N
+N/* Exported constants --------------------------------------------------------*/
+N/* HSE configuration */
+N#define RCC_HSE_OFF                      ((u32)0x00000000)
+N#define RCC_HSE_ON                       ((u32)0x00010000)
+N#define RCC_HSE_Bypass                   ((u32)0x00040000) //外部高速时钟旁路
+N
+N#define IS_RCC_HSE(HSE) (((HSE) == RCC_HSE_OFF) || ((HSE) == RCC_HSE_ON) || \
+N                         ((HSE) == RCC_HSE_Bypass))
+X#define IS_RCC_HSE(HSE) (((HSE) == RCC_HSE_OFF) || ((HSE) == RCC_HSE_ON) ||                          ((HSE) == RCC_HSE_Bypass))
+N
+N/* PLL entry clock source */
+N#define RCC_PLLSource_HSI_Div2           ((u32)0x00000000)
+N#define RCC_PLLSource_HSE_Div1           ((u32)0x00010000)
+N#define RCC_PLLSource_HSE_Div2           ((u32)0x00030000)
+N
+N#define IS_RCC_PLL_SOURCE(SOURCE) (((SOURCE) == RCC_PLLSource_HSI_Div2) || \
+N                                   ((SOURCE) == RCC_PLLSource_HSE_Div1) || \
+N                                   ((SOURCE) == RCC_PLLSource_HSE_Div2))
+X#define IS_RCC_PLL_SOURCE(SOURCE) (((SOURCE) == RCC_PLLSource_HSI_Div2) ||                                    ((SOURCE) == RCC_PLLSource_HSE_Div1) ||                                    ((SOURCE) == RCC_PLLSource_HSE_Div2))
+N
+N/* PLL multiplication factor */
+N#define RCC_PLLMul_2                     ((u32)0x00000000)
+N#define RCC_PLLMul_3                     ((u32)0x00040000)
+N#define RCC_PLLMul_4                     ((u32)0x00080000)
+N#define RCC_PLLMul_5                     ((u32)0x000C0000)
+N#define RCC_PLLMul_6                     ((u32)0x00100000)
+N#define RCC_PLLMul_7                     ((u32)0x00140000)
+N#define RCC_PLLMul_8                     ((u32)0x00180000)
+N#define RCC_PLLMul_9                     ((u32)0x001C0000)
+N#define RCC_PLLMul_10                    ((u32)0x00200000)
+N#define RCC_PLLMul_11                    ((u32)0x00240000)
+N#define RCC_PLLMul_12                    ((u32)0x00280000)
+N#define RCC_PLLMul_13                    ((u32)0x002C0000)
+N#define RCC_PLLMul_14                    ((u32)0x00300000)
+N#define RCC_PLLMul_15                    ((u32)0x00340000)
+N#define RCC_PLLMul_16                    ((u32)0x00380000)
+N
+N#define IS_RCC_PLL_MUL(MUL) (((MUL) == RCC_PLLMul_2) || ((MUL) == RCC_PLLMul_3)   || \
+N                             ((MUL) == RCC_PLLMul_4) || ((MUL) == RCC_PLLMul_5)   || \
+N                             ((MUL) == RCC_PLLMul_6) || ((MUL) == RCC_PLLMul_7)   || \
+N                             ((MUL) == RCC_PLLMul_8) || ((MUL) == RCC_PLLMul_9)   || \
+N                             ((MUL) == RCC_PLLMul_10) || ((MUL) == RCC_PLLMul_11) || \
+N                             ((MUL) == RCC_PLLMul_12) || ((MUL) == RCC_PLLMul_13) || \
+N                             ((MUL) == RCC_PLLMul_14) || ((MUL) == RCC_PLLMul_15) || \
+N                             ((MUL) == RCC_PLLMul_16))
+X#define IS_RCC_PLL_MUL(MUL) (((MUL) == RCC_PLLMul_2) || ((MUL) == RCC_PLLMul_3)   ||                              ((MUL) == RCC_PLLMul_4) || ((MUL) == RCC_PLLMul_5)   ||                              ((MUL) == RCC_PLLMul_6) || ((MUL) == RCC_PLLMul_7)   ||                              ((MUL) == RCC_PLLMul_8) || ((MUL) == RCC_PLLMul_9)   ||                              ((MUL) == RCC_PLLMul_10) || ((MUL) == RCC_PLLMul_11) ||                              ((MUL) == RCC_PLLMul_12) || ((MUL) == RCC_PLLMul_13) ||                              ((MUL) == RCC_PLLMul_14) || ((MUL) == RCC_PLLMul_15) ||                              ((MUL) == RCC_PLLMul_16))
+N
+N/* System clock source */
+N#define RCC_SYSCLKSource_HSI             ((u32)0x00000000)
+N#define RCC_SYSCLKSource_HSE             ((u32)0x00000001)
+N#define RCC_SYSCLKSource_PLLCLK          ((u32)0x00000002)
+N
+N#define IS_RCC_SYSCLK_SOURCE(SOURCE) (((SOURCE) == RCC_SYSCLKSource_HSI) || \
+N                                      ((SOURCE) == RCC_SYSCLKSource_HSE) || \
+N                                      ((SOURCE) == RCC_SYSCLKSource_PLLCLK))
+X#define IS_RCC_SYSCLK_SOURCE(SOURCE) (((SOURCE) == RCC_SYSCLKSource_HSI) ||                                       ((SOURCE) == RCC_SYSCLKSource_HSE) ||                                       ((SOURCE) == RCC_SYSCLKSource_PLLCLK))
+N
+N/* AHB clock source */
+N#define RCC_SYSCLK_Div1                  ((u32)0x00000000)
+N#define RCC_SYSCLK_Div2                  ((u32)0x00000080)
+N#define RCC_SYSCLK_Div4                  ((u32)0x00000090)
+N#define RCC_SYSCLK_Div8                  ((u32)0x000000A0)
+N#define RCC_SYSCLK_Div16                 ((u32)0x000000B0)
+N#define RCC_SYSCLK_Div64                 ((u32)0x000000C0)
+N#define RCC_SYSCLK_Div128                ((u32)0x000000D0)
+N#define RCC_SYSCLK_Div256                ((u32)0x000000E0)
+N#define RCC_SYSCLK_Div512                ((u32)0x000000F0)
+N
+N#define IS_RCC_HCLK(HCLK) (((HCLK) == RCC_SYSCLK_Div1) || ((HCLK) == RCC_SYSCLK_Div2) || \
+N                           ((HCLK) == RCC_SYSCLK_Div4) || ((HCLK) == RCC_SYSCLK_Div8) || \
+N                           ((HCLK) == RCC_SYSCLK_Div16) || ((HCLK) == RCC_SYSCLK_Div64) || \
+N                           ((HCLK) == RCC_SYSCLK_Div128) || ((HCLK) == RCC_SYSCLK_Div256) || \
+N                           ((HCLK) == RCC_SYSCLK_Div512))
+X#define IS_RCC_HCLK(HCLK) (((HCLK) == RCC_SYSCLK_Div1) || ((HCLK) == RCC_SYSCLK_Div2) ||                            ((HCLK) == RCC_SYSCLK_Div4) || ((HCLK) == RCC_SYSCLK_Div8) ||                            ((HCLK) == RCC_SYSCLK_Div16) || ((HCLK) == RCC_SYSCLK_Div64) ||                            ((HCLK) == RCC_SYSCLK_Div128) || ((HCLK) == RCC_SYSCLK_Div256) ||                            ((HCLK) == RCC_SYSCLK_Div512))
+N
+N/* APB1/APB2 clock source */
+N#define RCC_HCLK_Div1                    ((u32)0x00000000)
+N#define RCC_HCLK_Div2                    ((u32)0x00000400)
+N#define RCC_HCLK_Div4                    ((u32)0x00000500)
+N#define RCC_HCLK_Div8                    ((u32)0x00000600)
+N#define RCC_HCLK_Div16                   ((u32)0x00000700)
+N
+N#define IS_RCC_PCLK(PCLK) (((PCLK) == RCC_HCLK_Div1) || ((PCLK) == RCC_HCLK_Div2) || \
+N                           ((PCLK) == RCC_HCLK_Div4) || ((PCLK) == RCC_HCLK_Div8) || \
+N                           ((PCLK) == RCC_HCLK_Div16))
+X#define IS_RCC_PCLK(PCLK) (((PCLK) == RCC_HCLK_Div1) || ((PCLK) == RCC_HCLK_Div2) ||                            ((PCLK) == RCC_HCLK_Div4) || ((PCLK) == RCC_HCLK_Div8) ||                            ((PCLK) == RCC_HCLK_Div16))
+N
+N/* RCC Interrupt source */
+N#define RCC_IT_LSIRDY                    ((u8)0x01)
+N#define RCC_IT_LSERDY                    ((u8)0x02)
+N#define RCC_IT_HSIRDY                    ((u8)0x04)
+N#define RCC_IT_HSERDY                    ((u8)0x08)
+N#define RCC_IT_PLLRDY                    ((u8)0x10)
+N#define RCC_IT_CSS                       ((u8)0x80)
+N
+N#define IS_RCC_IT(IT) ((((IT) & (u8)0xE0) == 0x00) && ((IT) != 0x00))
+N#define IS_RCC_GET_IT(IT) (((IT) == RCC_IT_LSIRDY) || ((IT) == RCC_IT_LSERDY) || \
+N                           ((IT) == RCC_IT_HSIRDY) || ((IT) == RCC_IT_HSERDY) || \
+N                           ((IT) == RCC_IT_PLLRDY) || ((IT) == RCC_IT_CSS))
+X#define IS_RCC_GET_IT(IT) (((IT) == RCC_IT_LSIRDY) || ((IT) == RCC_IT_LSERDY) ||                            ((IT) == RCC_IT_HSIRDY) || ((IT) == RCC_IT_HSERDY) ||                            ((IT) == RCC_IT_PLLRDY) || ((IT) == RCC_IT_CSS))
+N#define IS_RCC_CLEAR_IT(IT) ((((IT) & (u8)0x60) == 0x00) && ((IT) != 0x00))
+N
+N/* USB clock source */
+N#define RCC_USBCLKSource_PLLCLK_1Div5    ((u8)0x00)
+N#define RCC_USBCLKSource_PLLCLK_Div1     ((u8)0x01)
+N
+N#define IS_RCC_USBCLK_SOURCE(SOURCE) (((SOURCE) == RCC_USBCLKSource_PLLCLK_1Div5) || \
+N                                      ((SOURCE) == RCC_USBCLKSource_PLLCLK_Div1))
+X#define IS_RCC_USBCLK_SOURCE(SOURCE) (((SOURCE) == RCC_USBCLKSource_PLLCLK_1Div5) ||                                       ((SOURCE) == RCC_USBCLKSource_PLLCLK_Div1))
+N
+N/* ADC clock source */
+N#define RCC_PCLK2_Div2                   ((u32)0x00000000)
+N#define RCC_PCLK2_Div4                   ((u32)0x00004000)
+N#define RCC_PCLK2_Div6                   ((u32)0x00008000)
+N#define RCC_PCLK2_Div8                   ((u32)0x0000C000)
+N
+N#define IS_RCC_ADCCLK(ADCCLK) (((ADCCLK) == RCC_PCLK2_Div2) || ((ADCCLK) == RCC_PCLK2_Div4) || \
+N                               ((ADCCLK) == RCC_PCLK2_Div6) || ((ADCCLK) == RCC_PCLK2_Div8))
+X#define IS_RCC_ADCCLK(ADCCLK) (((ADCCLK) == RCC_PCLK2_Div2) || ((ADCCLK) == RCC_PCLK2_Div4) ||                                ((ADCCLK) == RCC_PCLK2_Div6) || ((ADCCLK) == RCC_PCLK2_Div8))
+N
+N/* LSE configuration */
+N#define RCC_LSE_OFF                      ((u8)0x00)
+N#define RCC_LSE_ON                       ((u8)0x01)
+N#define RCC_LSE_Bypass                   ((u8)0x04)
+N
+N#define IS_RCC_LSE(LSE) (((LSE) == RCC_LSE_OFF) || ((LSE) == RCC_LSE_ON) || \
+N                         ((LSE) == RCC_LSE_Bypass))
+X#define IS_RCC_LSE(LSE) (((LSE) == RCC_LSE_OFF) || ((LSE) == RCC_LSE_ON) ||                          ((LSE) == RCC_LSE_Bypass))
+N
+N/* RTC clock source */
+N#define RCC_RTCCLKSource_LSE             ((u32)0x00000100)
+N#define RCC_RTCCLKSource_LSI             ((u32)0x00000200)
+N#define RCC_RTCCLKSource_HSE_Div128      ((u32)0x00000300)
+N
+N#define IS_RCC_RTCCLK_SOURCE(SOURCE) (((SOURCE) == RCC_RTCCLKSource_LSE) || \
+N                                      ((SOURCE) == RCC_RTCCLKSource_LSI) || \
+N                                      ((SOURCE) == RCC_RTCCLKSource_HSE_Div128))
+X#define IS_RCC_RTCCLK_SOURCE(SOURCE) (((SOURCE) == RCC_RTCCLKSource_LSE) ||                                       ((SOURCE) == RCC_RTCCLKSource_LSI) ||                                       ((SOURCE) == RCC_RTCCLKSource_HSE_Div128))
+N
+N/* AHB peripheral */
+N#define RCC_AHBPeriph_DMA1               ((u32)0x00000001)
+N#define RCC_AHBPeriph_DMA2               ((u32)0x00000002)
+N#define RCC_AHBPeriph_SRAM               ((u32)0x00000004)
+N#define RCC_AHBPeriph_FLITF              ((u32)0x00000010)
+N#define RCC_AHBPeriph_CRC                ((u32)0x00000040)
+N#define RCC_AHBPeriph_FSMC               ((u32)0x00000100)
+N#define RCC_AHBPeriph_SDIO               ((u32)0x00000400)
+N
+N#define IS_RCC_AHB_PERIPH(PERIPH) ((((PERIPH) & 0xFFFFFAA8) == 0x00) && ((PERIPH) != 0x00))
+N
+N/* APB2 peripheral */
+N#define RCC_APB2Periph_AFIO              ((u32)0x00000001)
+N#define RCC_APB2Periph_GPIOA             ((u32)0x00000004)
+N#define RCC_APB2Periph_GPIOB             ((u32)0x00000008)
+N#define RCC_APB2Periph_GPIOC             ((u32)0x00000010)
+N#define RCC_APB2Periph_GPIOD             ((u32)0x00000020)
+N#define RCC_APB2Periph_GPIOE             ((u32)0x00000040)
+N#define RCC_APB2Periph_GPIOF             ((u32)0x00000080)
+N#define RCC_APB2Periph_GPIOG             ((u32)0x00000100)
+N#define RCC_APB2Periph_ADC1              ((u32)0x00000200)
+N#define RCC_APB2Periph_ADC2              ((u32)0x00000400)
+N#define RCC_APB2Periph_TIM1              ((u32)0x00000800)
+N#define RCC_APB2Periph_SPI1              ((u32)0x00001000)
+N#define RCC_APB2Periph_TIM8              ((u32)0x00002000)
+N#define RCC_APB2Periph_USART1            ((u32)0x00004000)
+N#define RCC_APB2Periph_ADC3              ((u32)0x00008000)
+N#define RCC_APB2Periph_ALL               ((u32)0x0000FFFD)
+N
+N#define IS_RCC_APB2_PERIPH(PERIPH) ((((PERIPH) & 0xFFFF0002) == 0x00) && ((PERIPH) != 0x00))
+N
+N/* APB1 peripheral */
+N#define RCC_APB1Periph_TIM2              ((u32)0x00000001)
+N#define RCC_APB1Periph_TIM3              ((u32)0x00000002)
+N#define RCC_APB1Periph_TIM4              ((u32)0x00000004)
+N#define RCC_APB1Periph_TIM5              ((u32)0x00000008)
+N#define RCC_APB1Periph_TIM6              ((u32)0x00000010)
+N#define RCC_APB1Periph_TIM7              ((u32)0x00000020)
+N#define RCC_APB1Periph_WWDG              ((u32)0x00000800)
+N#define RCC_APB1Periph_SPI2              ((u32)0x00004000)
+N#define RCC_APB1Periph_SPI3              ((u32)0x00008000)
+N#define RCC_APB1Periph_USART2            ((u32)0x00020000)
+N#define RCC_APB1Periph_USART3            ((u32)0x00040000)
+N#define RCC_APB1Periph_UART4             ((u32)0x00080000)
+N#define RCC_APB1Periph_UART5             ((u32)0x00100000)
+N#define RCC_APB1Periph_I2C1              ((u32)0x00200000)
+N#define RCC_APB1Periph_I2C2              ((u32)0x00400000)
+N#define RCC_APB1Periph_USB               ((u32)0x00800000)
+N#define RCC_APB1Periph_CAN               ((u32)0x02000000)
+N#define RCC_APB1Periph_BKP               ((u32)0x08000000)
+N#define RCC_APB1Periph_PWR               ((u32)0x10000000)
+N#define RCC_APB1Periph_DAC               ((u32)0x20000000)
+N#define RCC_APB1Periph_ALL               ((u32)0x3AFEC83F)
+N
+N#define IS_RCC_APB1_PERIPH(PERIPH) ((((PERIPH) & 0xC50137C0) == 0x00) && ((PERIPH) != 0x00))
+N
+N/* Clock source to output on MCO pin */
+N#define RCC_MCO_NoClock                  ((u8)0x00)
+N#define RCC_MCO_SYSCLK                   ((u8)0x04)
+N#define RCC_MCO_HSI                      ((u8)0x05)
+N#define RCC_MCO_HSE                      ((u8)0x06)
+N#define RCC_MCO_PLLCLK_Div2              ((u8)0x07)
+N
+N#define IS_RCC_MCO(MCO) (((MCO) == RCC_MCO_NoClock) || ((MCO) == RCC_MCO_HSI) || \
+N                         ((MCO) == RCC_MCO_SYSCLK)  || ((MCO) == RCC_MCO_HSE) || \
+N                         ((MCO) == RCC_MCO_PLLCLK_Div2))
+X#define IS_RCC_MCO(MCO) (((MCO) == RCC_MCO_NoClock) || ((MCO) == RCC_MCO_HSI) ||                          ((MCO) == RCC_MCO_SYSCLK)  || ((MCO) == RCC_MCO_HSE) ||                          ((MCO) == RCC_MCO_PLLCLK_Div2))
+N
+N/* RCC Flag */
+N#define RCC_FLAG_HSIRDY                  ((u8)0x20)
+N#define RCC_FLAG_HSERDY                  ((u8)0x31)
+N#define RCC_FLAG_PLLRDY                  ((u8)0x39)
+N#define RCC_FLAG_LSERDY                  ((u8)0x41)
+N#define RCC_FLAG_LSIRDY                  ((u8)0x61)
+N#define RCC_FLAG_PINRST                  ((u8)0x7A)
+N#define RCC_FLAG_PORRST                  ((u8)0x7B)
+N#define RCC_FLAG_SFTRST                  ((u8)0x7C)
+N#define RCC_FLAG_IWDGRST                 ((u8)0x7D)
+N#define RCC_FLAG_WWDGRST                 ((u8)0x7E)
+N#define RCC_FLAG_LPWRRST                 ((u8)0x7F)
+N
+N#define IS_RCC_FLAG(FLAG) (((FLAG) == RCC_FLAG_HSIRDY) || ((FLAG) == RCC_FLAG_HSERDY) || \
+N                           ((FLAG) == RCC_FLAG_PLLRDY) || ((FLAG) == RCC_FLAG_LSERDY) || \
+N                           ((FLAG) == RCC_FLAG_LSIRDY) || ((FLAG) == RCC_FLAG_PINRST) || \
+N                           ((FLAG) == RCC_FLAG_PORRST) || ((FLAG) == RCC_FLAG_SFTRST) || \
+N                           ((FLAG) == RCC_FLAG_IWDGRST)|| ((FLAG) == RCC_FLAG_WWDGRST)|| \
+N                           ((FLAG) == RCC_FLAG_LPWRRST))
+X#define IS_RCC_FLAG(FLAG) (((FLAG) == RCC_FLAG_HSIRDY) || ((FLAG) == RCC_FLAG_HSERDY) ||                            ((FLAG) == RCC_FLAG_PLLRDY) || ((FLAG) == RCC_FLAG_LSERDY) ||                            ((FLAG) == RCC_FLAG_LSIRDY) || ((FLAG) == RCC_FLAG_PINRST) ||                            ((FLAG) == RCC_FLAG_PORRST) || ((FLAG) == RCC_FLAG_SFTRST) ||                            ((FLAG) == RCC_FLAG_IWDGRST)|| ((FLAG) == RCC_FLAG_WWDGRST)||                            ((FLAG) == RCC_FLAG_LPWRRST))
+N
+N#define IS_RCC_CALIBRATION_VALUE(VALUE) ((VALUE) <= 0x1F)
+N
+N/* Exported macro ------------------------------------------------------------*/
+N/* Exported functions ------------------------------------------------------- */
+Nvoid RCC_DeInit(void);
+Nvoid RCC_HSEConfig(u32 RCC_HSE);
+NErrorStatus RCC_WaitForHSEStartUp(void);
+Nvoid RCC_AdjustHSICalibrationValue(u8 HSICalibrationValue);
+Nvoid RCC_HSICmd(FunctionalState NewState);
+Nvoid RCC_PLLConfig(u32 RCC_PLLSource, u32 RCC_PLLMul);
+Nvoid RCC_PLLCmd(FunctionalState NewState);
+Nvoid RCC_SYSCLKConfig(u32 RCC_SYSCLKSource);
+Nu8 RCC_GetSYSCLKSource(void);
+Nvoid RCC_HCLKConfig(u32 RCC_SYSCLK);
+Nvoid RCC_PCLK1Config(u32 RCC_HCLK);
+Nvoid RCC_PCLK2Config(u32 RCC_HCLK);
+Nvoid RCC_ITConfig(u8 RCC_IT, FunctionalState NewState);
+Nvoid RCC_USBCLKConfig(u32 RCC_USBCLKSource);
+Nvoid RCC_ADCCLKConfig(u32 RCC_PCLK2);
+Nvoid RCC_LSEConfig(u8 RCC_LSE);
+Nvoid RCC_LSICmd(FunctionalState NewState);
+Nvoid RCC_RTCCLKConfig(u32 RCC_RTCCLKSource);
+Nvoid RCC_RTCCLKCmd(FunctionalState NewState);
+Nvoid RCC_GetClocksFreq(RCC_ClocksTypeDef* RCC_Clocks);
+Nvoid RCC_AHBPeriphClockCmd(u32 RCC_AHBPeriph, FunctionalState NewState);
+Nvoid RCC_APB2PeriphClockCmd(u32 RCC_APB2Periph, FunctionalState NewState);
+Nvoid RCC_APB1PeriphClockCmd(u32 RCC_APB1Periph, FunctionalState NewState);
+Nvoid RCC_APB2PeriphResetCmd(u32 RCC_APB2Periph, FunctionalState NewState);
+Nvoid RCC_APB1PeriphResetCmd(u32 RCC_APB1Periph, FunctionalState NewState);
+Nvoid RCC_BackupResetCmd(FunctionalState NewState);
+Nvoid RCC_ClockSecuritySystemCmd(FunctionalState NewState);
+Nvoid RCC_MCOConfig(u8 RCC_MCO);
+NFlagStatus RCC_GetFlagStatus(u8 RCC_FLAG);
+Nvoid RCC_ClearFlag(void);
+NITStatus RCC_GetITStatus(u8 RCC_IT);
+Nvoid RCC_ClearITPendingBit(u8 RCC_IT);
+N
+N#endif /* __STM32F10x_RCC_H */
+N
+N/******************* (C) COPYRIGHT 2008 STMicroelectronics *****END OF FILE****/
+L 18 "source\FWLib\src\stm32f10x_rcc.c" 2
+N
+N/* Private typedef -----------------------------------------------------------*/
+N/* Private define ------------------------------------------------------------*/
+N/* ------------ RCC registers bit address in the alias region ----------- */
+N#define RCC_OFFSET                (RCC_BASE - PERIPH_BASE)
+N
+N/* --- CR Register ---*/
+N/* Alias word address of HSION bit */
+N#define CR_OFFSET                 (RCC_OFFSET + 0x00)
+N#define HSION_BitNumber           0x00
+N#define CR_HSION_BB               (PERIPH_BB_BASE + (CR_OFFSET * 32) + (HSION_BitNumber * 4))
+N
+N/* Alias word address of PLLON bit */
+N#define PLLON_BitNumber           0x18
+N#define CR_PLLON_BB               (PERIPH_BB_BASE + (CR_OFFSET * 32) + (PLLON_BitNumber * 4))
+N
+N/* Alias word address of CSSON bit */
+N#define CSSON_BitNumber           0x13
+N#define CR_CSSON_BB               (PERIPH_BB_BASE + (CR_OFFSET * 32) + (CSSON_BitNumber * 4))
+N
+N/* --- CFGR Register ---*/
+N/* Alias word address of USBPRE bit */
+N#define CFGR_OFFSET               (RCC_OFFSET + 0x04)
+N#define USBPRE_BitNumber          0x16
+N#define CFGR_USBPRE_BB            (PERIPH_BB_BASE + (CFGR_OFFSET * 32) + (USBPRE_BitNumber * 4))
+N
+N/* --- BDCR Register ---*/
+N/* Alias word address of RTCEN bit */
+N#define BDCR_OFFSET               (RCC_OFFSET + 0x20)
+N#define RTCEN_BitNumber           0x0F
+N#define BDCR_RTCEN_BB             (PERIPH_BB_BASE + (BDCR_OFFSET * 32) + (RTCEN_BitNumber * 4))
+N
+N/* Alias word address of BDRST bit */
+N#define BDRST_BitNumber           0x10
+N#define BDCR_BDRST_BB             (PERIPH_BB_BASE + (BDCR_OFFSET * 32) + (BDRST_BitNumber * 4))
+N
+N/* --- CSR Register ---*/
+N/* Alias word address of LSION bit */
+N#define CSR_OFFSET                (RCC_OFFSET + 0x24)
+N#define LSION_BitNumber           0x00
+N#define CSR_LSION_BB              (PERIPH_BB_BASE + (CSR_OFFSET * 32) + (LSION_BitNumber * 4))
+N
+N/* ---------------------- RCC registers bit mask ------------------------ */
+N/* CR register bit mask */
+N#define CR_HSEBYP_Reset           ((u32)0xFFFBFFFF)
+N#define CR_HSEBYP_Set             ((u32)0x00040000)
+N#define CR_HSEON_Reset            ((u32)0xFFFEFFFF)
+N#define CR_HSEON_Set              ((u32)0x00010000)
+N#define CR_HSITRIM_Mask           ((u32)0xFFFFFF07)
+N
+N/* CFGR register bit mask */
+N#define CFGR_PLL_Mask             ((u32)0xFFC0FFFF)
+N#define CFGR_PLLMull_Mask         ((u32)0x003C0000)
+N#define CFGR_PLLSRC_Mask          ((u32)0x00010000)
+N#define CFGR_PLLXTPRE_Mask        ((u32)0x00020000)
+N#define CFGR_SWS_Mask             ((u32)0x0000000C)
+N#define CFGR_SW_Mask              ((u32)0xFFFFFFFC)
+N#define CFGR_HPRE_Reset_Mask      ((u32)0xFFFFFF0F)
+N#define CFGR_HPRE_Set_Mask        ((u32)0x000000F0)
+N#define CFGR_PPRE1_Reset_Mask     ((u32)0xFFFFF8FF)
+N#define CFGR_PPRE1_Set_Mask       ((u32)0x00000700)
+N#define CFGR_PPRE2_Reset_Mask     ((u32)0xFFFFC7FF)
+N#define CFGR_PPRE2_Set_Mask       ((u32)0x00003800)
+N#define CFGR_ADCPRE_Reset_Mask    ((u32)0xFFFF3FFF)
+N#define CFGR_ADCPRE_Set_Mask      ((u32)0x0000C000)
+N
+N/* CSR register bit mask */
+N#define CSR_RMVF_Set              ((u32)0x01000000)
+N
+N/* RCC Flag Mask */
+N#define FLAG_Mask                 ((u8)0x1F)
+N
+N/* Typical Value of the HSI in Hz */
+N#define HSI_Value                 ((u32)8000000)
+N
+N/* CIR register byte 2 (Bits[15:8]) base address */
+N#define CIR_BYTE2_ADDRESS         ((u32)0x40021009)
+N/* CIR register byte 3 (Bits[23:16]) base address */
+N#define CIR_BYTE3_ADDRESS         ((u32)0x4002100A)
+N
+N/* CFGR register byte 4 (Bits[31:24]) base address */
+N#define CFGR_BYTE4_ADDRESS        ((u32)0x40021007)
+N
+N/* BDCR register base address */
+N#define BDCR_ADDRESS              (PERIPH_BASE + BDCR_OFFSET)
+N
+N/* Time out for HSE start up */
+N#define HSEStartUp_TimeOut        ((u16)0x01FF)
+N
+N/* Private macro -------------------------------------------------------------*/
+N/* Private variables ---------------------------------------------------------*/
+Nstatic uc8 APBAHBPrescTable[16] = {0, 0, 0, 0, 1, 2, 3, 4, 1, 2, 3, 4, 6, 7, 8, 9};
+Nstatic uc8 ADCPrescTable[4] = {2, 4, 6, 8};
+N
+Nstatic volatile FlagStatus HSEStatus;
+Nstatic vu32 StartUpCounter = 0;
+N
+N/* Private function prototypes -----------------------------------------------*/
+N/* Private functions ---------------------------------------------------------*/
+N
+N/*******************************************************************************
+N* Function Name  : RCC_DeInit
+N* Description    : Resets the RCC clock configuration to the default reset state.
+N* Input          : None
+N* Output         : None
+N* Return         : None
+N*******************************************************************************/
+Nvoid RCC_DeInit(void)
+N{
+N  /* Set HSION bit */
+N  RCC->CR |= (u32)0x00000001;
+X  ((RCC_TypeDef *) ((((u32)0x40000000) + 0x20000) + 0x1000))->CR |= (u32)0x00000001;
+N
+N  /* Reset SW[1:0], HPRE[3:0], PPRE1[2:0], PPRE2[2:0], ADCPRE[1:0] and MCO[2:0] bits */
+N  RCC->CFGR &= (u32)0xF8FF0000;
+X  ((RCC_TypeDef *) ((((u32)0x40000000) + 0x20000) + 0x1000))->CFGR &= (u32)0xF8FF0000;
+N  
+N  /* Reset HSEON, CSSON and PLLON bits */
+N  RCC->CR &= (u32)0xFEF6FFFF;
+X  ((RCC_TypeDef *) ((((u32)0x40000000) + 0x20000) + 0x1000))->CR &= (u32)0xFEF6FFFF;
+N
+N  /* Reset HSEBYP bit */
+N  RCC->CR &= (u32)0xFFFBFFFF;
+X  ((RCC_TypeDef *) ((((u32)0x40000000) + 0x20000) + 0x1000))->CR &= (u32)0xFFFBFFFF;
+N
+N  /* Reset PLLSRC, PLLXTPRE, PLLMUL[3:0] and USBPRE bits */
+N  RCC->CFGR &= (u32)0xFF80FFFF;
+X  ((RCC_TypeDef *) ((((u32)0x40000000) + 0x20000) + 0x1000))->CFGR &= (u32)0xFF80FFFF;
+N
+N  /* Disable all interrupts */
+N  RCC->CIR = 0x00000000;
+X  ((RCC_TypeDef *) ((((u32)0x40000000) + 0x20000) + 0x1000))->CIR = 0x00000000;
+N}
+N
+N/*******************************************************************************
+N* Function Name  : RCC_HSEConfig
+N* Description    : Configures the External High Speed oscillator (HSE).
+N*                  HSE can not be stopped if it is used directly or through the 
+N*                  PLL as system clock.
+N* Input          : - RCC_HSE: specifies the new state of the HSE.
+N*                    This parameter can be one of the following values:
+N*                       - RCC_HSE_OFF: HSE oscillator OFF
+N*                       - RCC_HSE_ON: HSE oscillator ON
+N*                       - RCC_HSE_Bypass: HSE oscillator bypassed with external
+N*                         clock
+N* Output         : None
+N* Return         : None
+N*******************************************************************************/
+Nvoid RCC_HSEConfig(u32 RCC_HSE)
+N{
+N  /* Check the parameters */
+N  assert_param(IS_RCC_HSE(RCC_HSE));
+X  ((void)0);
+N
+N  /* Reset HSEON and HSEBYP bits before configuring the HSE ------------------*/
+N  /* Reset HSEON bit */
+N  RCC->CR &= CR_HSEON_Reset;
+X  ((RCC_TypeDef *) ((((u32)0x40000000) + 0x20000) + 0x1000))->CR &= ((u32)0xFFFEFFFF);
+N
+N  /* Reset HSEBYP bit */
+N  RCC->CR &= CR_HSEBYP_Reset;
+X  ((RCC_TypeDef *) ((((u32)0x40000000) + 0x20000) + 0x1000))->CR &= ((u32)0xFFFBFFFF);
+N
+N  /* Configure HSE (RCC_HSE_OFF is already covered by the code section above) */
+N  switch(RCC_HSE)
+N  {
+N    case RCC_HSE_ON:
+X    case ((u32)0x00010000):
+N      /* Set HSEON bit */
+N      RCC->CR |= CR_HSEON_Set;
+X      ((RCC_TypeDef *) ((((u32)0x40000000) + 0x20000) + 0x1000))->CR |= ((u32)0x00010000);
+N      break;
+N      
+N    case RCC_HSE_Bypass:
+X    case ((u32)0x00040000):
+N      /* Set HSEBYP and HSEON bits */
+N      RCC->CR |= CR_HSEBYP_Set | CR_HSEON_Set;
+X      ((RCC_TypeDef *) ((((u32)0x40000000) + 0x20000) + 0x1000))->CR |= ((u32)0x00040000) | ((u32)0x00010000);
+N      break;            
+N      
+N    default:
+N      break;      
+N  }
+N}
+N
+N/*******************************************************************************
+N* Function Name  : RCC_WaitForHSEStartUp
+N* Description    : Waits for HSE start-up.
+N* Input          : None
+N* Output         : None
+N* Return         : An ErrorStatus enumuration value:
+N*                         - SUCCESS: HSE oscillator is stable and ready to use
+N*                         - ERROR: HSE oscillator not yet ready
+N*******************************************************************************/
+NErrorStatus RCC_WaitForHSEStartUp(void)
+N{
+N  ErrorStatus status = ERROR;
+N
+N  /* Wait till HSE is ready and if Time out is reached exit */
+N  do
+N  {
+N    HSEStatus = RCC_GetFlagStatus(RCC_FLAG_HSERDY);
+X    HSEStatus = RCC_GetFlagStatus(((u8)0x31));
+N    StartUpCounter++;  
+N  } while((HSEStatus == RESET) && (StartUpCounter != HSEStartUp_TimeOut));
+X  } while((HSEStatus == RESET) && (StartUpCounter != ((u16)0x01FF)));
+N
+N
+N  if (RCC_GetFlagStatus(RCC_FLAG_HSERDY) != RESET)
+X  if (RCC_GetFlagStatus(((u8)0x31)) != RESET)
+N  {
+N    status = SUCCESS;
+N  }
+N  else
+N  {
+N    status = ERROR;
+N  }  
+N
+N  return (status);
+N}
+N
+N/*******************************************************************************
+N* Function Name  : RCC_AdjustHSICalibrationValue
+N* Description    : Adjusts the Internal High Speed oscillator (HSI) calibration
+N*                  value.
+N* Input          : - HSICalibrationValue: specifies the calibration trimming value.
+N*                    This parameter must be a number between 0 and 0x1F.
+N* Output         : None
+N* Return         : None
+N*******************************************************************************/
+Nvoid RCC_AdjustHSICalibrationValue(u8 HSICalibrationValue)
+N{
+N  u32 tmpreg = 0;
+N
+N  /* Check the parameters */
+N  assert_param(IS_RCC_CALIBRATION_VALUE(HSICalibrationValue));
+X  ((void)0);
+N
+N  tmpreg = RCC->CR;
+X  tmpreg = ((RCC_TypeDef *) ((((u32)0x40000000) + 0x20000) + 0x1000))->CR;
+N
+N  /* Clear HSITRIM[4:0] bits */
+N  tmpreg &= CR_HSITRIM_Mask;
+X  tmpreg &= ((u32)0xFFFFFF07);
+N
+N  /* Set the HSITRIM[4:0] bits according to HSICalibrationValue value */
+N  tmpreg |= (u32)HSICalibrationValue << 3;
+N
+N  /* Store the new value */
+N  RCC->CR = tmpreg;
+X  ((RCC_TypeDef *) ((((u32)0x40000000) + 0x20000) + 0x1000))->CR = tmpreg;
+N}
+N
+N/*******************************************************************************
+N* Function Name  : RCC_HSICmd
+N* Description    : Enables or disables the Internal High Speed oscillator (HSI).
+N*                  HSI can not be stopped if it is used directly or through the 
+N*                  PLL as system clock.
+N* Input          : - NewState: new state of the HSI.
+N*                    This parameter can be: ENABLE or DISABLE.
+N* Output         : None
+N* Return         : None
+N*******************************************************************************/
+Nvoid RCC_HSICmd(FunctionalState NewState)
+N{
+N  /* Check the parameters */
+N  assert_param(IS_FUNCTIONAL_STATE(NewState));
+X  ((void)0);
+N
+N  *(vu32 *) CR_HSION_BB = (u32)NewState;
+X  *(vu32 *) (((u32)0x42000000) + (((((((u32)0x40000000) + 0x20000) + 0x1000) - ((u32)0x40000000)) + 0x00) * 32) + (0x00 * 4)) = (u32)NewState;
+N}
+N
+N/*******************************************************************************
+N* Function Name  : RCC_PLLConfig
+N* Description    : Configures the PLL clock source and multiplication factor.
+N*                  This function must be used only when the PLL is disabled.
+N* Input          : - RCC_PLLSource: specifies the PLL entry clock source.
+N*                    This parameter can be one of the following values:
+N*                       - RCC_PLLSource_HSI_Div2: HSI oscillator clock divided
+N*                         by 2 selected as PLL clock entry
+N*                       - RCC_PLLSource_HSE_Div1: HSE oscillator clock selected
+N*                         as PLL clock entry
+N*                       - RCC_PLLSource_HSE_Div2: HSE oscillator clock divided
+N*                         by 2 selected as PLL clock entry
+N*                  - RCC_PLLMul: specifies the PLL multiplication factor.
+N*                    This parameter can be RCC_PLLMul_x where x:[2,16]
+N* Output         : None
+N* Return         : None
+N*******************************************************************************/
+Nvoid RCC_PLLConfig(u32 RCC_PLLSource, u32 RCC_PLLMul)
+N{
+N  u32 tmpreg = 0;
+N
+N  /* Check the parameters */
+N  assert_param(IS_RCC_PLL_SOURCE(RCC_PLLSource));
+X  ((void)0);
+N  assert_param(IS_RCC_PLL_MUL(RCC_PLLMul));
+X  ((void)0);
+N
+N  tmpreg = RCC->CFGR;
+X  tmpreg = ((RCC_TypeDef *) ((((u32)0x40000000) + 0x20000) + 0x1000))->CFGR;
+N
+N  /* Clear PLLSRC, PLLXTPRE and PLLMUL[3:0] bits */
+N  tmpreg &= CFGR_PLL_Mask;
+X  tmpreg &= ((u32)0xFFC0FFFF);
+N
+N  /* Set the PLL configuration bits */
+N  tmpreg |= RCC_PLLSource | RCC_PLLMul;
+N
+N  /* Store the new value */
+N  RCC->CFGR = tmpreg;
+X  ((RCC_TypeDef *) ((((u32)0x40000000) + 0x20000) + 0x1000))->CFGR = tmpreg;
+N}
+N
+N/*******************************************************************************
+N* Function Name  : RCC_PLLCmd
+N* Description    : Enables or disables the PLL.
+N*                  The PLL can not be disabled if it is used as system clock.
+N* Input          : - NewState: new state of the PLL.
+N*                    This parameter can be: ENABLE or DISABLE.
+N* Output         : None
+N* Return         : None
+N*******************************************************************************/
+Nvoid RCC_PLLCmd(FunctionalState NewState)
+N{
+N  /* Check the parameters */
+N  assert_param(IS_FUNCTIONAL_STATE(NewState));
+X  ((void)0);
+N
+N  *(vu32 *) CR_PLLON_BB = (u32)NewState;
+X  *(vu32 *) (((u32)0x42000000) + (((((((u32)0x40000000) + 0x20000) + 0x1000) - ((u32)0x40000000)) + 0x00) * 32) + (0x18 * 4)) = (u32)NewState;
+N}
+N
+N/*******************************************************************************
+N* Function Name  : RCC_SYSCLKConfig
+N* Description    : Configures the system clock (SYSCLK).
+N* Input          : - RCC_SYSCLKSource: specifies the clock source used as system
+N*                    clock. This parameter can be one of the following values:
+N*                       - RCC_SYSCLKSource_HSI: HSI selected as system clock
+N*                       - RCC_SYSCLKSource_HSE: HSE selected as system clock
+N*                       - RCC_SYSCLKSource_PLLCLK: PLL selected as system clock
+N* Output         : None
+N* Return         : None
+N*******************************************************************************/
+Nvoid RCC_SYSCLKConfig(u32 RCC_SYSCLKSource)
+N{
+N  u32 tmpreg = 0;
+N
+N  /* Check the parameters */
+N  assert_param(IS_RCC_SYSCLK_SOURCE(RCC_SYSCLKSource));
+X  ((void)0);
+N
+N  tmpreg = RCC->CFGR;
+X  tmpreg = ((RCC_TypeDef *) ((((u32)0x40000000) + 0x20000) + 0x1000))->CFGR;
+N
+N  /* Clear SW[1:0] bits */
+N  tmpreg &= CFGR_SW_Mask;
+X  tmpreg &= ((u32)0xFFFFFFFC);
+N
+N  /* Set SW[1:0] bits according to RCC_SYSCLKSource value */
+N  tmpreg |= RCC_SYSCLKSource;
+N
+N  /* Store the new value */
+N  RCC->CFGR = tmpreg;
+X  ((RCC_TypeDef *) ((((u32)0x40000000) + 0x20000) + 0x1000))->CFGR = tmpreg;
+N}
+N
+N/*******************************************************************************
+N* Function Name  : RCC_GetSYSCLKSource
+N* Description    : Returns the clock source used as system clock.
+N* Input          : None
+N* Output         : None
+N* Return         : The clock source used as system clock. The returned value can
+N*                  be one of the following:
+N*                       - 0x00: HSI used as system clock
+N*                       - 0x04: HSE used as system clock
+N*                       - 0x08: PLL used as system clock
+N*******************************************************************************/
+Nu8 RCC_GetSYSCLKSource(void)
+N{
+N  return ((u8)(RCC->CFGR & CFGR_SWS_Mask));
+X  return ((u8)(((RCC_TypeDef *) ((((u32)0x40000000) + 0x20000) + 0x1000))->CFGR & ((u32)0x0000000C)));
+N}
+N
+N/*******************************************************************************
+N* Function Name  : RCC_HCLKConfig
+N* Description    : Configures the AHB clock (HCLK).
+N* Input          : - RCC_SYSCLK: defines the AHB clock divider. This clock is
+N*                    derived from the system clock (SYSCLK).
+N*                    This parameter can be one of the following values:
+N*                       - RCC_SYSCLK_Div1: AHB clock = SYSCLK
+N*                       - RCC_SYSCLK_Div2: AHB clock = SYSCLK/2
+N*                       - RCC_SYSCLK_Div4: AHB clock = SYSCLK/4
+N*                       - RCC_SYSCLK_Div8: AHB clock = SYSCLK/8
+N*                       - RCC_SYSCLK_Div16: AHB clock = SYSCLK/16
+N*                       - RCC_SYSCLK_Div64: AHB clock = SYSCLK/64
+N*                       - RCC_SYSCLK_Div128: AHB clock = SYSCLK/128
+N*                       - RCC_SYSCLK_Div256: AHB clock = SYSCLK/256
+N*                       - RCC_SYSCLK_Div512: AHB clock = SYSCLK/512
+N* Output         : None
+N* Return         : None
+N*******************************************************************************/
+Nvoid RCC_HCLKConfig(u32 RCC_SYSCLK)
+N{
+N  u32 tmpreg = 0;
+N
+N  /* Check the parameters */
+N  assert_param(IS_RCC_HCLK(RCC_SYSCLK));
+X  ((void)0);
+N
+N  tmpreg = RCC->CFGR;
+X  tmpreg = ((RCC_TypeDef *) ((((u32)0x40000000) + 0x20000) + 0x1000))->CFGR;
+N
+N  /* Clear HPRE[3:0] bits */
+N  tmpreg &= CFGR_HPRE_Reset_Mask;
+X  tmpreg &= ((u32)0xFFFFFF0F);
+N
+N  /* Set HPRE[3:0] bits according to RCC_SYSCLK value */
+N  tmpreg |= RCC_SYSCLK;
+N
+N  /* Store the new value */
+N  RCC->CFGR = tmpreg;
+X  ((RCC_TypeDef *) ((((u32)0x40000000) + 0x20000) + 0x1000))->CFGR = tmpreg;
+N}
+N
+N/*******************************************************************************
+N* Function Name  : RCC_PCLK1Config
+N* Description    : Configures the Low Speed APB clock (PCLK1).
+N* Input          : - RCC_HCLK: defines the APB1 clock divider. This clock is
+N*                    derived from the AHB clock (HCLK).
+N*                    This parameter can be one of the following values:
+N*                       - RCC_HCLK_Div1: APB1 clock = HCLK
+N*                       - RCC_HCLK_Div2: APB1 clock = HCLK/2
+N*                       - RCC_HCLK_Div4: APB1 clock = HCLK/4
+N*                       - RCC_HCLK_Div8: APB1 clock = HCLK/8
+N*                       - RCC_HCLK_Div16: APB1 clock = HCLK/16
+N* Output         : None
+N* Return         : None
+N*******************************************************************************/
+Nvoid RCC_PCLK1Config(u32 RCC_HCLK)
+N{
+N  u32 tmpreg = 0;
+N
+N  /* Check the parameters */
+N  assert_param(IS_RCC_PCLK(RCC_HCLK));
+X  ((void)0);
+N
+N  tmpreg = RCC->CFGR;
+X  tmpreg = ((RCC_TypeDef *) ((((u32)0x40000000) + 0x20000) + 0x1000))->CFGR;
+N
+N  /* Clear PPRE1[2:0] bits */
+N  tmpreg &= CFGR_PPRE1_Reset_Mask;
+X  tmpreg &= ((u32)0xFFFFF8FF);
+N
+N  /* Set PPRE1[2:0] bits according to RCC_HCLK value */
+N  tmpreg |= RCC_HCLK;
+N
+N  /* Store the new value */
+N  RCC->CFGR = tmpreg;
+X  ((RCC_TypeDef *) ((((u32)0x40000000) + 0x20000) + 0x1000))->CFGR = tmpreg;
+N}
+N
+N/*******************************************************************************
+N* Function Name  : RCC_PCLK2Config
+N* Description    : Configures the High Speed APB clock (PCLK2).
+N* Input          : - RCC_HCLK: defines the APB2 clock divider. This clock is
+N*                    derived from the AHB clock (HCLK).
+N*                    This parameter can be one of the following values:
+N*                       - RCC_HCLK_Div1: APB2 clock = HCLK
+N*                       - RCC_HCLK_Div2: APB2 clock = HCLK/2
+N*                       - RCC_HCLK_Div4: APB2 clock = HCLK/4
+N*                       - RCC_HCLK_Div8: APB2 clock = HCLK/8
+N*                       - RCC_HCLK_Div16: APB2 clock = HCLK/16
+N* Output         : None
+N* Return         : None
+N*******************************************************************************/
+Nvoid RCC_PCLK2Config(u32 RCC_HCLK)
+N{
+N  u32 tmpreg = 0;
+N
+N  /* Check the parameters */
+N  assert_param(IS_RCC_PCLK(RCC_HCLK));
+X  ((void)0);
+N
+N  tmpreg = RCC->CFGR;
+X  tmpreg = ((RCC_TypeDef *) ((((u32)0x40000000) + 0x20000) + 0x1000))->CFGR;
+N
+N  /* Clear PPRE2[2:0] bits */
+N  tmpreg &= CFGR_PPRE2_Reset_Mask;
+X  tmpreg &= ((u32)0xFFFFC7FF);
+N
+N  /* Set PPRE2[2:0] bits according to RCC_HCLK value */
+N  tmpreg |= RCC_HCLK << 3;
+N
+N  /* Store the new value */
+N  RCC->CFGR = tmpreg;
+X  ((RCC_TypeDef *) ((((u32)0x40000000) + 0x20000) + 0x1000))->CFGR = tmpreg;
+N}
+N
+N/*******************************************************************************
+N* Function Name  : RCC_ITConfig
+N* Description    : Enables or disables the specified RCC interrupts.
+N* Input          : - RCC_IT: specifies the RCC interrupt sources to be enabled
+N*                    or disabled.
+N*                    This parameter can be any combination of the following values:
+N*                       - RCC_IT_LSIRDY: LSI ready interrupt
+N*                       - RCC_IT_LSERDY: LSE ready interrupt
+N*                       - RCC_IT_HSIRDY: HSI ready interrupt
+N*                       - RCC_IT_HSERDY: HSE ready interrupt
+N*                       - RCC_IT_PLLRDY: PLL ready interrupt
+N*                  - NewState: new state of the specified RCC interrupts.
+N*                    This parameter can be: ENABLE or DISABLE.
+N* Output         : None
+N* Return         : None
+N*******************************************************************************/
+Nvoid RCC_ITConfig(u8 RCC_IT, FunctionalState NewState)
+N{
+N  /* Check the parameters */
+N  assert_param(IS_RCC_IT(RCC_IT));
+X  ((void)0);
+N  assert_param(IS_FUNCTIONAL_STATE(NewState));
+X  ((void)0);
+N
+N  if (NewState != DISABLE)
+N  {
+N    /* Perform Byte access to RCC_CIR[12:8] bits to enable the selected interrupts */
+N    *(vu8 *) CIR_BYTE2_ADDRESS |= RCC_IT;
+X    *(vu8 *) ((u32)0x40021009) |= RCC_IT;
+N  }
+N  else
+N  {
+N    /* Perform Byte access to RCC_CIR[12:8] bits to disable the selected interrupts */
+N    *(vu8 *) CIR_BYTE2_ADDRESS &= (u8)~RCC_IT;
+X    *(vu8 *) ((u32)0x40021009) &= (u8)~RCC_IT;
+N  }
+N}
+N
+N/*******************************************************************************
+N* Function Name  : RCC_USBCLKConfig
+N* Description    : Configures the USB clock (USBCLK).
+N* Input          : - RCC_USBCLKSource: specifies the USB clock source. This clock
+N*                    is derived from the PLL output.
+N*                    This parameter can be one of the following values:
+N*                       - RCC_USBCLKSource_PLLCLK_1Div5: PLL clock divided by 1,5
+N*                         selected as USB clock source
+N*                       - RCC_USBCLKSource_PLLCLK_Div1: PLL clock selected as USB
+N*                         clock source
+N* Output         : None
+N* Return         : None
+N*******************************************************************************/
+Nvoid RCC_USBCLKConfig(u32 RCC_USBCLKSource)
+N{
+N  /* Check the parameters */
+N  assert_param(IS_RCC_USBCLK_SOURCE(RCC_USBCLKSource));
+X  ((void)0);
+N
+N  *(vu32 *) CFGR_USBPRE_BB = RCC_USBCLKSource;
+X  *(vu32 *) (((u32)0x42000000) + (((((((u32)0x40000000) + 0x20000) + 0x1000) - ((u32)0x40000000)) + 0x04) * 32) + (0x16 * 4)) = RCC_USBCLKSource;
+N}
+N
+N/*******************************************************************************
+N* Function Name  : RCC_ADCCLKConfig
+N* Description    : Configures the ADC clock (ADCCLK).
+N* Input          : - RCC_PCLK2: defines the ADC clock divider. This clock is
+N*                    derived from the APB2 clock (PCLK2).
+N*                    This parameter can be one of the following values:
+N*                       - RCC_PCLK2_Div2: ADC clock = PCLK2/2
+N*                       - RCC_PCLK2_Div4: ADC clock = PCLK2/4
+N*                       - RCC_PCLK2_Div6: ADC clock = PCLK2/6
+N*                       - RCC_PCLK2_Div8: ADC clock = PCLK2/8
+N* Output         : None
+N* Return         : None
+N*******************************************************************************/
+Nvoid RCC_ADCCLKConfig(u32 RCC_PCLK2)
+N{
+N  u32 tmpreg = 0;
+N
+N  /* Check the parameters */
+N  assert_param(IS_RCC_ADCCLK(RCC_PCLK2));
+X  ((void)0);
+N
+N  tmpreg = RCC->CFGR;
+X  tmpreg = ((RCC_TypeDef *) ((((u32)0x40000000) + 0x20000) + 0x1000))->CFGR;
+N
+N  /* Clear ADCPRE[1:0] bits */
+N  tmpreg &= CFGR_ADCPRE_Reset_Mask;
+X  tmpreg &= ((u32)0xFFFF3FFF);
+N
+N  /* Set ADCPRE[1:0] bits according to RCC_PCLK2 value */
+N  tmpreg |= RCC_PCLK2;
+N
+N  /* Store the new value */
+N  RCC->CFGR = tmpreg;
+X  ((RCC_TypeDef *) ((((u32)0x40000000) + 0x20000) + 0x1000))->CFGR = tmpreg;
+N}
+N
+N/*******************************************************************************
+N* Function Name  : RCC_LSEConfig
+N* Description    : Configures the External Low Speed oscillator (LSE).
+N* Input          : - RCC_LSE: specifies the new state of the LSE.
+N*                    This parameter can be one of the following values:
+N*                       - RCC_LSE_OFF: LSE oscillator OFF
+N*                       - RCC_LSE_ON: LSE oscillator ON
+N*                       - RCC_LSE_Bypass: LSE oscillator bypassed with external
+N*                         clock
+N* Output         : None
+N* Return         : None
+N*******************************************************************************/
+Nvoid RCC_LSEConfig(u8 RCC_LSE)
+N{
+N  /* Check the parameters */
+N  assert_param(IS_RCC_LSE(RCC_LSE));
+X  ((void)0);
+N
+N  /* Reset LSEON and LSEBYP bits before configuring the LSE ------------------*/
+N  /* Reset LSEON bit */
+N  *(vu8 *) BDCR_ADDRESS = RCC_LSE_OFF;
+X  *(vu8 *) (((u32)0x40000000) + ((((((u32)0x40000000) + 0x20000) + 0x1000) - ((u32)0x40000000)) + 0x20)) = ((u8)0x00);
+N
+N  /* Reset LSEBYP bit */
+N  *(vu8 *) BDCR_ADDRESS = RCC_LSE_OFF;
+X  *(vu8 *) (((u32)0x40000000) + ((((((u32)0x40000000) + 0x20000) + 0x1000) - ((u32)0x40000000)) + 0x20)) = ((u8)0x00);
+N
+N  /* Configure LSE (RCC_LSE_OFF is already covered by the code section above) */
+N  switch(RCC_LSE)
+N  {
+N    case RCC_LSE_ON:
+X    case ((u8)0x01):
+N      /* Set LSEON bit */
+N      *(vu8 *) BDCR_ADDRESS = RCC_LSE_ON;
+X      *(vu8 *) (((u32)0x40000000) + ((((((u32)0x40000000) + 0x20000) + 0x1000) - ((u32)0x40000000)) + 0x20)) = ((u8)0x01);
+N      break;
+N      
+N    case RCC_LSE_Bypass:
+X    case ((u8)0x04):
+N      /* Set LSEBYP and LSEON bits */
+N      *(vu8 *) BDCR_ADDRESS = RCC_LSE_Bypass | RCC_LSE_ON;
+X      *(vu8 *) (((u32)0x40000000) + ((((((u32)0x40000000) + 0x20000) + 0x1000) - ((u32)0x40000000)) + 0x20)) = ((u8)0x04) | ((u8)0x01);
+N      break;            
+N      
+N    default:
+N      break;      
+N  }
+N}
+N
+N/*******************************************************************************
+N* Function Name  : RCC_LSICmd
+N* Description    : Enables or disables the Internal Low Speed oscillator (LSI).
+N*                  LSI can not be disabled if the IWDG is running.
+N* Input          : - NewState: new state of the LSI.
+N*                    This parameter can be: ENABLE or DISABLE.
+N* Output         : None
+N* Return         : None
+N*******************************************************************************/
+Nvoid RCC_LSICmd(FunctionalState NewState)
+N{
+N  /* Check the parameters */
+N  assert_param(IS_FUNCTIONAL_STATE(NewState));
+X  ((void)0);
+N
+N  *(vu32 *) CSR_LSION_BB = (u32)NewState;
+X  *(vu32 *) (((u32)0x42000000) + (((((((u32)0x40000000) + 0x20000) + 0x1000) - ((u32)0x40000000)) + 0x24) * 32) + (0x00 * 4)) = (u32)NewState;
+N}
+N
+N/*******************************************************************************
+N* Function Name  : RCC_RTCCLKConfig
+N* Description    : Configures the RTC clock (RTCCLK).
+N*                  Once the RTC clock is selected it can抰 be changed unless the
+N*                  Backup domain is reset.
+N* Input          : - RCC_RTCCLKSource: specifies the RTC clock source.
+N*                    This parameter can be one of the following values:
+N*                       - RCC_RTCCLKSource_LSE: LSE selected as RTC clock
+N*                       - RCC_RTCCLKSource_LSI: LSI selected as RTC clock
+N*                       - RCC_RTCCLKSource_HSE_Div128: HSE clock divided by 128
+N*                         selected as RTC clock
+N* Output         : None
+N* Return         : None
+N*******************************************************************************/
+Nvoid RCC_RTCCLKConfig(u32 RCC_RTCCLKSource)
+N{
+N  /* Check the parameters */
+N  assert_param(IS_RCC_RTCCLK_SOURCE(RCC_RTCCLKSource));
+X  ((void)0);
+N
+N  /* Select the RTC clock source */
+N  RCC->BDCR |= RCC_RTCCLKSource;
+X  ((RCC_TypeDef *) ((((u32)0x40000000) + 0x20000) + 0x1000))->BDCR |= RCC_RTCCLKSource;
+N}
+N
+N/*******************************************************************************
+N* Function Name  : RCC_RTCCLKCmd
+N* Description    : Enables or disables the RTC clock.
+N*                  This function must be used only after the RTC clock was
+N*                  selected using the RCC_RTCCLKConfig function.
+N* Input          : - NewState: new state of the RTC clock.
+N*                    This parameter can be: ENABLE or DISABLE.
+N* Output         : None
+N* Return         : None
+N*******************************************************************************/
+Nvoid RCC_RTCCLKCmd(FunctionalState NewState)
+N{
+N  /* Check the parameters */
+N  assert_param(IS_FUNCTIONAL_STATE(NewState));
+X  ((void)0);
+N
+N  *(vu32 *) BDCR_RTCEN_BB = (u32)NewState;
+X  *(vu32 *) (((u32)0x42000000) + (((((((u32)0x40000000) + 0x20000) + 0x1000) - ((u32)0x40000000)) + 0x20) * 32) + (0x0F * 4)) = (u32)NewState;
+N}
+N
+N/*******************************************************************************
+N* Function Name  : RCC_GetClocksFreq
+N* Description    : Returns the frequencies of different on chip clocks.
+N* Input          : - RCC_Clocks: pointer to a RCC_ClocksTypeDef structure which
+N*                    will hold the clocks frequencies.
+N* Output         : None
+N* Return         : None
+N*******************************************************************************/
+Nvoid RCC_GetClocksFreq(RCC_ClocksTypeDef* RCC_Clocks)
+N{
+N  u32 tmp = 0, pllmull = 0, pllsource = 0, presc = 0;
+N
+N  /* Get SYSCLK source -------------------------------------------------------*/
+N  tmp = RCC->CFGR & CFGR_SWS_Mask;
+X  tmp = ((RCC_TypeDef *) ((((u32)0x40000000) + 0x20000) + 0x1000))->CFGR & ((u32)0x0000000C);
+N
+N  switch (tmp)
+N  {
+N    case 0x00:  /* HSI used as system clock */
+N      RCC_Clocks->SYSCLK_Frequency = HSI_Value;
+X      RCC_Clocks->SYSCLK_Frequency = ((u32)8000000);
+N      break;
+N
+N    case 0x04:  /* HSE used as system clock */
+N      RCC_Clocks->SYSCLK_Frequency = HSE_Value;
+X      RCC_Clocks->SYSCLK_Frequency = ((u32)8000000);
+N      break;
+N
+N    case 0x08:  /* PLL used as system clock */
+N      /* Get PLL clock source and multiplication factor ----------------------*/
+N      pllmull = RCC->CFGR & CFGR_PLLMull_Mask;
+X      pllmull = ((RCC_TypeDef *) ((((u32)0x40000000) + 0x20000) + 0x1000))->CFGR & ((u32)0x003C0000);
+N      pllmull = ( pllmull >> 18) + 2;
+N
+N      pllsource = RCC->CFGR & CFGR_PLLSRC_Mask;
+X      pllsource = ((RCC_TypeDef *) ((((u32)0x40000000) + 0x20000) + 0x1000))->CFGR & ((u32)0x00010000);
+N
+N      if (pllsource == 0x00)
+N      {/* HSI oscillator clock divided by 2 selected as PLL clock entry */
+N        RCC_Clocks->SYSCLK_Frequency = (HSI_Value >> 1) * pllmull;
+X        RCC_Clocks->SYSCLK_Frequency = (((u32)8000000) >> 1) * pllmull;
+N      }
+N      else
+N      {/* HSE selected as PLL clock entry */
+N
+N        if ((RCC->CFGR & CFGR_PLLXTPRE_Mask) != (u32)RESET)
+X        if ((((RCC_TypeDef *) ((((u32)0x40000000) + 0x20000) + 0x1000))->CFGR & ((u32)0x00020000)) != (u32)RESET)
+N        {/* HSE oscillator clock divided by 2 */
+N
+N          RCC_Clocks->SYSCLK_Frequency = (HSE_Value >> 1) * pllmull;
+X          RCC_Clocks->SYSCLK_Frequency = (((u32)8000000) >> 1) * pllmull;
+N        }
+N        else
+N        {
+N          RCC_Clocks->SYSCLK_Frequency = HSE_Value * pllmull;
+X          RCC_Clocks->SYSCLK_Frequency = ((u32)8000000) * pllmull;
+N        }
+N      }
+N      break;
+N
+N    default:
+N      RCC_Clocks->SYSCLK_Frequency = HSI_Value;
+X      RCC_Clocks->SYSCLK_Frequency = ((u32)8000000);
+N      break;
+N  }
+N
+N  /* Compute HCLK, PCLK1, PCLK2 and ADCCLK clocks frequencies ----------------*/
+N  /* Get HCLK prescaler */
+N  tmp = RCC->CFGR & CFGR_HPRE_Set_Mask;
+X  tmp = ((RCC_TypeDef *) ((((u32)0x40000000) + 0x20000) + 0x1000))->CFGR & ((u32)0x000000F0);
+N  tmp = tmp >> 4;
+N  presc = APBAHBPrescTable[tmp];
+N
+N  /* HCLK clock frequency */
+N  RCC_Clocks->HCLK_Frequency = RCC_Clocks->SYSCLK_Frequency >> presc;
+N
+N  /* Get PCLK1 prescaler */
+N  tmp = RCC->CFGR & CFGR_PPRE1_Set_Mask;
+X  tmp = ((RCC_TypeDef *) ((((u32)0x40000000) + 0x20000) + 0x1000))->CFGR & ((u32)0x00000700);
+N  tmp = tmp >> 8;
+N  presc = APBAHBPrescTable[tmp];
+N
+N  /* PCLK1 clock frequency */
+N  RCC_Clocks->PCLK1_Frequency = RCC_Clocks->HCLK_Frequency >> presc;
+N
+N  /* Get PCLK2 prescaler */
+N  tmp = RCC->CFGR & CFGR_PPRE2_Set_Mask;
+X  tmp = ((RCC_TypeDef *) ((((u32)0x40000000) + 0x20000) + 0x1000))->CFGR & ((u32)0x00003800);
+N  tmp = tmp >> 11;
+N  presc = APBAHBPrescTable[tmp];
+N
+N  /* PCLK2 clock frequency */
+N  RCC_Clocks->PCLK2_Frequency = RCC_Clocks->HCLK_Frequency >> presc;
+N
+N  /* Get ADCCLK prescaler */
+N  tmp = RCC->CFGR & CFGR_ADCPRE_Set_Mask;
+X  tmp = ((RCC_TypeDef *) ((((u32)0x40000000) + 0x20000) + 0x1000))->CFGR & ((u32)0x0000C000);
+N  tmp = tmp >> 14;
+N  presc = ADCPrescTable[tmp];
+N
+N  /* ADCCLK clock frequency */
+N  RCC_Clocks->ADCCLK_Frequency = RCC_Clocks->PCLK2_Frequency / presc;
+N}
+N
+N/*******************************************************************************
+N* Function Name  : RCC_AHBPeriphClockCmd
+N* Description    : Enables or disables the AHB peripheral clock.
+N* Input          : - RCC_AHBPeriph: specifies the AHB peripheral to gates its clock.
+N*                    This parameter can be any combination of the following values:
+N*                       - RCC_AHBPeriph_DMA1
+N*                       - RCC_AHBPeriph_DMA2
+N*                       - RCC_AHBPeriph_SRAM
+N*                       - RCC_AHBPeriph_FLITF
+N*                       - RCC_AHBPeriph_CRC
+N*                       - RCC_AHBPeriph_FSMC
+N*                       - RCC_AHBPeriph_SDIO
+N*                    SRAM and FLITF clock can be disabled only during sleep mode.
+N*                  - NewState: new state of the specified peripheral clock.
+N*                    This parameter can be: ENABLE or DISABLE.
+N* Output         : None
+N* Return         : None
+N*******************************************************************************/
+Nvoid RCC_AHBPeriphClockCmd(u32 RCC_AHBPeriph, FunctionalState NewState)
+N{
+N  /* Check the parameters */
+N  assert_param(IS_RCC_AHB_PERIPH(RCC_AHBPeriph));
+X  ((void)0);
+N  assert_param(IS_FUNCTIONAL_STATE(NewState));
+X  ((void)0);
+N
+N  if (NewState != DISABLE)
+N  {
+N    RCC->AHBENR |= RCC_AHBPeriph;
+X    ((RCC_TypeDef *) ((((u32)0x40000000) + 0x20000) + 0x1000))->AHBENR |= RCC_AHBPeriph;
+N  }
+N  else
+N  {
+N    RCC->AHBENR &= ~RCC_AHBPeriph;
+X    ((RCC_TypeDef *) ((((u32)0x40000000) + 0x20000) + 0x1000))->AHBENR &= ~RCC_AHBPeriph;
+N  }
+N}
+N
+N/*******************************************************************************
+N* Function Name  : RCC_APB2PeriphClockCmd
+N* Description    : Enables or disables the High Speed APB (APB2) peripheral clock.
+N* Input          : - RCC_APB2Periph: specifies the APB2 peripheral to gates its
+N*                    clock.
+N*                    This parameter can be any combination of the following values:
+N*                       - RCC_APB2Periph_AFIO, RCC_APB2Periph_GPIOA, RCC_APB2Periph_GPIOB,
+N*                         RCC_APB2Periph_GPIOC, RCC_APB2Periph_GPIOD, RCC_APB2Periph_GPIOE,
+N*                         RCC_APB2Periph_GPIOF, RCC_APB2Periph_GPIOG, RCC_APB2Periph_ADC1,
+N*                         RCC_APB2Periph_ADC2, RCC_APB2Periph_TIM1, RCC_APB2Periph_SPI1,
+N*                         RCC_APB2Periph_TIM8, RCC_APB2Periph_USART1, RCC_APB2Periph_ADC3,
+N*                         RCC_APB2Periph_ALL
+N*                  - NewState: new state of the specified peripheral clock.
+N*                    This parameter can be: ENABLE or DISABLE.
+N* Output         : None
+N* Return         : None
+N*******************************************************************************/
+Nvoid RCC_APB2PeriphClockCmd(u32 RCC_APB2Periph, FunctionalState NewState)
+N{
+N  /* Check the parameters */
+N  assert_param(IS_RCC_APB2_PERIPH(RCC_APB2Periph));
+X  ((void)0);
+N  assert_param(IS_FUNCTIONAL_STATE(NewState));
+X  ((void)0);
+N
+N  if (NewState != DISABLE)
+N  {
+N    RCC->APB2ENR |= RCC_APB2Periph;
+X    ((RCC_TypeDef *) ((((u32)0x40000000) + 0x20000) + 0x1000))->APB2ENR |= RCC_APB2Periph;
+N  }
+N  else
+N  {
+N    RCC->APB2ENR &= ~RCC_APB2Periph;
+X    ((RCC_TypeDef *) ((((u32)0x40000000) + 0x20000) + 0x1000))->APB2ENR &= ~RCC_APB2Periph;
+N  }
+N}
+N
+N/*******************************************************************************
+N* Function Name  : RCC_APB1PeriphClockCmd
+N* Description    : Enables or disables the Low Speed APB (APB1) peripheral clock.
+N* Input          : - RCC_APB1Periph: specifies the APB1 peripheral to gates its
+N*                    clock.
+N*                    This parameter can be any combination of the following values:
+N*                       - RCC_APB1Periph_TIM2, RCC_APB1Periph_TIM3, RCC_APB1Periph_TIM4,
+N*                         RCC_APB1Periph_TIM5, RCC_APB1Periph_TIM6, RCC_APB1Periph_TIM7,
+N*                         RCC_APB1Periph_WWDG, RCC_APB1Periph_SPI2, RCC_APB1Periph_SPI3,
+N*                         RCC_APB1Periph_USART2, RCC_APB1Periph_USART3, RCC_APB1Periph_USART4, 
+N*                         RCC_APB1Periph_USART5, RCC_APB1Periph_I2C1, RCC_APB1Periph_I2C2,
+N*                         RCC_APB1Periph_USB, RCC_APB1Periph_CAN, RCC_APB1Periph_BKP,
+N*                         RCC_APB1Periph_PWR, RCC_APB1Periph_DAC, RCC_APB1Periph_ALL
+N*                  - NewState: new state of the specified peripheral clock.
+N*                    This parameter can be: ENABLE or DISABLE.
+N* Output         : None
+N* Return         : None
+N*******************************************************************************/
+Nvoid RCC_APB1PeriphClockCmd(u32 RCC_APB1Periph, FunctionalState NewState)
+N{
+N  /* Check the parameters */
+N  assert_param(IS_RCC_APB1_PERIPH(RCC_APB1Periph));
+X  ((void)0);
+N  assert_param(IS_FUNCTIONAL_STATE(NewState));
+X  ((void)0);
+N
+N  if (NewState != DISABLE)
+N  {
+N    RCC->APB1ENR |= RCC_APB1Periph;
+X    ((RCC_TypeDef *) ((((u32)0x40000000) + 0x20000) + 0x1000))->APB1ENR |= RCC_APB1Periph;
+N  }
+N  else
+N  {
+N    RCC->APB1ENR &= ~RCC_APB1Periph;
+X    ((RCC_TypeDef *) ((((u32)0x40000000) + 0x20000) + 0x1000))->APB1ENR &= ~RCC_APB1Periph;
+N  }
+N}
+N
+N/*******************************************************************************
+N* Function Name  : RCC_APB2PeriphResetCmd
+N* Description    : Forces or releases High Speed APB (APB2) peripheral reset.
+N* Input          : - RCC_APB2Periph: specifies the APB2 peripheral to reset.
+N*                    This parameter can be any combination of the following values:
+N*                       - RCC_APB2Periph_AFIO, RCC_APB2Periph_GPIOA, RCC_APB2Periph_GPIOB,
+N*                         RCC_APB2Periph_GPIOC, RCC_APB2Periph_GPIOD, RCC_APB2Periph_GPIOE,
+N*                         RCC_APB2Periph_GPIOF, RCC_APB2Periph_GPIOG, RCC_APB2Periph_ADC1,
+N*                         RCC_APB2Periph_ADC2, RCC_APB2Periph_TIM1, RCC_APB2Periph_SPI1,
+N*                         RCC_APB2Periph_TIM8, RCC_APB2Periph_USART1, RCC_APB2Periph_ADC3,
+N*                         RCC_APB2Periph_ALL
+N*                  - NewState: new state of the specified peripheral reset.
+N*                    This parameter can be: ENABLE or DISABLE.
+N* Output         : None
+N* Return         : None
+N*******************************************************************************/
+Nvoid RCC_APB2PeriphResetCmd(u32 RCC_APB2Periph, FunctionalState NewState)
+N{
+N  /* Check the parameters */
+N  assert_param(IS_RCC_APB2_PERIPH(RCC_APB2Periph));
+X  ((void)0);
+N  assert_param(IS_FUNCTIONAL_STATE(NewState));
+X  ((void)0);
+N
+N  if (NewState != DISABLE)
+N  {
+N    RCC->APB2RSTR |= RCC_APB2Periph;
+X    ((RCC_TypeDef *) ((((u32)0x40000000) + 0x20000) + 0x1000))->APB2RSTR |= RCC_APB2Periph;
+N  }
+N  else
+N  {
+N    RCC->APB2RSTR &= ~RCC_APB2Periph;
+X    ((RCC_TypeDef *) ((((u32)0x40000000) + 0x20000) + 0x1000))->APB2RSTR &= ~RCC_APB2Periph;
+N  }
+N}
+N
+N/*******************************************************************************
+N* Function Name  : RCC_APB1PeriphResetCmd
+N* Description    : Forces or releases Low Speed APB (APB1) peripheral reset.
+N* Input          : - RCC_APB1Periph: specifies the APB1 peripheral to reset.
+N*                    This parameter can be any combination of the following values:
+N*                       - RCC_APB1Periph_TIM2, RCC_APB1Periph_TIM3, RCC_APB1Periph_TIM4,
+N*                         RCC_APB1Periph_TIM5, RCC_APB1Periph_TIM6, RCC_APB1Periph_TIM7,
+N*                         RCC_APB1Periph_WWDG, RCC_APB1Periph_SPI2, RCC_APB1Periph_SPI3,
+N*                         RCC_APB1Periph_USART2, RCC_APB1Periph_USART3, RCC_APB1Periph_USART4, 
+N*                         RCC_APB1Periph_USART5, RCC_APB1Periph_I2C1, RCC_APB1Periph_I2C2,
+N*                         RCC_APB1Periph_USB, RCC_APB1Periph_CAN, RCC_APB1Periph_BKP,
+N*                         RCC_APB1Periph_PWR, RCC_APB1Periph_DAC, RCC_APB1Periph_ALL
+N*                  - NewState: new state of the specified peripheral clock.
+N*                    This parameter can be: ENABLE or DISABLE.
+N* Output         : None
+N* Return         : None
+N*******************************************************************************/
+Nvoid RCC_APB1PeriphResetCmd(u32 RCC_APB1Periph, FunctionalState NewState)
+N{
+N  /* Check the parameters */
+N  assert_param(IS_RCC_APB1_PERIPH(RCC_APB1Periph));
+X  ((void)0);
+N  assert_param(IS_FUNCTIONAL_STATE(NewState));
+X  ((void)0);
+N
+N  if (NewState != DISABLE)
+N  {
+N    RCC->APB1RSTR |= RCC_APB1Periph;
+X    ((RCC_TypeDef *) ((((u32)0x40000000) + 0x20000) + 0x1000))->APB1RSTR |= RCC_APB1Periph;
+N  }
+N  else
+N  {
+N    RCC->APB1RSTR &= ~RCC_APB1Periph;
+X    ((RCC_TypeDef *) ((((u32)0x40000000) + 0x20000) + 0x1000))->APB1RSTR &= ~RCC_APB1Periph;
+N  }
+N}
+N
+N/*******************************************************************************
+N* Function Name  : RCC_BackupResetCmd
+N* Description    : Forces or releases the Backup domain reset.
+N* Input          : - NewState: new state of the Backup domain reset.
+N*                    This parameter can be: ENABLE or DISABLE.
+N* Output         : None
+N* Return         : None
+N*******************************************************************************/
+Nvoid RCC_BackupResetCmd(FunctionalState NewState)
+N{
+N  /* Check the parameters */
+N  assert_param(IS_FUNCTIONAL_STATE(NewState));
+X  ((void)0);
+N
+N  *(vu32 *) BDCR_BDRST_BB = (u32)NewState;
+X  *(vu32 *) (((u32)0x42000000) + (((((((u32)0x40000000) + 0x20000) + 0x1000) - ((u32)0x40000000)) + 0x20) * 32) + (0x10 * 4)) = (u32)NewState;
+N}
+N
+N/*******************************************************************************
+N* Function Name  : RCC_ClockSecuritySystemCmd
+N* Description    : Enables or disables the Clock Security System.
+N* Input          : - NewState: new state of the Clock Security System..
+N*                    This parameter can be: ENABLE or DISABLE.
+N* Output         : None
+N* Return         : None
+N*******************************************************************************/
+Nvoid RCC_ClockSecuritySystemCmd(FunctionalState NewState)
+N{
+N  /* Check the parameters */
+N  assert_param(IS_FUNCTIONAL_STATE(NewState));
+X  ((void)0);
+N
+N  *(vu32 *) CR_CSSON_BB = (u32)NewState;
+X  *(vu32 *) (((u32)0x42000000) + (((((((u32)0x40000000) + 0x20000) + 0x1000) - ((u32)0x40000000)) + 0x00) * 32) + (0x13 * 4)) = (u32)NewState;
+N}
+N
+N/*******************************************************************************
+N* Function Name  : RCC_MCOConfig
+N* Description    : Selects the clock source to output on MCO pin.
+N* Input          : - RCC_MCO: specifies the clock source to output.
+N*                    This parameter can be one of the following values:
+N*                       - RCC_MCO_NoClock: No clock selected
+N*                       - RCC_MCO_SYSCLK: System clock selected
+N*                       - RCC_MCO_HSI: HSI oscillator clock selected
+N*                       - RCC_MCO_HSE: HSE oscillator clock selected
+N*                       - RCC_MCO_PLLCLK_Div2: PLL clock divided by 2 selected
+N* Output         : None
+N* Return         : None
+N*******************************************************************************/
+Nvoid RCC_MCOConfig(u8 RCC_MCO)
+N{
+N  /* Check the parameters */
+N  assert_param(IS_RCC_MCO(RCC_MCO));
+X  ((void)0);
+N
+N  /* Perform Byte access to MCO[2:0] bits to select the MCO source */
+N  *(vu8 *) CFGR_BYTE4_ADDRESS = RCC_MCO;
+X  *(vu8 *) ((u32)0x40021007) = RCC_MCO;
+N}
+N
+N/*******************************************************************************
+N* Function Name  : RCC_GetFlagStatus
+N* Description    : Checks whether the specified RCC flag is set or not.
+N* Input          : - RCC_FLAG: specifies the flag to check.
+N*                    This parameter can be one of the following values:
+N*                       - RCC_FLAG_HSIRDY: HSI oscillator clock ready
+N*                       - RCC_FLAG_HSERDY: HSE oscillator clock ready
+N*                       - RCC_FLAG_PLLRDY: PLL clock ready
+N*                       - RCC_FLAG_LSERDY: LSE oscillator clock ready
+N*                       - RCC_FLAG_LSIRDY: LSI oscillator clock ready
+N*                       - RCC_FLAG_PINRST: Pin reset
+N*                       - RCC_FLAG_PORRST: POR/PDR reset
+N*                       - RCC_FLAG_SFTRST: Software reset
+N*                       - RCC_FLAG_IWDGRST: Independent Watchdog reset
+N*                       - RCC_FLAG_WWDGRST: Window Watchdog reset
+N*                       - RCC_FLAG_LPWRRST: Low Power reset
+N* Output         : None
+N* Return         : The new state of RCC_FLAG (SET or RESET).
+N*******************************************************************************/
+NFlagStatus RCC_GetFlagStatus(u8 RCC_FLAG)
+N{
+N  u32 tmp = 0;
+N  u32 statusreg = 0;
+N  FlagStatus bitstatus = RESET;
+N
+N  /* Check the parameters */
+N  assert_param(IS_RCC_FLAG(RCC_FLAG));
+X  ((void)0);
+N
+N  /* Get the RCC register index */
+N  tmp = RCC_FLAG >> 5;
+N
+N  if (tmp == 1)               /* The flag to check is in CR register */
+N  {
+N    statusreg = RCC->CR;
+X    statusreg = ((RCC_TypeDef *) ((((u32)0x40000000) + 0x20000) + 0x1000))->CR;
+N  }
+N  else if (tmp == 2)          /* The flag to check is in BDCR register */
+N  {
+N    statusreg = RCC->BDCR;
+X    statusreg = ((RCC_TypeDef *) ((((u32)0x40000000) + 0x20000) + 0x1000))->BDCR;
+N  }
+N  else                       /* The flag to check is in CSR register */
+N  {
+N    statusreg = RCC->CSR;
+X    statusreg = ((RCC_TypeDef *) ((((u32)0x40000000) + 0x20000) + 0x1000))->CSR;
+N  }
+N
+N  /* Get the flag position */
+N  tmp = RCC_FLAG & FLAG_Mask;
+X  tmp = RCC_FLAG & ((u8)0x1F);
+N
+N  if ((statusreg & ((u32)1 << tmp)) != (u32)RESET)
+N  {
+N    bitstatus = SET;
+N  }
+N  else
+N  {
+N    bitstatus = RESET;
+N  }
+N
+N  /* Return the flag status */
+N  return bitstatus;
+N}
+N
+N/*******************************************************************************
+N* Function Name  : RCC_ClearFlag
+N* Description    : Clears the RCC reset flags.
+N*                  The reset flags are: RCC_FLAG_PINRST, RCC_FLAG_PORRST,
+N*                  RCC_FLAG_SFTRST, RCC_FLAG_IWDGRST, RCC_FLAG_WWDGRST,
+N*                  RCC_FLAG_LPWRRST
+N* Input          : None
+N* Output         : None
+N* Return         : None
+N*******************************************************************************/
+Nvoid RCC_ClearFlag(void)
+N{
+N  /* Set RMVF bit to clear the reset flags */
+N  RCC->CSR |= CSR_RMVF_Set;
+X  ((RCC_TypeDef *) ((((u32)0x40000000) + 0x20000) + 0x1000))->CSR |= ((u32)0x01000000);
+N}
+N
+N/*******************************************************************************
+N* Function Name  : RCC_GetITStatus
+N* Description    : Checks whether the specified RCC interrupt has occurred or not.
+N* Input          : - RCC_IT: specifies the RCC interrupt source to check.
+N*                    This parameter can be one of the following values:
+N*                       - RCC_IT_LSIRDY: LSI ready interrupt
+N*                       - RCC_IT_LSERDY: LSE ready interrupt
+N*                       - RCC_IT_HSIRDY: HSI ready interrupt
+N*                       - RCC_IT_HSERDY: HSE ready interrupt
+N*                       - RCC_IT_PLLRDY: PLL ready interrupt
+N*                       - RCC_IT_CSS: Clock Security System interrupt
+N* Output         : None
+N* Return         : The new state of RCC_IT (SET or RESET).
+N*******************************************************************************/
+NITStatus RCC_GetITStatus(u8 RCC_IT)
+N{
+N  ITStatus bitstatus = RESET;
+N
+N  /* Check the parameters */
+N  assert_param(IS_RCC_GET_IT(RCC_IT));
+X  ((void)0);
+N
+N  /* Check the status of the specified RCC interrupt */
+N  if ((RCC->CIR & RCC_IT) != (u32)RESET)
+X  if ((((RCC_TypeDef *) ((((u32)0x40000000) + 0x20000) + 0x1000))->CIR & RCC_IT) != (u32)RESET)
+N  {
+N    bitstatus = SET;
+N  }
+N  else
+N  {
+N    bitstatus = RESET;
+N  }
+N
+N  /* Return the RCC_IT status */
+N  return  bitstatus;
+N}
+N
+N/*******************************************************************************
+N* Function Name  : RCC_ClearITPendingBit
+N* Description    : Clears the RCC抯 interrupt pending bits.
+N* Input          : - RCC_IT: specifies the interrupt pending bit to clear.
+N*                    This parameter can be any combination of the following values:
+N*                       - RCC_IT_LSIRDY: LSI ready interrupt
+N*                       - RCC_IT_LSERDY: LSE ready interrupt
+N*                       - RCC_IT_HSIRDY: HSI ready interrupt
+N*                       - RCC_IT_HSERDY: HSE ready interrupt
+N*                       - RCC_IT_PLLRDY: PLL ready interrupt
+N*                       - RCC_IT_CSS: Clock Security System interrupt
+N* Output         : None
+N* Return         : None
+N*******************************************************************************/
+Nvoid RCC_ClearITPendingBit(u8 RCC_IT)
+N{
+N  /* Check the parameters */
+N  assert_param(IS_RCC_CLEAR_IT(RCC_IT));
+X  ((void)0);
+N
+N  /* Perform Byte access to RCC_CIR[23:16] bits to clear the selected interrupt
+N     pending bits */
+N  *(vu8 *) CIR_BYTE3_ADDRESS = RCC_IT;
+X  *(vu8 *) ((u32)0x4002100A) = RCC_IT;
+N}
+N
+N/******************* (C) COPYRIGHT 2008 STMicroelectronics *****END OF FILE****/

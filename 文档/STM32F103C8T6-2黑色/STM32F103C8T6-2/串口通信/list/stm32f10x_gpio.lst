@@ -1,0 +1,2697 @@
+L 1 "source\FWLib\src\stm32f10x_gpio.c"
+N/******************** (C) COPYRIGHT 2008 STMicroelectronics ********************
+N* File Name          : stm32f10x_gpio.c
+N* Author             : MCD Application Team
+N* Version            : V2.0.1
+N* Date               : 06/13/2008
+N* Description        : This file provides all the GPIO firmware functions.
+N********************************************************************************
+N* THE PRESENT FIRMWARE WHICH IS FOR GUIDANCE ONLY AIMS AT PROVIDING CUSTOMERS
+N* WITH CODING INFORMATION REGARDING THEIR PRODUCTS IN ORDER FOR THEM TO SAVE TIME.
+N* AS A RESULT, STMICROELECTRONICS SHALL NOT BE HELD LIABLE FOR ANY DIRECT,
+N* INDIRECT OR CONSEQUENTIAL DAMAGES WITH RESPECT TO ANY CLAIMS ARISING FROM THE
+N* CONTENT OF SUCH FIRMWARE AND/OR THE USE MADE BY CUSTOMERS OF THE CODING
+N* INFORMATION CONTAINED HEREIN IN CONNECTION WITH THEIR PRODUCTS.
+N*******************************************************************************/
+N
+N/* Includes ------------------------------------------------------------------*/
+N#include "stm32f10x_gpio.h"
+L 1 "D:\Program Files\keil4.14\ARM\INC\ST\STM32F10x\stm32f10x_gpio.h" 1
+N/******************** (C) COPYRIGHT 2008 STMicroelectronics ********************
+N* File Name          : stm32f10x_gpio.h
+N* Author             : MCD Application Team
+N* Version            : V2.0.1
+N* Date               : 06/13/2008
+N* Description        : This file contains all the functions prototypes for the
+N*                      GPIO firmware library.
+N********************************************************************************
+N* THE PRESENT FIRMWARE WHICH IS FOR GUIDANCE ONLY AIMS AT PROVIDING CUSTOMERS
+N* WITH CODING INFORMATION REGARDING THEIR PRODUCTS IN ORDER FOR THEM TO SAVE TIME.
+N* AS A RESULT, STMICROELECTRONICS SHALL NOT BE HELD LIABLE FOR ANY DIRECT,
+N* INDIRECT OR CONSEQUENTIAL DAMAGES WITH RESPECT TO ANY CLAIMS ARISING FROM THE
+N* CONTENT OF SUCH FIRMWARE AND/OR THE USE MADE BY CUSTOMERS OF THE CODING
+N* INFORMATION CONTAINED HEREIN IN CONNECTION WITH THEIR PRODUCTS.
+N*******************************************************************************/
+N
+N/* Define to prevent recursive inclusion -------------------------------------*/
+N#ifndef __STM32F10x_GPIO_H
+N#define __STM32F10x_GPIO_H
+N
+N/* Includes ------------------------------------------------------------------*/
+N#include "stm32f10x_map.h"
+L 1 "D:\Program Files\keil4.14\ARM\INC\ST\STM32F10x\stm32f10x_map.h" 1
+N/******************** (C) COPYRIGHT 2008 STMicroelectronics ********************
+N* File Name          : stm32f10x_map.h
+N* Author             : MCD Application Team
+N* Version            : V2.0.1
+N* Date               : 06/13/2008
+N* Description        : This file contains all the peripheral register's definitions
+N*                      and memory mapping.
+N********************************************************************************
+N* THE PRESENT FIRMWARE WHICH IS FOR GUIDANCE ONLY AIMS AT PROVIDING CUSTOMERS
+N* WITH CODING INFORMATION REGARDING THEIR PRODUCTS IN ORDER FOR THEM TO SAVE TIME.
+N* AS A RESULT, STMICROELECTRONICS SHALL NOT BE HELD LIABLE FOR ANY DIRECT,
+N* INDIRECT OR CONSEQUENTIAL DAMAGES WITH RESPECT TO ANY CLAIMS ARISING FROM THE
+N* CONTENT OF SUCH FIRMWARE AND/OR THE USE MADE BY CUSTOMERS OF THE CODING
+N* INFORMATION CONTAINED HEREIN IN CONNECTION WITH THEIR PRODUCTS.
+N*******************************************************************************/
+N
+N/* Define to prevent recursive inclusion -------------------------------------*/
+N#ifndef __STM32F10x_MAP_H
+N#define __STM32F10x_MAP_H
+N
+N#ifndef EXT
+N  #define EXT extern
+N#endif /* EXT */
+N
+N/* Includes ------------------------------------------------------------------*/
+N#include "stm32f10x_conf.h"
+L 1 "D:\Program Files\keil4.14\ARM\INC\ST\STM32F10x\stm32f10x_conf.h" 1
+N/******************** (C) COPYRIGHT 2008 STMicroelectronics ********************
+N* File Name          : stm32f10x_conf.h
+N* Author             : MCD Application Team
+N* Version            : V2.0.1
+N* Date               : 06/13/2008
+N* Description        : Library configuration file.
+N********************************************************************************
+N* THE PRESENT FIRMWARE WHICH IS FOR GUIDANCE ONLY AIMS AT PROVIDING CUSTOMERS
+N* WITH CODING INFORMATION REGARDING THEIR PRODUCTS IN ORDER FOR THEM TO SAVE TIME.
+N* AS A RESULT, STMICROELECTRONICS SHALL NOT BE HELD LIABLE FOR ANY DIRECT,
+N* INDIRECT OR CONSEQUENTIAL DAMAGES WITH RESPECT TO ANY CLAIMS ARISING FROM THE
+N* CONTENT OF SUCH FIRMWARE AND/OR THE USE MADE BY CUSTOMERS OF THE CODING
+N* INFORMATION CONTAINED HEREIN IN CONNECTION WITH THEIR PRODUCTS.
+N*******************************************************************************/
+N
+N/* Define to prevent recursive inclusion -------------------------------------*/
+N#ifndef __STM32F10x_CONF_H
+N#define __STM32F10x_CONF_H
+N
+N/* Includes ------------------------------------------------------------------*/
+N#include "stm32f10x_type.h"
+L 1 "D:\Program Files\keil4.14\ARM\INC\ST\STM32F10x\stm32f10x_type.h" 1
+N/******************** (C) COPYRIGHT 2008 STMicroelectronics ********************
+N* File Name          : stm32f10x_type.h
+N* Author             : MCD Application Team
+N* Version            : V2.0.1
+N* Date               : 06/13/2008
+N* Description        : This file contains all the common data types used for the
+N*                      STM32F10x firmware library.
+N********************************************************************************
+N* THE PRESENT FIRMWARE WHICH IS FOR GUIDANCE ONLY AIMS AT PROVIDING CUSTOMERS
+N* WITH CODING INFORMATION REGARDING THEIR PRODUCTS IN ORDER FOR THEM TO SAVE TIME.
+N* AS A RESULT, STMICROELECTRONICS SHALL NOT BE HELD LIABLE FOR ANY DIRECT,
+N* INDIRECT OR CONSEQUENTIAL DAMAGES WITH RESPECT TO ANY CLAIMS ARISING FROM THE
+N* CONTENT OF SUCH FIRMWARE AND/OR THE USE MADE BY CUSTOMERS OF THE CODING
+N* INFORMATION CONTAINED HEREIN IN CONNECTION WITH THEIR PRODUCTS.
+N*******************************************************************************/
+N
+N/* Define to prevent recursive inclusion -------------------------------------*/
+N#ifndef __STM32F10x_TYPE_H
+N#define __STM32F10x_TYPE_H
+N
+N/* Includes ------------------------------------------------------------------*/
+N/* Exported types ------------------------------------------------------------*/
+Ntypedef signed long  s32;
+Ntypedef signed short s16;
+Ntypedef signed char  s8;
+N
+Ntypedef signed long  const sc32;  /* Read Only */
+Ntypedef signed short const sc16;  /* Read Only */
+Ntypedef signed char  const sc8;   /* Read Only */
+N
+Ntypedef volatile signed long  vs32;
+Ntypedef volatile signed short vs16;
+Ntypedef volatile signed char  vs8;
+N
+Ntypedef volatile signed long  const vsc32;  /* Read Only */
+Ntypedef volatile signed short const vsc16;  /* Read Only */
+Ntypedef volatile signed char  const vsc8;   /* Read Only */
+N
+Ntypedef unsigned long  u32;
+Ntypedef unsigned short u16;
+Ntypedef unsigned char  u8;
+N
+Ntypedef unsigned long  const uc32;  /* Read Only */
+Ntypedef unsigned short const uc16;  /* Read Only */
+Ntypedef unsigned char  const uc8;   /* Read Only */
+N
+Ntypedef volatile unsigned long  vu32;
+Ntypedef volatile unsigned short vu16;
+Ntypedef volatile unsigned char  vu8;
+N
+Ntypedef volatile unsigned long  const vuc32;  /* Read Only */
+Ntypedef volatile unsigned short const vuc16;  /* Read Only */
+Ntypedef volatile unsigned char  const vuc8;   /* Read Only */
+N
+Ntypedef enum {FALSE = 0, TRUE = !FALSE} bool;//假的和真的
+N
+Ntypedef enum {RESET = 0, SET = !RESET} FlagStatus, ITStatus;  //重设预设置
+N
+Ntypedef enum {DISABLE = 0, ENABLE = !DISABLE} FunctionalState;//失能预使能
+N#define IS_FUNCTIONAL_STATE(STATE) (((STATE) == DISABLE) || ((STATE) == ENABLE))
+N
+Ntypedef enum {ERROR = 0, SUCCESS = !ERROR} ErrorStatus;	//错误与成功
+N
+N#define U8_MAX     ((u8)255)
+N#define S8_MAX     ((s8)127)
+N#define S8_MIN     ((s8)-128)
+N#define U16_MAX    ((u16)65535u)
+N#define S16_MAX    ((s16)32767)
+N#define S16_MIN    ((s16)-32768)
+N#define U32_MAX    ((u32)4294967295uL)
+N#define S32_MAX    ((s32)2147483647)
+N#define S32_MIN    ((s32)-2147483648)
+N
+N/* Exported constants --------------------------------------------------------*/
+N/* Exported macro ------------------------------------------------------------*/
+N/* Exported functions ------------------------------------------------------- */
+N
+N#endif /* __STM32F10x_TYPE_H */
+N
+N/******************* (C) COPYRIGHT 2008 STMicroelectronics *****END OF FILE****/
+L 22 "D:\Program Files\keil4.14\ARM\INC\ST\STM32F10x\stm32f10x_conf.h" 2
+N
+N/* Exported types ------------------------------------------------------------*/
+N/* Exported constants --------------------------------------------------------*/
+N/* Uncomment the line below to compile the library in DEBUG mode, this will expanse
+N   the "assert_param" macro in the firmware library code (see "Exported macro"
+N   section below) */
+N/* #define DEBUG    1*/
+N
+N/* Comment the line below to disable the specific peripheral inclusion */
+N/************************************* ADC ************************************/
+N#define _ADC
+N#define _ADC1
+N#define _ADC2
+N#define _ADC3
+N
+N/************************************* BKP ************************************/
+N#define _BKP 
+N
+N/************************************* CAN ************************************/
+N#define _CAN
+N
+N/************************************* CRC ************************************/
+N#define _CRC
+N
+N/************************************* DAC ************************************/
+N#define _DAC
+N
+N/************************************* DBGMCU *********************************/
+N#define _DBGMCU
+N
+N/************************************* DMA ************************************/
+N#define _DMA
+N#define _DMA1_Channel1
+N#define _DMA1_Channel2
+N#define _DMA1_Channel3
+N#define _DMA1_Channel4
+N#define _DMA1_Channel5
+N#define _DMA1_Channel6
+N#define _DMA1_Channel7
+N#define _DMA2_Channel1
+N#define _DMA2_Channel2
+N#define _DMA2_Channel3
+N#define _DMA2_Channel4
+N#define _DMA2_Channel5
+N
+N/************************************* EXTI ***********************************/
+N#define _EXTI
+N
+N/************************************* FLASH and Option Bytes *****************/
+N#define _FLASH
+N/* Uncomment the line below to enable FLASH program/erase/protections functions,
+N   otherwise only FLASH configuration (latency, prefetch, half cycle) functions
+N   are enabled */
+N#define _FLASH_PROG
+N
+N/************************************* FSMC ***********************************/
+N#define _FSMC
+N
+N/************************************* GPIO ***********************************/
+N#define _GPIO
+N#define _GPIOA
+N#define _GPIOB
+N#define _GPIOC
+N#define _GPIOD
+N#define _GPIOE
+N#define _GPIOF
+N#define _GPIOG
+N#define _AFIO
+N
+N/************************************* I2C ************************************/
+N#define _I2C
+N#define _I2C1
+N#define _I2C2
+N
+N/************************************* IWDG ***********************************/
+N#define _IWDG
+N
+N/************************************* NVIC ***********************************/
+N#define _NVIC
+N
+N/************************************* PWR ************************************/
+N#define _PWR
+N
+N/************************************* RCC ************************************/
+N#define _RCC
+N
+N/************************************* RTC ************************************/
+N#define _RTC
+N
+N/************************************* SDIO ***********************************/
+N#define _SDIO
+N
+N/************************************* SPI ************************************/
+N#define _SPI
+N#define _SPI1
+N#define _SPI2
+N#define _SPI3
+N
+N/************************************* SysTick ********************************/
+N#define _SysTick
+N
+N/************************************* TIM ************************************/
+N#define _TIM
+N#define _TIM1
+N#define _TIM2
+N#define _TIM3
+N#define _TIM4
+N#define _TIM5
+N#define _TIM6
+N#define _TIM7
+N#define _TIM8
+N
+N/************************************* USART **********************************/
+N#define _USART
+N#define _USART1
+N#define _USART2
+N#define _USART3
+N#define _UART4
+N#define _UART5
+N
+N/************************************* WWDG ***********************************/
+N#define _WWDG
+N
+N/* In the following line adjust the value of External High Speed oscillator (HSE)
+N   used in your application */
+N#define HSE_Value    ((u32)8000000) /* Value of the External oscillator in Hz*/
+N
+N/* Exported macro ------------------------------------------------------------*/
+N#ifdef  DEBUG
+S/*******************************************************************************
+S* Macro Name     : assert_param
+S* Description    : The assert_param macro is used for function's parameters check.
+S*                  It is used only if the library is compiled in DEBUG mode. 
+S* Input          : - expr: If expr is false, it calls assert_failed function
+S*                    which reports the name of the source file and the source
+S*                    line number of the call that failed. 
+S*                    If expr is true, it returns no value.
+S* Return         : None
+S*******************************************************************************/ 
+S  #define assert_param(expr) ((expr) ? (void)0 : assert_failed((u8 *)__FILE__, __LINE__))
+S/* Exported functions ------------------------------------------------------- */
+S  void assert_failed(u8* file, u32 line);
+N#else
+N  #define assert_param(expr) ((void)0)
+N#endif /* DEBUG */
+N
+N#endif /* __STM32F10x_CONF_H */
+N
+N/******************* (C) COPYRIGHT 2008 STMicroelectronics *****END OF FILE****/
+L 27 "D:\Program Files\keil4.14\ARM\INC\ST\STM32F10x\stm32f10x_map.h" 2
+N#include "stm32f10x_type.h"
+N#include "cortexm3_macro.h"
+L 1 "D:\Program Files\keil4.14\ARM\INC\ST\STM32F10x\cortexm3_macro.h" 1
+N/******************** (C) COPYRIGHT 2008 STMicroelectronics ********************
+N* File Name          : cortexm3_macro.h
+N* Author             : MCD Application Team
+N* Version            : V2.0.1
+N* Date               : 06/13/2008
+N* Description        : Header file for cortexm3_macro.s.
+N********************************************************************************
+N* THE PRESENT FIRMWARE WHICH IS FOR GUIDANCE ONLY AIMS AT PROVIDING CUSTOMERS
+N* WITH CODING INFORMATION REGARDING THEIR PRODUCTS IN ORDER FOR THEM TO SAVE TIME.
+N* AS A RESULT, STMICROELECTRONICS SHALL NOT BE HELD LIABLE FOR ANY DIRECT,
+N* INDIRECT OR CONSEQUENTIAL DAMAGES WITH RESPECT TO ANY CLAIMS ARISING FROM THE
+N* CONTENT OF SUCH FIRMWARE AND/OR THE USE MADE BY CUSTOMERS OF THE CODING
+N* INFORMATION CONTAINED HEREIN IN CONNECTION WITH THEIR PRODUCTS.
+N*******************************************************************************/
+N
+N/* Define to prevent recursive inclusion -------------------------------------*/
+N#ifndef __CORTEXM3_MACRO_H
+N#define __CORTEXM3_MACRO_H
+N
+N/* Includes ------------------------------------------------------------------*/
+N#include "stm32f10x_type.h"
+N
+N/* Exported types ------------------------------------------------------------*/
+N/* Exported constants --------------------------------------------------------*/
+N/* Exported macro ------------------------------------------------------------*/
+N/* Exported functions ------------------------------------------------------- */
+Nvoid __WFI(void);
+Nvoid __WFE(void);
+Nvoid __SEV(void);
+Nvoid __ISB(void);
+Nvoid __DSB(void);
+Nvoid __DMB(void);
+Nvoid __SVC(void);
+Nu32 __MRS_CONTROL(void);
+Nvoid __MSR_CONTROL(u32 Control);
+Nu32 __MRS_PSP(void);
+Nvoid __MSR_PSP(u32 TopOfProcessStack);
+Nu32 __MRS_MSP(void);
+Nvoid __MSR_MSP(u32 TopOfMainStack);
+Nvoid __RESETPRIMASK(void);
+Nvoid __SETPRIMASK(void);
+Nu32 __READ_PRIMASK(void);
+Nvoid __RESETFAULTMASK(void);
+Nvoid __SETFAULTMASK(void);
+Nu32 __READ_FAULTMASK(void);
+Nvoid __BASEPRICONFIG(u32 NewPriority);
+Nu32 __GetBASEPRI(void);
+Nu16 __REV_HalfWord(u16 Data);
+Nu32 __REV_Word(u32 Data);
+N
+N#endif /* __CORTEXM3_MACRO_H */
+N
+N/******************* (C) COPYRIGHT 2008 STMicroelectronics *****END OF FILE****/
+L 29 "D:\Program Files\keil4.14\ARM\INC\ST\STM32F10x\stm32f10x_map.h" 2
+N
+N/* Exported types ------------------------------------------------------------*/
+N/******************************************************************************/
+N/*                         Peripheral registers structures                    */
+N/******************************************************************************/
+N
+N/*------------------------ Analog to Digital Converter -----------------------*/
+Ntypedef struct
+N{
+N  vu32 SR;
+N  vu32 CR1;
+N  vu32 CR2;
+N  vu32 SMPR1;
+N  vu32 SMPR2;
+N  vu32 JOFR1;
+N  vu32 JOFR2;
+N  vu32 JOFR3;
+N  vu32 JOFR4;
+N  vu32 HTR;
+N  vu32 LTR;
+N  vu32 SQR1;
+N  vu32 SQR2;
+N  vu32 SQR3;
+N  vu32 JSQR;
+N  vu32 JDR1;
+N  vu32 JDR2;
+N  vu32 JDR3;
+N  vu32 JDR4;
+N  vu32 DR;
+N} ADC_TypeDef;
+N
+N/*------------------------ Backup Registers ----------------------------------*/
+Ntypedef struct
+N{
+N  u32  RESERVED0;
+N  vu16 DR1;
+N  u16  RESERVED1;
+N  vu16 DR2;
+N  u16  RESERVED2;
+N  vu16 DR3;
+N  u16  RESERVED3;
+N  vu16 DR4;
+N  u16  RESERVED4;
+N  vu16 DR5;
+N  u16  RESERVED5;
+N  vu16 DR6;
+N  u16  RESERVED6;
+N  vu16 DR7;
+N  u16  RESERVED7;
+N  vu16 DR8;
+N  u16  RESERVED8;
+N  vu16 DR9;
+N  u16  RESERVED9;
+N  vu16 DR10;
+N  u16  RESERVED10; 
+N  vu16 RTCCR;
+N  u16  RESERVED11;
+N  vu16 CR;
+N  u16  RESERVED12;
+N  vu16 CSR;
+N  u16  RESERVED13[5];
+N  vu16 DR11;
+N  u16  RESERVED14;
+N  vu16 DR12;
+N  u16  RESERVED15;
+N  vu16 DR13;
+N  u16  RESERVED16;
+N  vu16 DR14;
+N  u16  RESERVED17;
+N  vu16 DR15;
+N  u16  RESERVED18;
+N  vu16 DR16;
+N  u16  RESERVED19;
+N  vu16 DR17;
+N  u16  RESERVED20;
+N  vu16 DR18;
+N  u16  RESERVED21;
+N  vu16 DR19;
+N  u16  RESERVED22;
+N  vu16 DR20;
+N  u16  RESERVED23;
+N  vu16 DR21;
+N  u16  RESERVED24;
+N  vu16 DR22;
+N  u16  RESERVED25;
+N  vu16 DR23;
+N  u16  RESERVED26;
+N  vu16 DR24;
+N  u16  RESERVED27;
+N  vu16 DR25;
+N  u16  RESERVED28;
+N  vu16 DR26;
+N  u16  RESERVED29;
+N  vu16 DR27;
+N  u16  RESERVED30;
+N  vu16 DR28;
+N  u16  RESERVED31;
+N  vu16 DR29;
+N  u16  RESERVED32;
+N  vu16 DR30;
+N  u16  RESERVED33; 
+N  vu16 DR31;
+N  u16  RESERVED34;
+N  vu16 DR32;
+N  u16  RESERVED35;
+N  vu16 DR33;
+N  u16  RESERVED36;
+N  vu16 DR34;
+N  u16  RESERVED37;
+N  vu16 DR35;
+N  u16  RESERVED38;
+N  vu16 DR36;
+N  u16  RESERVED39;
+N  vu16 DR37;
+N  u16  RESERVED40;
+N  vu16 DR38;
+N  u16  RESERVED41;
+N  vu16 DR39;
+N  u16  RESERVED42;
+N  vu16 DR40;
+N  u16  RESERVED43;
+N  vu16 DR41;
+N  u16  RESERVED44;
+N  vu16 DR42;
+N  u16  RESERVED45;    
+N} BKP_TypeDef;
+N
+N/*------------------------ Controller Area Network ---------------------------*/
+Ntypedef struct
+N{
+N  vu32 TIR;
+N  vu32 TDTR;
+N  vu32 TDLR;
+N  vu32 TDHR;
+N} CAN_TxMailBox_TypeDef;
+N
+Ntypedef struct
+N{
+N  vu32 RIR;
+N  vu32 RDTR;
+N  vu32 RDLR;
+N  vu32 RDHR;
+N} CAN_FIFOMailBox_TypeDef;
+N
+Ntypedef struct
+N{
+N  vu32 FR1;
+N  vu32 FR2;
+N} CAN_FilterRegister_TypeDef;
+N
+Ntypedef struct
+N{
+N  vu32 MCR;
+N  vu32 MSR;
+N  vu32 TSR;
+N  vu32 RF0R;
+N  vu32 RF1R;
+N  vu32 IER;
+N  vu32 ESR;
+N  vu32 BTR;
+N  u32  RESERVED0[88];
+N  CAN_TxMailBox_TypeDef sTxMailBox[3];
+N  CAN_FIFOMailBox_TypeDef sFIFOMailBox[2];
+N  u32  RESERVED1[12];
+N  vu32 FMR;
+N  vu32 FM1R;
+N  u32  RESERVED2;
+N  vu32 FS1R;
+N  u32  RESERVED3;
+N  vu32 FFA1R;
+N  u32  RESERVED4;
+N  vu32 FA1R;
+N  u32  RESERVED5[8];
+N  CAN_FilterRegister_TypeDef sFilterRegister[14];
+N} CAN_TypeDef;
+N
+N/*------------------------ CRC calculation unit ------------------------------*/
+Ntypedef struct
+N{
+N  vu32 DR;
+N  vu8  IDR;
+N  u8   RESERVED0;
+N  u16  RESERVED1;
+N  vu32 CR;
+N} CRC_TypeDef;
+N
+N
+N/*------------------------ Digital to Analog Converter -----------------------*/
+Ntypedef struct
+N{
+N  vu32 CR;
+N  vu32 SWTRIGR;
+N  vu32 DHR12R1;
+N  vu32 DHR12L1;
+N  vu32 DHR8R1;
+N  vu32 DHR12R2;
+N  vu32 DHR12L2;
+N  vu32 DHR8R2;
+N  vu32 DHR12RD;
+N  vu32 DHR12LD;
+N  vu32 DHR8RD;
+N  vu32 DOR1;
+N  vu32 DOR2;
+N} DAC_TypeDef;
+N
+N/*------------------------ Debug MCU -----------------------------------------*/
+Ntypedef struct
+N{
+N  vu32 IDCODE;
+N  vu32 CR;	
+N}DBGMCU_TypeDef;
+N
+N/*------------------------ DMA Controller ------------------------------------*/
+Ntypedef struct
+N{
+N  vu32 CCR;
+N  vu32 CNDTR;
+N  vu32 CPAR;
+N  vu32 CMAR;
+N} DMA_Channel_TypeDef;
+N
+Ntypedef struct
+N{
+N  vu32 ISR;
+N  vu32 IFCR;
+N} DMA_TypeDef;
+N
+N/*------------------------ External Interrupt/Event Controller ---------------*/
+Ntypedef struct
+N{
+N  vu32 IMR;
+N  vu32 EMR;
+N  vu32 RTSR;
+N  vu32 FTSR;
+N  vu32 SWIER;
+N  vu32 PR;
+N} EXTI_TypeDef;
+N
+N/*------------------------ FLASH and Option Bytes Registers ------------------*/
+Ntypedef struct
+N{
+N  vu32 ACR;
+N  vu32 KEYR;
+N  vu32 OPTKEYR;
+N  vu32 SR;
+N  vu32 CR;
+N  vu32 AR;
+N  vu32 RESERVED;
+N  vu32 OBR;
+N  vu32 WRPR;
+N} FLASH_TypeDef;
+N
+Ntypedef struct
+N{
+N  vu16 RDP;
+N  vu16 USER;
+N  vu16 Data0;
+N  vu16 Data1;
+N  vu16 WRP0;
+N  vu16 WRP1;
+N  vu16 WRP2;
+N  vu16 WRP3;
+N} OB_TypeDef;
+N
+N/*------------------------ Flexible Static Memory Controller -----------------*/
+Ntypedef struct
+N{
+N  vu32 BTCR[8];   
+N} FSMC_Bank1_TypeDef; 
+N
+Ntypedef struct
+N{
+N  vu32 BWTR[7];
+N} FSMC_Bank1E_TypeDef;
+N
+Ntypedef struct
+N{
+N  vu32 PCR2;
+N  vu32 SR2;
+N  vu32 PMEM2;
+N  vu32 PATT2;
+N  u32  RESERVED0;   
+N  vu32 ECCR2; 
+N} FSMC_Bank2_TypeDef;  
+N
+Ntypedef struct
+N{
+N  vu32 PCR3;
+N  vu32 SR3;
+N  vu32 PMEM3;
+N  vu32 PATT3;
+N  u32  RESERVED0;   
+N  vu32 ECCR3; 
+N} FSMC_Bank3_TypeDef; 
+N
+Ntypedef struct
+N{
+N  vu32 PCR4;
+N  vu32 SR4;
+N  vu32 PMEM4;
+N  vu32 PATT4;
+N  vu32 PIO4; 
+N} FSMC_Bank4_TypeDef; 
+N
+N/*------------------------ General Purpose and Alternate Function IO ---------*/
+Ntypedef struct
+N{
+N  vu32 CRL;
+N  vu32 CRH;
+N  vu32 IDR;
+N  vu32 ODR;
+N  vu32 BSRR;
+N  vu32 BRR;
+N  vu32 LCKR;
+N} GPIO_TypeDef;
+N
+Ntypedef struct
+N{
+N  vu32 EVCR;
+N  vu32 MAPR;
+N  vu32 EXTICR[4];
+N} AFIO_TypeDef;
+N
+N/*------------------------ Inter-integrated Circuit Interface ----------------*/
+Ntypedef struct
+N{
+N  vu16 CR1;
+N  u16  RESERVED0;
+N  vu16 CR2;
+N  u16  RESERVED1;
+N  vu16 OAR1;
+N  u16  RESERVED2;
+N  vu16 OAR2;
+N  u16  RESERVED3;
+N  vu16 DR;
+N  u16  RESERVED4;
+N  vu16 SR1;
+N  u16  RESERVED5;
+N  vu16 SR2;
+N  u16  RESERVED6;
+N  vu16 CCR;
+N  u16  RESERVED7;
+N  vu16 TRISE;
+N  u16  RESERVED8;
+N} I2C_TypeDef;
+N
+N/*------------------------ Independent WATCHDOG ------------------------------*/
+Ntypedef struct
+N{
+N  vu32 KR;
+N  vu32 PR;
+N  vu32 RLR;
+N  vu32 SR;
+N} IWDG_TypeDef;
+N
+N/*------------------------ Nested Vectored Interrupt Controller --------------*/
+Ntypedef struct
+N{
+N  vu32 ISER[2];
+N  u32  RESERVED0[30];
+N  vu32 ICER[2];
+N  u32  RSERVED1[30];
+N  vu32 ISPR[2];
+N  u32  RESERVED2[30];
+N  vu32 ICPR[2];
+N  u32  RESERVED3[30];
+N  vu32 IABR[2];
+N  u32  RESERVED4[62];
+N  vu32 IPR[15];
+N} NVIC_TypeDef;
+N
+Ntypedef struct
+N{
+N  vuc32 CPUID;
+N  vu32 ICSR;
+N  vu32 VTOR;
+N  vu32 AIRCR;
+N  vu32 SCR;
+N  vu32 CCR;
+N  vu32 SHPR[3];
+N  vu32 SHCSR;
+N  vu32 CFSR;
+N  vu32 HFSR;
+N  vu32 DFSR;
+N  vu32 MMFAR;
+N  vu32 BFAR;
+N  vu32 AFSR;
+N} SCB_TypeDef;
+N
+N/*------------------------ Power Control -------------------------------------*/
+Ntypedef struct
+N{
+N  vu32 CR;
+N  vu32 CSR;
+N} PWR_TypeDef;
+N
+N/*------------------------ Reset and Clock Control ---------------------------*/
+Ntypedef struct
+N{
+N  vu32 CR;
+N  vu32 CFGR;
+N  vu32 CIR;
+N  vu32 APB2RSTR;
+N  vu32 APB1RSTR;
+N  vu32 AHBENR;
+N  vu32 APB2ENR;
+N  vu32 APB1ENR;
+N  vu32 BDCR;
+N  vu32 CSR;
+N} RCC_TypeDef;
+N
+N/*------------------------ Real-Time Clock -----------------------------------*/
+Ntypedef struct
+N{
+N  vu16 CRH;
+N  u16  RESERVED0;
+N  vu16 CRL;
+N  u16  RESERVED1;
+N  vu16 PRLH;
+N  u16  RESERVED2;
+N  vu16 PRLL;
+N  u16  RESERVED3;
+N  vu16 DIVH;
+N  u16  RESERVED4;
+N  vu16 DIVL;
+N  u16  RESERVED5;
+N  vu16 CNTH;
+N  u16  RESERVED6;
+N  vu16 CNTL;
+N  u16  RESERVED7;
+N  vu16 ALRH;
+N  u16  RESERVED8;
+N  vu16 ALRL;
+N  u16  RESERVED9;
+N} RTC_TypeDef;
+N
+N/*------------------------ SD host Interface ---------------------------------*/
+Ntypedef struct
+N{
+N  vu32 POWER;
+N  vu32 CLKCR;
+N  vu32 ARG;
+N  vu32 CMD;
+N  vuc32 RESPCMD;
+N  vuc32 RESP1;
+N  vuc32 RESP2;
+N  vuc32 RESP3;
+N  vuc32 RESP4;
+N  vu32 DTIMER;
+N  vu32 DLEN;
+N  vu32 DCTRL;
+N  vuc32 DCOUNT;
+N  vuc32 STA;
+N  vu32 ICR;
+N  vu32 MASK;
+N  u32  RESERVED0[2];
+N  vuc32 FIFOCNT;
+N  u32  RESERVED1[13];
+N  vu32 FIFO;
+N} SDIO_TypeDef;
+N
+N/*------------------------ Serial Peripheral Interface -----------------------*/
+Ntypedef struct
+N{
+N  vu16 CR1;
+N  u16  RESERVED0;
+N  vu16 CR2;
+N  u16  RESERVED1;
+N  vu16 SR;
+N  u16  RESERVED2;
+N  vu16 DR;
+N  u16  RESERVED3;
+N  vu16 CRCPR;
+N  u16  RESERVED4;
+N  vu16 RXCRCR;
+N  u16  RESERVED5;
+N  vu16 TXCRCR;
+N  u16  RESERVED6;
+N  vu16 I2SCFGR;
+N  u16  RESERVED7;
+N  vu16 I2SPR;
+N  u16  RESERVED8;  
+N} SPI_TypeDef;
+N
+N/*------------------------ SystemTick ----------------------------------------*/
+Ntypedef struct
+N{
+N  vu32 CTRL;
+N  vu32 LOAD;
+N  vu32 VAL;
+N  vuc32 CALIB;
+N} SysTick_TypeDef;
+N
+N/*------------------------ TIM -----------------------------------------------*/
+Ntypedef struct
+N{
+N  vu16 CR1;
+N  u16  RESERVED0;
+N  vu16 CR2;
+N  u16  RESERVED1;
+N  vu16 SMCR;
+N  u16  RESERVED2;
+N  vu16 DIER;
+N  u16  RESERVED3;
+N  vu16 SR;
+N  u16  RESERVED4;
+N  vu16 EGR;
+N  u16  RESERVED5;
+N  vu16 CCMR1;
+N  u16  RESERVED6;
+N  vu16 CCMR2;
+N  u16  RESERVED7;
+N  vu16 CCER;
+N  u16  RESERVED8;
+N  vu16 CNT;
+N  u16  RESERVED9;
+N  vu16 PSC;
+N  u16  RESERVED10;
+N  vu16 ARR;
+N  u16  RESERVED11;
+N  vu16 RCR;
+N  u16  RESERVED12;
+N  vu16 CCR1;
+N  u16  RESERVED13;
+N  vu16 CCR2;
+N  u16  RESERVED14;
+N  vu16 CCR3;
+N  u16  RESERVED15;
+N  vu16 CCR4;
+N  u16  RESERVED16;
+N  vu16 BDTR;
+N  u16  RESERVED17;
+N  vu16 DCR;
+N  u16  RESERVED18;
+N  vu16 DMAR;
+N  u16  RESERVED19;
+N} TIM_TypeDef;
+N
+N/*----------------- Universal Synchronous Asynchronous Receiver Transmitter --*/
+Ntypedef struct
+N{
+N  vu16 SR;
+N  u16  RESERVED0;
+N  vu16 DR;
+N  u16  RESERVED1;
+N  vu16 BRR;
+N  u16  RESERVED2;
+N  vu16 CR1;
+N  u16  RESERVED3;
+N  vu16 CR2;
+N  u16  RESERVED4;
+N  vu16 CR3;
+N  u16  RESERVED5;
+N  vu16 GTPR;
+N  u16  RESERVED6;
+N} USART_TypeDef;
+N
+N/*------------------------ Window WATCHDOG -----------------------------------*/
+Ntypedef struct
+N{
+N  vu32 CR;
+N  vu32 CFR;
+N  vu32 SR;
+N} WWDG_TypeDef;
+N
+N/******************************************************************************/
+N/*                         Peripheral memory map                              */
+N/******************************************************************************/
+N/* Peripheral and SRAM base address in the alias region */
+N#define PERIPH_BB_BASE        ((u32)0x42000000)
+N#define SRAM_BB_BASE          ((u32)0x22000000)
+N
+N/* Peripheral and SRAM base address in the bit-band region */
+N#define SRAM_BASE             ((u32)0x20000000)
+N#define PERIPH_BASE           ((u32)0x40000000)
+N
+N/* FSMC registers base address */
+N#define FSMC_R_BASE           ((u32)0xA0000000)
+N
+N/* Peripheral memory map */
+N#define APB1PERIPH_BASE       PERIPH_BASE
+N#define APB2PERIPH_BASE       (PERIPH_BASE + 0x10000)
+N#define AHBPERIPH_BASE        (PERIPH_BASE + 0x20000)
+N
+N#define TIM2_BASE             (APB1PERIPH_BASE + 0x0000)
+N#define TIM3_BASE             (APB1PERIPH_BASE + 0x0400)
+N#define TIM4_BASE             (APB1PERIPH_BASE + 0x0800)
+N#define TIM5_BASE             (APB1PERIPH_BASE + 0x0C00)
+N#define TIM6_BASE             (APB1PERIPH_BASE + 0x1000)
+N#define TIM7_BASE             (APB1PERIPH_BASE + 0x1400)
+N#define RTC_BASE              (APB1PERIPH_BASE + 0x2800)
+N#define WWDG_BASE             (APB1PERIPH_BASE + 0x2C00)
+N#define IWDG_BASE             (APB1PERIPH_BASE + 0x3000)
+N#define SPI2_BASE             (APB1PERIPH_BASE + 0x3800)
+N#define SPI3_BASE             (APB1PERIPH_BASE + 0x3C00)
+N#define USART2_BASE           (APB1PERIPH_BASE + 0x4400)
+N#define USART3_BASE           (APB1PERIPH_BASE + 0x4800)
+N#define UART4_BASE            (APB1PERIPH_BASE + 0x4C00)
+N#define UART5_BASE            (APB1PERIPH_BASE + 0x5000)
+N#define I2C1_BASE             (APB1PERIPH_BASE + 0x5400)
+N#define I2C2_BASE             (APB1PERIPH_BASE + 0x5800)
+N#define CAN_BASE              (APB1PERIPH_BASE + 0x6400)
+N#define BKP_BASE              (APB1PERIPH_BASE + 0x6C00)
+N#define PWR_BASE              (APB1PERIPH_BASE + 0x7000)
+N#define DAC_BASE              (APB1PERIPH_BASE + 0x7400)
+N
+N#define AFIO_BASE             (APB2PERIPH_BASE + 0x0000)
+N#define EXTI_BASE             (APB2PERIPH_BASE + 0x0400)
+N#define GPIOA_BASE            (APB2PERIPH_BASE + 0x0800)
+N#define GPIOB_BASE            (APB2PERIPH_BASE + 0x0C00)
+N#define GPIOC_BASE            (APB2PERIPH_BASE + 0x1000)
+N#define GPIOD_BASE            (APB2PERIPH_BASE + 0x1400)
+N#define GPIOE_BASE            (APB2PERIPH_BASE + 0x1800)
+N#define GPIOF_BASE            (APB2PERIPH_BASE + 0x1C00)
+N#define GPIOG_BASE            (APB2PERIPH_BASE + 0x2000)
+N#define ADC1_BASE             (APB2PERIPH_BASE + 0x2400)
+N#define ADC2_BASE             (APB2PERIPH_BASE + 0x2800)
+N#define TIM1_BASE             (APB2PERIPH_BASE + 0x2C00)
+N#define SPI1_BASE             (APB2PERIPH_BASE + 0x3000)
+N#define TIM8_BASE             (APB2PERIPH_BASE + 0x3400)
+N#define USART1_BASE           (APB2PERIPH_BASE + 0x3800)
+N#define ADC3_BASE             (APB2PERIPH_BASE + 0x3C00)
+N
+N#define SDIO_BASE             (PERIPH_BASE + 0x18000)
+N
+N#define DMA1_BASE             (AHBPERIPH_BASE + 0x0000)
+N#define DMA1_Channel1_BASE    (AHBPERIPH_BASE + 0x0008)
+N#define DMA1_Channel2_BASE    (AHBPERIPH_BASE + 0x001C)
+N#define DMA1_Channel3_BASE    (AHBPERIPH_BASE + 0x0030)
+N#define DMA1_Channel4_BASE    (AHBPERIPH_BASE + 0x0044)
+N#define DMA1_Channel5_BASE    (AHBPERIPH_BASE + 0x0058)
+N#define DMA1_Channel6_BASE    (AHBPERIPH_BASE + 0x006C)
+N#define DMA1_Channel7_BASE    (AHBPERIPH_BASE + 0x0080)
+N#define DMA2_BASE             (AHBPERIPH_BASE + 0x0400)
+N#define DMA2_Channel1_BASE    (AHBPERIPH_BASE + 0x0408)
+N#define DMA2_Channel2_BASE    (AHBPERIPH_BASE + 0x041C)
+N#define DMA2_Channel3_BASE    (AHBPERIPH_BASE + 0x0430)
+N#define DMA2_Channel4_BASE    (AHBPERIPH_BASE + 0x0444)
+N#define DMA2_Channel5_BASE    (AHBPERIPH_BASE + 0x0458)
+N#define RCC_BASE              (AHBPERIPH_BASE + 0x1000)
+N#define CRC_BASE              (AHBPERIPH_BASE + 0x3000)
+N
+N/* Flash registers base address */
+N#define FLASH_R_BASE          (AHBPERIPH_BASE + 0x2000)
+N/* Flash Option Bytes base address */
+N#define OB_BASE               ((u32)0x1FFFF800)
+N
+N/* FSMC Bankx registers base address */
+N#define FSMC_Bank1_R_BASE     (FSMC_R_BASE + 0x0000)
+N#define FSMC_Bank1E_R_BASE    (FSMC_R_BASE + 0x0104)
+N#define FSMC_Bank2_R_BASE     (FSMC_R_BASE + 0x0060)
+N#define FSMC_Bank3_R_BASE     (FSMC_R_BASE + 0x0080)
+N#define FSMC_Bank4_R_BASE     (FSMC_R_BASE + 0x00A0)
+N
+N/* Debug MCU registers base address */
+N#define DBGMCU_BASE          ((u32)0xE0042000)
+N
+N/* System Control Space memory map */
+N#define SCS_BASE              ((u32)0xE000E000)
+N
+N#define SysTick_BASE          (SCS_BASE + 0x0010)
+N#define NVIC_BASE             (SCS_BASE + 0x0100)
+N#define SCB_BASE              (SCS_BASE + 0x0D00)
+N
+N/******************************************************************************/
+N/*                         Peripheral declaration                             */
+N/******************************************************************************/
+N
+N/*------------------------ Non Debug Mode ------------------------------------*/
+N#ifndef DEBUG
+N#ifdef _TIM2
+N  #define TIM2                ((TIM_TypeDef *) TIM2_BASE)
+N#endif /*_TIM2 */
+N
+N#ifdef _TIM3
+N  #define TIM3                ((TIM_TypeDef *) TIM3_BASE)
+N#endif /*_TIM3 */
+N
+N#ifdef _TIM4
+N  #define TIM4                ((TIM_TypeDef *) TIM4_BASE)
+N#endif /*_TIM4 */
+N
+N#ifdef _TIM5
+N  #define TIM5                ((TIM_TypeDef *) TIM5_BASE)
+N#endif /*_TIM5 */
+N
+N#ifdef _TIM6
+N  #define TIM6                ((TIM_TypeDef *) TIM6_BASE)
+N#endif /*_TIM6 */
+N
+N#ifdef _TIM7
+N  #define TIM7                ((TIM_TypeDef *) TIM7_BASE)
+N#endif /*_TIM7 */
+N
+N#ifdef _RTC
+N  #define RTC                 ((RTC_TypeDef *) RTC_BASE)
+N#endif /*_RTC */
+N
+N#ifdef _WWDG
+N  #define WWDG                ((WWDG_TypeDef *) WWDG_BASE)
+N#endif /*_WWDG */
+N
+N#ifdef _IWDG
+N  #define IWDG                ((IWDG_TypeDef *) IWDG_BASE)
+N#endif /*_IWDG */
+N
+N#ifdef _SPI2
+N  #define SPI2                ((SPI_TypeDef *) SPI2_BASE)
+N#endif /*_SPI2 */
+N
+N#ifdef _SPI3
+N  #define SPI3                ((SPI_TypeDef *) SPI3_BASE)
+N#endif /*_SPI3 */
+N
+N#ifdef _USART2
+N  #define USART2              ((USART_TypeDef *) USART2_BASE)
+N#endif /*_USART2 */
+N
+N#ifdef _USART3
+N  #define USART3              ((USART_TypeDef *) USART3_BASE)
+N#endif /*_USART3 */
+N
+N#ifdef _UART4
+N  #define UART4              ((USART_TypeDef *) UART4_BASE)
+N#endif /*_UART4 */
+N
+N#ifdef _UART5
+N  #define UART5              ((USART_TypeDef *) UART5_BASE)
+N#endif /*_USART5 */
+N
+N#ifdef _I2C1
+N  #define I2C1                ((I2C_TypeDef *) I2C1_BASE)
+N#endif /*_I2C1 */
+N
+N#ifdef _I2C2
+N  #define I2C2                ((I2C_TypeDef *) I2C2_BASE)
+N#endif /*_I2C2 */
+N
+N#ifdef _CAN
+N  #define CAN                 ((CAN_TypeDef *) CAN_BASE)
+N#endif /*_CAN */
+N
+N#ifdef _BKP
+N  #define BKP                 ((BKP_TypeDef *) BKP_BASE)
+N#endif /*_BKP */
+N
+N#ifdef _PWR
+N  #define PWR                 ((PWR_TypeDef *) PWR_BASE)
+N#endif /*_PWR */
+N
+N#ifdef _DAC
+N  #define DAC                 ((DAC_TypeDef *) DAC_BASE)
+N#endif /*_DAC */
+N
+N#ifdef _AFIO
+N  #define AFIO                ((AFIO_TypeDef *) AFIO_BASE)
+N#endif /*_AFIO */
+N
+N#ifdef _EXTI
+N  #define EXTI                ((EXTI_TypeDef *) EXTI_BASE)
+N#endif /*_EXTI */
+N
+N#ifdef _GPIOA
+N  #define GPIOA               ((GPIO_TypeDef *) GPIOA_BASE)
+N#endif /*_GPIOA */
+N
+N#ifdef _GPIOB
+N  #define GPIOB               ((GPIO_TypeDef *) GPIOB_BASE)
+N#endif /*_GPIOB */
+N
+N#ifdef _GPIOC
+N  #define GPIOC               ((GPIO_TypeDef *) GPIOC_BASE)
+N#endif /*_GPIOC */
+N
+N#ifdef _GPIOD
+N  #define GPIOD               ((GPIO_TypeDef *) GPIOD_BASE)
+N#endif /*_GPIOD */
+N
+N#ifdef _GPIOE
+N  #define GPIOE               ((GPIO_TypeDef *) GPIOE_BASE)
+N#endif /*_GPIOE */
+N
+N#ifdef _GPIOF
+N  #define GPIOF               ((GPIO_TypeDef *) GPIOF_BASE)
+N#endif /*_GPIOF */
+N
+N#ifdef _GPIOG
+N  #define GPIOG               ((GPIO_TypeDef *) GPIOG_BASE)
+N#endif /*_GPIOG */
+N
+N#ifdef _ADC1
+N  #define ADC1                ((ADC_TypeDef *) ADC1_BASE)
+N#endif /*_ADC1 */
+N
+N#ifdef _ADC2
+N  #define ADC2                ((ADC_TypeDef *) ADC2_BASE)
+N#endif /*_ADC2 */
+N
+N#ifdef _TIM1
+N  #define TIM1                ((TIM_TypeDef *) TIM1_BASE)
+N#endif /*_TIM1 */
+N
+N#ifdef _SPI1
+N  #define SPI1                ((SPI_TypeDef *) SPI1_BASE)
+N#endif /*_SPI1 */
+N
+N#ifdef _TIM8
+N  #define TIM8                ((TIM_TypeDef *) TIM8_BASE)
+N#endif /*_TIM8 */
+N
+N#ifdef _USART1
+N  #define USART1              ((USART_TypeDef *) USART1_BASE)
+N#endif /*_USART1 */
+N
+N#ifdef _ADC3
+N  #define ADC3                ((ADC_TypeDef *) ADC3_BASE)
+N#endif /*_ADC3 */
+N
+N#ifdef _SDIO
+N  #define SDIO                ((SDIO_TypeDef *) SDIO_BASE)
+N#endif /*_SDIO */
+N
+N#ifdef _DMA
+N  #define DMA1                ((DMA_TypeDef *) DMA1_BASE)
+N  #define DMA2                ((DMA_TypeDef *) DMA2_BASE)
+N#endif /*_DMA */
+N
+N#ifdef _DMA1_Channel1
+N  #define DMA1_Channel1       ((DMA_Channel_TypeDef *) DMA1_Channel1_BASE)
+N#endif /*_DMA1_Channel1 */
+N
+N#ifdef _DMA1_Channel2
+N  #define DMA1_Channel2       ((DMA_Channel_TypeDef *) DMA1_Channel2_BASE)
+N#endif /*_DMA1_Channel2 */
+N
+N#ifdef _DMA1_Channel3
+N  #define DMA1_Channel3       ((DMA_Channel_TypeDef *) DMA1_Channel3_BASE)
+N#endif /*_DMA1_Channel3 */
+N
+N#ifdef _DMA1_Channel4
+N  #define DMA1_Channel4       ((DMA_Channel_TypeDef *) DMA1_Channel4_BASE)
+N#endif /*_DMA1_Channel4 */
+N
+N#ifdef _DMA1_Channel5
+N  #define DMA1_Channel5       ((DMA_Channel_TypeDef *) DMA1_Channel5_BASE)
+N#endif /*_DMA1_Channel5 */
+N
+N#ifdef _DMA1_Channel6
+N  #define DMA1_Channel6       ((DMA_Channel_TypeDef *) DMA1_Channel6_BASE)
+N#endif /*_DMA1_Channel6 */
+N
+N#ifdef _DMA1_Channel7
+N  #define DMA1_Channel7       ((DMA_Channel_TypeDef *) DMA1_Channel7_BASE)
+N#endif /*_DMA1_Channel7 */
+N
+N#ifdef _DMA2_Channel1
+N  #define DMA2_Channel1       ((DMA_Channel_TypeDef *) DMA2_Channel1_BASE)
+N#endif /*_DMA2_Channel1 */
+N
+N#ifdef _DMA2_Channel2
+N  #define DMA2_Channel2       ((DMA_Channel_TypeDef *) DMA2_Channel2_BASE)
+N#endif /*_DMA2_Channel2 */
+N
+N#ifdef _DMA2_Channel3
+N  #define DMA2_Channel3       ((DMA_Channel_TypeDef *) DMA2_Channel3_BASE)
+N#endif /*_DMA2_Channel3 */
+N
+N#ifdef _DMA2_Channel4
+N  #define DMA2_Channel4       ((DMA_Channel_TypeDef *) DMA2_Channel4_BASE)
+N#endif /*_DMA2_Channel4 */
+N
+N#ifdef _DMA2_Channel5
+N  #define DMA2_Channel5       ((DMA_Channel_TypeDef *) DMA2_Channel5_BASE)
+N#endif /*_DMA2_Channel5 */
+N
+N#ifdef _RCC
+N  #define RCC                 ((RCC_TypeDef *) RCC_BASE)
+N#endif /*_RCC */
+N
+N#ifdef _CRC
+N  #define CRC                 ((CRC_TypeDef *) CRC_BASE)
+N#endif /*_CRC */
+N
+N#ifdef _FLASH
+N  #define FLASH               ((FLASH_TypeDef *) FLASH_R_BASE)
+N  #define OB                  ((OB_TypeDef *) OB_BASE) 
+N#endif /*_FLASH */
+N
+N#ifdef _FSMC
+N  #define FSMC_Bank1          ((FSMC_Bank1_TypeDef *) FSMC_Bank1_R_BASE)
+N  #define FSMC_Bank1E         ((FSMC_Bank1E_TypeDef *) FSMC_Bank1E_R_BASE)
+N  #define FSMC_Bank2          ((FSMC_Bank2_TypeDef *) FSMC_Bank2_R_BASE)
+N  #define FSMC_Bank3          ((FSMC_Bank3_TypeDef *) FSMC_Bank3_R_BASE)
+N  #define FSMC_Bank4          ((FSMC_Bank4_TypeDef *) FSMC_Bank4_R_BASE)
+N#endif /*_FSMC */
+N
+N#ifdef _DBGMCU
+N  #define DBGMCU              ((DBGMCU_TypeDef *) DBGMCU_BASE)
+N#endif /*_DBGMCU */
+N
+N#ifdef _SysTick
+N  #define SysTick             ((SysTick_TypeDef *) SysTick_BASE)
+N#endif /*_SysTick */
+N
+N#ifdef _NVIC
+N  #define NVIC                ((NVIC_TypeDef *) NVIC_BASE)
+N  #define SCB                 ((SCB_TypeDef *) SCB_BASE)  
+N#endif /*_NVIC */
+N
+N/*------------------------ Debug Mode ----------------------------------------*/
+N#else   /* DEBUG */
+S#ifdef _TIM2
+S  EXT TIM_TypeDef             *TIM2;
+S#endif /*_TIM2 */
+S
+S#ifdef _TIM3
+S  EXT TIM_TypeDef             *TIM3;
+S#endif /*_TIM3 */
+S
+S#ifdef _TIM4
+S  EXT TIM_TypeDef             *TIM4;
+S#endif /*_TIM4 */
+S
+S#ifdef _TIM5
+S  EXT TIM_TypeDef             *TIM5;
+S#endif /*_TIM5 */
+S
+S#ifdef _TIM6
+S  EXT TIM_TypeDef             *TIM6;
+S#endif /*_TIM6 */
+S
+S#ifdef _TIM7
+S  EXT TIM_TypeDef             *TIM7;
+S#endif /*_TIM7 */
+S
+S#ifdef _RTC
+S  EXT RTC_TypeDef             *RTC;
+S#endif /*_RTC */
+S
+S#ifdef _WWDG
+S  EXT WWDG_TypeDef            *WWDG;
+S#endif /*_WWDG */
+S
+S#ifdef _IWDG
+S  EXT IWDG_TypeDef            *IWDG;
+S#endif /*_IWDG */
+S
+S#ifdef _SPI2
+S  EXT SPI_TypeDef             *SPI2;
+S#endif /*_SPI2 */
+S
+S#ifdef _SPI3
+S  EXT SPI_TypeDef             *SPI3;
+S#endif /*_SPI3 */
+S
+S#ifdef _USART2
+S  EXT USART_TypeDef           *USART2;
+S#endif /*_USART2 */
+S
+S#ifdef _USART3
+S  EXT USART_TypeDef           *USART3;
+S#endif /*_USART3 */
+S
+S#ifdef _UART4
+S  EXT USART_TypeDef           *UART4;
+S#endif /*_UART4 */
+S
+S#ifdef _UART5
+S  EXT USART_TypeDef           *UART5;
+S#endif /*_UART5 */
+S
+S#ifdef _I2C1
+S  EXT I2C_TypeDef             *I2C1;
+S#endif /*_I2C1 */
+S
+S#ifdef _I2C2
+S  EXT I2C_TypeDef             *I2C2;
+S#endif /*_I2C2 */
+S
+S#ifdef _CAN
+S  EXT CAN_TypeDef             *CAN;
+S#endif /*_CAN */
+S
+S#ifdef _BKP
+S  EXT BKP_TypeDef             *BKP;
+S#endif /*_BKP */
+S
+S#ifdef _PWR
+S  EXT PWR_TypeDef             *PWR;
+S#endif /*_PWR */
+S
+S#ifdef _DAC
+S  EXT DAC_TypeDef             *DAC;
+S#endif /*_DAC */
+S
+S#ifdef _AFIO
+S  EXT AFIO_TypeDef            *AFIO;
+S#endif /*_AFIO */
+S
+S#ifdef _EXTI
+S  EXT EXTI_TypeDef            *EXTI;
+S#endif /*_EXTI */
+S
+S#ifdef _GPIOA
+S  EXT GPIO_TypeDef            *GPIOA;
+S#endif /*_GPIOA */
+S
+S#ifdef _GPIOB
+S  EXT GPIO_TypeDef            *GPIOB;
+S#endif /*_GPIOB */
+S
+S#ifdef _GPIOC
+S  EXT GPIO_TypeDef            *GPIOC;
+S#endif /*_GPIOC */
+S
+S#ifdef _GPIOD
+S  EXT GPIO_TypeDef            *GPIOD;
+S#endif /*_GPIOD */
+S
+S#ifdef _GPIOE
+S  EXT GPIO_TypeDef            *GPIOE;
+S#endif /*_GPIOE */
+S
+S#ifdef _GPIOF
+S  EXT GPIO_TypeDef            *GPIOF;
+S#endif /*_GPIOF */
+S
+S#ifdef _GPIOG
+S  EXT GPIO_TypeDef            *GPIOG;
+S#endif /*_GPIOG */
+S
+S#ifdef _ADC1
+S  EXT ADC_TypeDef             *ADC1;
+S#endif /*_ADC1 */
+S
+S#ifdef _ADC2
+S  EXT ADC_TypeDef             *ADC2;
+S#endif /*_ADC2 */
+S
+S#ifdef _TIM1
+S  EXT TIM_TypeDef             *TIM1;
+S#endif /*_TIM1 */
+S
+S#ifdef _SPI1
+S  EXT SPI_TypeDef             *SPI1;
+S#endif /*_SPI1 */
+S
+S#ifdef _TIM8
+S  EXT TIM_TypeDef             *TIM8;
+S#endif /*_TIM8 */
+S
+S#ifdef _USART1
+S  EXT USART_TypeDef           *USART1;
+S#endif /*_USART1 */
+S
+S#ifdef _ADC3
+S  EXT ADC_TypeDef             *ADC3;
+S#endif /*_ADC3 */
+S
+S#ifdef _SDIO
+S  EXT SDIO_TypeDef            *SDIO;
+S#endif /*_SDIO */
+S
+S#ifdef _DMA
+S  EXT DMA_TypeDef             *DMA1;
+S  EXT DMA_TypeDef             *DMA2;
+S#endif /*_DMA */
+S
+S#ifdef _DMA1_Channel1
+S  EXT DMA_Channel_TypeDef     *DMA1_Channel1;
+S#endif /*_DMA1_Channel1 */
+S
+S#ifdef _DMA1_Channel2
+S  EXT DMA_Channel_TypeDef     *DMA1_Channel2;
+S#endif /*_DMA1_Channel2 */
+S
+S#ifdef _DMA1_Channel3
+S  EXT DMA_Channel_TypeDef     *DMA1_Channel3;
+S#endif /*_DMA1_Channel3 */
+S
+S#ifdef _DMA1_Channel4
+S  EXT DMA_Channel_TypeDef     *DMA1_Channel4;
+S#endif /*_DMA1_Channel4 */
+S
+S#ifdef _DMA1_Channel5
+S  EXT DMA_Channel_TypeDef     *DMA1_Channel5;
+S#endif /*_DMA1_Channel5 */
+S
+S#ifdef _DMA1_Channel6
+S  EXT DMA_Channel_TypeDef     *DMA1_Channel6;
+S#endif /*_DMA1_Channel6 */
+S
+S#ifdef _DMA1_Channel7
+S  EXT DMA_Channel_TypeDef     *DMA1_Channel7;
+S#endif /*_DMA1_Channel7 */
+S
+S#ifdef _DMA2_Channel1
+S  EXT DMA_Channel_TypeDef     *DMA2_Channel1;
+S#endif /*_DMA2_Channel1 */
+S
+S#ifdef _DMA2_Channel2
+S  EXT DMA_Channel_TypeDef     *DMA2_Channel2;
+S#endif /*_DMA2_Channel2 */
+S
+S#ifdef _DMA2_Channel3
+S  EXT DMA_Channel_TypeDef     *DMA2_Channel3;
+S#endif /*_DMA2_Channel3 */
+S
+S#ifdef _DMA2_Channel4
+S  EXT DMA_Channel_TypeDef     *DMA2_Channel4;
+S#endif /*_DMA2_Channel4 */
+S
+S#ifdef _DMA2_Channel5
+S  EXT DMA_Channel_TypeDef     *DMA2_Channel5;
+S#endif /*_DMA2_Channel5 */
+S
+S#ifdef _RCC
+S  EXT RCC_TypeDef             *RCC;
+S#endif /*_RCC */
+S
+S#ifdef _CRC
+S  EXT CRC_TypeDef             *CRC;
+S#endif /*_CRC */
+S
+S#ifdef _FLASH
+S  EXT FLASH_TypeDef            *FLASH;
+S  EXT OB_TypeDef               *OB;  
+S#endif /*_FLASH */
+S
+S#ifdef _FSMC
+S  EXT FSMC_Bank1_TypeDef      *FSMC_Bank1;
+S  EXT FSMC_Bank1E_TypeDef     *FSMC_Bank1E;
+S  EXT FSMC_Bank2_TypeDef      *FSMC_Bank2;
+S  EXT FSMC_Bank3_TypeDef      *FSMC_Bank3;
+S  EXT FSMC_Bank4_TypeDef      *FSMC_Bank4;
+S#endif /*_FSMC */
+S
+S#ifdef _DBGMCU
+S  EXT DBGMCU_TypeDef          *DBGMCU;
+S#endif /*_DBGMCU */
+S
+S#ifdef _SysTick
+S  EXT SysTick_TypeDef         *SysTick;
+S#endif /*_SysTick */
+S
+S#ifdef _NVIC
+S  EXT NVIC_TypeDef            *NVIC;
+S  EXT SCB_TypeDef             *SCB;
+S#endif /*_NVIC */
+S
+N#endif  /* DEBUG */
+N
+N/* Exported constants --------------------------------------------------------*/
+N/* Exported macro ------------------------------------------------------------*/
+N/* Exported functions ------------------------------------------------------- */
+N
+N#endif /* __STM32F10x_MAP_H */
+N
+N/******************* (C) COPYRIGHT 2008 STMicroelectronics *****END OF FILE****/
+L 23 "D:\Program Files\keil4.14\ARM\INC\ST\STM32F10x\stm32f10x_gpio.h" 2
+N
+N/* Exported types ------------------------------------------------------------*/
+N#define IS_GPIO_ALL_PERIPH(PERIPH) (((*(u32*)&(PERIPH)) == GPIOA_BASE) || \
+N                                    ((*(u32*)&(PERIPH)) == GPIOB_BASE) || \
+N                                    ((*(u32*)&(PERIPH)) == GPIOC_BASE) || \
+N                                    ((*(u32*)&(PERIPH)) == GPIOD_BASE) || \
+N                                    ((*(u32*)&(PERIPH)) == GPIOE_BASE) || \
+N                                    ((*(u32*)&(PERIPH)) == GPIOF_BASE) || \
+N                                    ((*(u32*)&(PERIPH)) == GPIOG_BASE))
+X#define IS_GPIO_ALL_PERIPH(PERIPH) (((*(u32*)&(PERIPH)) == GPIOA_BASE) ||                                     ((*(u32*)&(PERIPH)) == GPIOB_BASE) ||                                     ((*(u32*)&(PERIPH)) == GPIOC_BASE) ||                                     ((*(u32*)&(PERIPH)) == GPIOD_BASE) ||                                     ((*(u32*)&(PERIPH)) == GPIOE_BASE) ||                                     ((*(u32*)&(PERIPH)) == GPIOF_BASE) ||                                     ((*(u32*)&(PERIPH)) == GPIOG_BASE))
+N                                     
+N/* Output Maximum frequency selection ----------------------------------------*/
+Ntypedef enum
+N{ 
+N  GPIO_Speed_10MHz = 1,
+N  GPIO_Speed_2MHz, 
+N  GPIO_Speed_50MHz
+N}GPIOSpeed_TypeDef;
+N
+N#define IS_GPIO_SPEED(SPEED) (((SPEED) == GPIO_Speed_10MHz) || ((SPEED) == GPIO_Speed_2MHz) || \
+N                              ((SPEED) == GPIO_Speed_50MHz))
+X#define IS_GPIO_SPEED(SPEED) (((SPEED) == GPIO_Speed_10MHz) || ((SPEED) == GPIO_Speed_2MHz) ||                               ((SPEED) == GPIO_Speed_50MHz))
+N                                         
+N/* Configuration Mode enumeration --------------------------------------------*/
+Ntypedef enum
+N{ GPIO_Mode_AIN = 0x0,	 //模拟输入
+N  GPIO_Mode_IN_FLOATING = 0x04,	 //输入浮空
+N  GPIO_Mode_IPD = 0x28,			//输入下拉
+N  GPIO_Mode_IPU = 0x48,			//输入上拉
+N  GPIO_Mode_Out_OD = 0x14,		//开漏输出
+N  GPIO_Mode_Out_PP = 0x10,	   //推挽输出
+N  GPIO_Mode_AF_OD = 0x1C,	   //复用功能开漏输出
+N  GPIO_Mode_AF_PP = 0x18	  //复用功能推挽输出
+N}GPIOMode_TypeDef;
+N
+N#define IS_GPIO_MODE(MODE) (((MODE) == GPIO_Mode_AIN) || ((MODE) == GPIO_Mode_IN_FLOATING) || \
+N                            ((MODE) == GPIO_Mode_IPD) || ((MODE) == GPIO_Mode_IPU) || \
+N                            ((MODE) == GPIO_Mode_Out_OD) || ((MODE) == GPIO_Mode_Out_PP) || \
+N                            ((MODE) == GPIO_Mode_AF_OD) || ((MODE) == GPIO_Mode_AF_PP))
+X#define IS_GPIO_MODE(MODE) (((MODE) == GPIO_Mode_AIN) || ((MODE) == GPIO_Mode_IN_FLOATING) ||                             ((MODE) == GPIO_Mode_IPD) || ((MODE) == GPIO_Mode_IPU) ||                             ((MODE) == GPIO_Mode_Out_OD) || ((MODE) == GPIO_Mode_Out_PP) ||                             ((MODE) == GPIO_Mode_AF_OD) || ((MODE) == GPIO_Mode_AF_PP))
+N                              
+N/* GPIO Init structure definition */
+Ntypedef struct
+N{
+N  u16 GPIO_Pin;
+N  GPIOSpeed_TypeDef GPIO_Speed;
+N  GPIOMode_TypeDef GPIO_Mode;
+N}GPIO_InitTypeDef;
+N
+N/* Bit_SET and Bit_RESET enumeration -----------------------------------------*/
+Ntypedef enum
+N{ Bit_RESET = 0,
+N  Bit_SET
+N}BitAction;
+N#define IS_GPIO_BIT_ACTION(ACTION) (((ACTION) == Bit_RESET) || ((ACTION) == Bit_SET))
+N
+N/* Exported constants --------------------------------------------------------*/
+N/* GPIO pins define ----------------------------------------------------------*/
+N#define GPIO_Pin_0                 ((u16)0x0001)  /* Pin 0 selected */
+N#define GPIO_Pin_1                 ((u16)0x0002)  /* Pin 1 selected */
+N#define GPIO_Pin_2                 ((u16)0x0004)  /* Pin 2 selected */
+N#define GPIO_Pin_3                 ((u16)0x0008)  /* Pin 3 selected */
+N#define GPIO_Pin_4                 ((u16)0x0010)  /* Pin 4 selected */
+N#define GPIO_Pin_5                 ((u16)0x0020)  /* Pin 5 selected */
+N#define GPIO_Pin_6                 ((u16)0x0040)  /* Pin 6 selected */
+N#define GPIO_Pin_7                 ((u16)0x0080)  /* Pin 7 selected */
+N#define GPIO_Pin_8                 ((u16)0x0100)  /* Pin 8 selected */
+N#define GPIO_Pin_9                 ((u16)0x0200)  /* Pin 9 selected */
+N#define GPIO_Pin_10                ((u16)0x0400)  /* Pin 10 selected */
+N#define GPIO_Pin_11                ((u16)0x0800)  /* Pin 11 selected */
+N#define GPIO_Pin_12                ((u16)0x1000)  /* Pin 12 selected */
+N#define GPIO_Pin_13                ((u16)0x2000)  /* Pin 13 selected */
+N#define GPIO_Pin_14                ((u16)0x4000)  /* Pin 14 selected */
+N#define GPIO_Pin_15                ((u16)0x8000)  /* Pin 15 selected */
+N#define GPIO_Pin_All               ((u16)0xFFFF)  /* All pins selected */
+N
+N#define IS_GPIO_PIN(PIN) ((((PIN) & (u16)0x00) == 0x00) && ((PIN) != (u16)0x00))
+N
+N#define IS_GET_GPIO_PIN(PIN) (((PIN) == GPIO_Pin_0) || \
+N                              ((PIN) == GPIO_Pin_1) || \
+N                              ((PIN) == GPIO_Pin_2) || \
+N                              ((PIN) == GPIO_Pin_3) || \
+N                              ((PIN) == GPIO_Pin_4) || \
+N                              ((PIN) == GPIO_Pin_5) || \
+N                              ((PIN) == GPIO_Pin_6) || \
+N                              ((PIN) == GPIO_Pin_7) || \
+N                              ((PIN) == GPIO_Pin_8) || \
+N                              ((PIN) == GPIO_Pin_9) || \
+N                              ((PIN) == GPIO_Pin_10) || \
+N                              ((PIN) == GPIO_Pin_11) || \
+N                              ((PIN) == GPIO_Pin_12) || \
+N                              ((PIN) == GPIO_Pin_13) || \
+N                              ((PIN) == GPIO_Pin_14) || \
+N                              ((PIN) == GPIO_Pin_15))
+X#define IS_GET_GPIO_PIN(PIN) (((PIN) == GPIO_Pin_0) ||                               ((PIN) == GPIO_Pin_1) ||                               ((PIN) == GPIO_Pin_2) ||                               ((PIN) == GPIO_Pin_3) ||                               ((PIN) == GPIO_Pin_4) ||                               ((PIN) == GPIO_Pin_5) ||                               ((PIN) == GPIO_Pin_6) ||                               ((PIN) == GPIO_Pin_7) ||                               ((PIN) == GPIO_Pin_8) ||                               ((PIN) == GPIO_Pin_9) ||                               ((PIN) == GPIO_Pin_10) ||                               ((PIN) == GPIO_Pin_11) ||                               ((PIN) == GPIO_Pin_12) ||                               ((PIN) == GPIO_Pin_13) ||                               ((PIN) == GPIO_Pin_14) ||                               ((PIN) == GPIO_Pin_15))
+N                            
+N/* GPIO Remap define ---------------------------------------------------------*/
+N#define GPIO_Remap_SPI1            ((u32)0x00000001)  /* SPI1 Alternate Function mapping */
+N#define GPIO_Remap_I2C1            ((u32)0x00000002)  /* I2C1 Alternate Function mapping */
+N#define GPIO_Remap_USART1          ((u32)0x00000004)  /* USART1 Alternate Function mapping */
+N#define GPIO_Remap_USART2          ((u32)0x00000008)  /* USART2 Alternate Function mapping */
+N#define GPIO_PartialRemap_USART3   ((u32)0x00140010)  /* USART3 Partial Alternate Function mapping */
+N#define GPIO_FullRemap_USART3      ((u32)0x00140030)  /* USART3 Full Alternate Function mapping */
+N#define GPIO_PartialRemap_TIM1     ((u32)0x00160040)  /* TIM1 Partial Alternate Function mapping */
+N#define GPIO_FullRemap_TIM1        ((u32)0x001600C0)  /* TIM1 Full Alternate Function mapping */
+N#define GPIO_PartialRemap1_TIM2    ((u32)0x00180100)  /* TIM2 Partial1 Alternate Function mapping */
+N#define GPIO_PartialRemap2_TIM2    ((u32)0x00180200)  /* TIM2 Partial2 Alternate Function mapping */
+N#define GPIO_FullRemap_TIM2        ((u32)0x00180300)  /* TIM2 Full Alternate Function mapping */
+N#define GPIO_PartialRemap_TIM3     ((u32)0x001A0800)  /* TIM3 Partial Alternate Function mapping */
+N#define GPIO_FullRemap_TIM3        ((u32)0x001A0C00)  /* TIM3 Full Alternate Function mapping */
+N#define GPIO_Remap_TIM4            ((u32)0x00001000)  /* TIM4 Alternate Function mapping */
+N#define GPIO_Remap1_CAN            ((u32)0x001D4000)  /* CAN Alternate Function mapping */
+N#define GPIO_Remap2_CAN            ((u32)0x001D6000)  /* CAN Alternate Function mapping */
+N#define GPIO_Remap_PD01            ((u32)0x00008000)  /* PD01 Alternate Function mapping */
+N#define GPIO_Remap_TIM5CH4_LSI     ((u32)0x00200001)  /* LSI connected to TIM5 Channel4 input capture for calibration */
+N#define GPIO_Remap_ADC1_ETRGINJ    ((u32)0x00200002)  /* ADC1 External Trigger Injected Conversion remapping */
+N#define GPIO_Remap_ADC1_ETRGREG    ((u32)0x00200004)  /* ADC1 External Trigger Regular Conversion remapping */
+N#define GPIO_Remap_ADC2_ETRGINJ    ((u32)0x00200008)  /* ADC2 External Trigger Injected Conversion remapping */
+N#define GPIO_Remap_ADC2_ETRGREG    ((u32)0x00200010)  /* ADC2 External Trigger Regular Conversion remapping */
+N#define GPIO_Remap_SWJ_NoJTRST     ((u32)0x00300100)  /* Full SWJ Enabled (JTAG-DP + SW-DP) but without JTRST */
+N#define GPIO_Remap_SWJ_JTAGDisable ((u32)0x00300200)  /* JTAG-DP Disabled and SW-DP Enabled */
+N#define GPIO_Remap_SWJ_Disable     ((u32)0x00300400)  /* Full SWJ Disabled (JTAG-DP + SW-DP) */
+N
+N
+N#define IS_GPIO_REMAP(REMAP) (((REMAP) == GPIO_Remap_SPI1) || ((REMAP) == GPIO_Remap_I2C1) || \
+N                              ((REMAP) == GPIO_Remap_USART1) || ((REMAP) == GPIO_Remap_USART2) || \
+N                              ((REMAP) == GPIO_PartialRemap_USART3) || ((REMAP) == GPIO_FullRemap_USART3) || \
+N                              ((REMAP) == GPIO_PartialRemap_TIM1) || ((REMAP) == GPIO_FullRemap_TIM1) || \
+N                              ((REMAP) == GPIO_PartialRemap1_TIM2) || ((REMAP) == GPIO_PartialRemap2_TIM2) || \
+N                              ((REMAP) == GPIO_FullRemap_TIM2) || ((REMAP) == GPIO_PartialRemap_TIM3) || \
+N                              ((REMAP) == GPIO_FullRemap_TIM3) || ((REMAP) == GPIO_Remap_TIM4) || \
+N                              ((REMAP) == GPIO_Remap1_CAN) || ((REMAP) == GPIO_Remap2_CAN) || \
+N                              ((REMAP) == GPIO_Remap_PD01) || ((REMAP) == GPIO_Remap_TIM5CH4_LSI) || \
+N                              ((REMAP) == GPIO_Remap_ADC1_ETRGINJ) ||((REMAP) == GPIO_Remap_ADC1_ETRGREG) || \
+N                              ((REMAP) == GPIO_Remap_ADC2_ETRGINJ) ||((REMAP) == GPIO_Remap_ADC2_ETRGREG) || \
+N                              ((REMAP) == GPIO_Remap_SWJ_NoJTRST) || ((REMAP) == GPIO_Remap_SWJ_JTAGDisable)|| \
+N                              ((REMAP) == GPIO_Remap_SWJ_Disable))
+X#define IS_GPIO_REMAP(REMAP) (((REMAP) == GPIO_Remap_SPI1) || ((REMAP) == GPIO_Remap_I2C1) ||                               ((REMAP) == GPIO_Remap_USART1) || ((REMAP) == GPIO_Remap_USART2) ||                               ((REMAP) == GPIO_PartialRemap_USART3) || ((REMAP) == GPIO_FullRemap_USART3) ||                               ((REMAP) == GPIO_PartialRemap_TIM1) || ((REMAP) == GPIO_FullRemap_TIM1) ||                               ((REMAP) == GPIO_PartialRemap1_TIM2) || ((REMAP) == GPIO_PartialRemap2_TIM2) ||                               ((REMAP) == GPIO_FullRemap_TIM2) || ((REMAP) == GPIO_PartialRemap_TIM3) ||                               ((REMAP) == GPIO_FullRemap_TIM3) || ((REMAP) == GPIO_Remap_TIM4) ||                               ((REMAP) == GPIO_Remap1_CAN) || ((REMAP) == GPIO_Remap2_CAN) ||                               ((REMAP) == GPIO_Remap_PD01) || ((REMAP) == GPIO_Remap_TIM5CH4_LSI) ||                               ((REMAP) == GPIO_Remap_ADC1_ETRGINJ) ||((REMAP) == GPIO_Remap_ADC1_ETRGREG) ||                               ((REMAP) == GPIO_Remap_ADC2_ETRGINJ) ||((REMAP) == GPIO_Remap_ADC2_ETRGREG) ||                               ((REMAP) == GPIO_Remap_SWJ_NoJTRST) || ((REMAP) == GPIO_Remap_SWJ_JTAGDisable)||                               ((REMAP) == GPIO_Remap_SWJ_Disable))
+N                              
+N/* GPIO Port Sources ---------------------------------------------------------*/
+N#define GPIO_PortSourceGPIOA       ((u8)0x00)
+N#define GPIO_PortSourceGPIOB       ((u8)0x01)
+N#define GPIO_PortSourceGPIOC       ((u8)0x02)
+N#define GPIO_PortSourceGPIOD       ((u8)0x03)
+N#define GPIO_PortSourceGPIOE       ((u8)0x04)
+N#define GPIO_PortSourceGPIOF       ((u8)0x05)
+N#define GPIO_PortSourceGPIOG       ((u8)0x06)
+N
+N#define IS_GPIO_EVENTOUT_PORT_SOURCE(PORTSOURCE) (((PORTSOURCE) == GPIO_PortSourceGPIOA) || \
+N                                                  ((PORTSOURCE) == GPIO_PortSourceGPIOB) || \
+N                                                  ((PORTSOURCE) == GPIO_PortSourceGPIOC) || \
+N                                                  ((PORTSOURCE) == GPIO_PortSourceGPIOD) || \
+N                                                  ((PORTSOURCE) == GPIO_PortSourceGPIOE))
+X#define IS_GPIO_EVENTOUT_PORT_SOURCE(PORTSOURCE) (((PORTSOURCE) == GPIO_PortSourceGPIOA) ||                                                   ((PORTSOURCE) == GPIO_PortSourceGPIOB) ||                                                   ((PORTSOURCE) == GPIO_PortSourceGPIOC) ||                                                   ((PORTSOURCE) == GPIO_PortSourceGPIOD) ||                                                   ((PORTSOURCE) == GPIO_PortSourceGPIOE))
+N                                         
+N#define IS_GPIO_EXTI_PORT_SOURCE(PORTSOURCE) (((PORTSOURCE) == GPIO_PortSourceGPIOA) || \
+N                                              ((PORTSOURCE) == GPIO_PortSourceGPIOB) || \
+N                                              ((PORTSOURCE) == GPIO_PortSourceGPIOC) || \
+N                                              ((PORTSOURCE) == GPIO_PortSourceGPIOD) || \
+N                                              ((PORTSOURCE) == GPIO_PortSourceGPIOE) || \
+N                                              ((PORTSOURCE) == GPIO_PortSourceGPIOF) || \
+N                                              ((PORTSOURCE) == GPIO_PortSourceGPIOG))
+X#define IS_GPIO_EXTI_PORT_SOURCE(PORTSOURCE) (((PORTSOURCE) == GPIO_PortSourceGPIOA) ||                                               ((PORTSOURCE) == GPIO_PortSourceGPIOB) ||                                               ((PORTSOURCE) == GPIO_PortSourceGPIOC) ||                                               ((PORTSOURCE) == GPIO_PortSourceGPIOD) ||                                               ((PORTSOURCE) == GPIO_PortSourceGPIOE) ||                                               ((PORTSOURCE) == GPIO_PortSourceGPIOF) ||                                               ((PORTSOURCE) == GPIO_PortSourceGPIOG))
+N                                       
+N/* GPIO Pin sources ----------------------------------------------------------*/
+N#define GPIO_PinSource0            ((u8)0x00)
+N#define GPIO_PinSource1            ((u8)0x01)
+N#define GPIO_PinSource2            ((u8)0x02)
+N#define GPIO_PinSource3            ((u8)0x03)
+N#define GPIO_PinSource4            ((u8)0x04)
+N#define GPIO_PinSource5            ((u8)0x05)
+N#define GPIO_PinSource6            ((u8)0x06)
+N#define GPIO_PinSource7            ((u8)0x07)
+N#define GPIO_PinSource8            ((u8)0x08)
+N#define GPIO_PinSource9            ((u8)0x09)
+N#define GPIO_PinSource10           ((u8)0x0A)
+N#define GPIO_PinSource11           ((u8)0x0B)
+N#define GPIO_PinSource12           ((u8)0x0C)
+N#define GPIO_PinSource13           ((u8)0x0D)
+N#define GPIO_PinSource14           ((u8)0x0E)
+N#define GPIO_PinSource15           ((u8)0x0F)
+N
+N#define IS_GPIO_PIN_SOURCE(PINSOURCE) (((PINSOURCE) == GPIO_PinSource0) || \
+N                                       ((PINSOURCE) == GPIO_PinSource1) || \
+N                                       ((PINSOURCE) == GPIO_PinSource2) || \
+N                                       ((PINSOURCE) == GPIO_PinSource3) || \
+N                                       ((PINSOURCE) == GPIO_PinSource4) || \
+N                                       ((PINSOURCE) == GPIO_PinSource5) || \
+N                                       ((PINSOURCE) == GPIO_PinSource6) || \
+N                                       ((PINSOURCE) == GPIO_PinSource7) || \
+N                                       ((PINSOURCE) == GPIO_PinSource8) || \
+N                                       ((PINSOURCE) == GPIO_PinSource9) || \
+N                                       ((PINSOURCE) == GPIO_PinSource10) || \
+N                                       ((PINSOURCE) == GPIO_PinSource11) || \
+N                                       ((PINSOURCE) == GPIO_PinSource12) || \
+N                                       ((PINSOURCE) == GPIO_PinSource13) || \
+N                                       ((PINSOURCE) == GPIO_PinSource14) || \
+N                                       ((PINSOURCE) == GPIO_PinSource15))
+X#define IS_GPIO_PIN_SOURCE(PINSOURCE) (((PINSOURCE) == GPIO_PinSource0) ||                                        ((PINSOURCE) == GPIO_PinSource1) ||                                        ((PINSOURCE) == GPIO_PinSource2) ||                                        ((PINSOURCE) == GPIO_PinSource3) ||                                        ((PINSOURCE) == GPIO_PinSource4) ||                                        ((PINSOURCE) == GPIO_PinSource5) ||                                        ((PINSOURCE) == GPIO_PinSource6) ||                                        ((PINSOURCE) == GPIO_PinSource7) ||                                        ((PINSOURCE) == GPIO_PinSource8) ||                                        ((PINSOURCE) == GPIO_PinSource9) ||                                        ((PINSOURCE) == GPIO_PinSource10) ||                                        ((PINSOURCE) == GPIO_PinSource11) ||                                        ((PINSOURCE) == GPIO_PinSource12) ||                                        ((PINSOURCE) == GPIO_PinSource13) ||                                        ((PINSOURCE) == GPIO_PinSource14) ||                                        ((PINSOURCE) == GPIO_PinSource15))
+N                          
+N/* Exported macro ------------------------------------------------------------*/
+N/* Exported functions ------------------------------------------------------- */
+Nvoid GPIO_DeInit(GPIO_TypeDef* GPIOx);
+Nvoid GPIO_AFIODeInit(void);
+Nvoid GPIO_Init(GPIO_TypeDef* GPIOx, GPIO_InitTypeDef* GPIO_InitStruct);
+Nvoid GPIO_StructInit(GPIO_InitTypeDef* GPIO_InitStruct);
+Nu8 GPIO_ReadInputDataBit(GPIO_TypeDef* GPIOx, u16 GPIO_Pin);
+Nu16 GPIO_ReadInputData(GPIO_TypeDef* GPIOx);
+Nu8 GPIO_ReadOutputDataBit(GPIO_TypeDef* GPIOx, u16 GPIO_Pin);
+Nu16 GPIO_ReadOutputData(GPIO_TypeDef* GPIOx);
+Nvoid GPIO_SetBits(GPIO_TypeDef* GPIOx, u16 GPIO_Pin);
+Nvoid GPIO_ResetBits(GPIO_TypeDef* GPIOx, u16 GPIO_Pin);
+Nvoid GPIO_WriteBit(GPIO_TypeDef* GPIOx, u16 GPIO_Pin, BitAction BitVal);
+Nvoid GPIO_Write(GPIO_TypeDef* GPIOx, u16 PortVal);
+Nvoid GPIO_PinLockConfig(GPIO_TypeDef* GPIOx, u16 GPIO_Pin);
+Nvoid GPIO_EventOutputConfig(u8 GPIO_PortSource, u8 GPIO_PinSource);
+Nvoid GPIO_EventOutputCmd(FunctionalState NewState);
+Nvoid GPIO_PinRemapConfig(u32 GPIO_Remap, FunctionalState NewState);
+Nvoid GPIO_EXTILineConfig(u8 GPIO_PortSource, u8 GPIO_PinSource);
+N
+N#endif /* __STM32F10x_GPIO_H */
+N
+N/******************* (C) COPYRIGHT 2008 STMicroelectronics *****END OF FILE****/
+L 18 "source\FWLib\src\stm32f10x_gpio.c" 2
+N#include "stm32f10x_rcc.h"
+L 1 "D:\Program Files\keil4.14\ARM\INC\ST\STM32F10x\stm32f10x_rcc.h" 1
+N/******************** (C) COPYRIGHT 2008 STMicroelectronics ********************
+N* File Name          : stm32f10x_rcc.h
+N* Author             : MCD Application Team
+N* Version            : V2.0.1
+N* Date               : 06/13/2008
+N* Description        : This file contains all the functions prototypes for the
+N*                      RCC firmware library.
+N********************************************************************************
+N* THE PRESENT FIRMWARE WHICH IS FOR GUIDANCE ONLY AIMS AT PROVIDING CUSTOMERS
+N* WITH CODING INFORMATION REGARDING THEIR PRODUCTS IN ORDER FOR THEM TO SAVE TIME.
+N* AS A RESULT, STMICROELECTRONICS SHALL NOT BE HELD LIABLE FOR ANY DIRECT,
+N* INDIRECT OR CONSEQUENTIAL DAMAGES WITH RESPECT TO ANY CLAIMS ARISING FROM THE
+N* CONTENT OF SUCH FIRMWARE AND/OR THE USE MADE BY CUSTOMERS OF THE CODING
+N* INFORMATION CONTAINED HEREIN IN CONNECTION WITH THEIR PRODUCTS.
+N*******************************************************************************/
+N
+N/* Define to prevent recursive inclusion -------------------------------------*/
+N#ifndef __STM32F10x_RCC_H
+N#define __STM32F10x_RCC_H
+N
+N/* Includes ------------------------------------------------------------------*/
+N#include "stm32f10x_map.h"
+N
+N/* Exported types ------------------------------------------------------------*/
+Ntypedef struct
+N{
+N  u32 SYSCLK_Frequency;
+N  u32 HCLK_Frequency;
+N  u32 PCLK1_Frequency;
+N  u32 PCLK2_Frequency;
+N  u32 ADCCLK_Frequency;
+N}RCC_ClocksTypeDef;
+N
+N/* Exported constants --------------------------------------------------------*/
+N/* HSE configuration */
+N#define RCC_HSE_OFF                      ((u32)0x00000000)
+N#define RCC_HSE_ON                       ((u32)0x00010000)
+N#define RCC_HSE_Bypass                   ((u32)0x00040000) //外部高速时钟旁路
+N
+N#define IS_RCC_HSE(HSE) (((HSE) == RCC_HSE_OFF) || ((HSE) == RCC_HSE_ON) || \
+N                         ((HSE) == RCC_HSE_Bypass))
+X#define IS_RCC_HSE(HSE) (((HSE) == RCC_HSE_OFF) || ((HSE) == RCC_HSE_ON) ||                          ((HSE) == RCC_HSE_Bypass))
+N
+N/* PLL entry clock source */
+N#define RCC_PLLSource_HSI_Div2           ((u32)0x00000000)
+N#define RCC_PLLSource_HSE_Div1           ((u32)0x00010000)
+N#define RCC_PLLSource_HSE_Div2           ((u32)0x00030000)
+N
+N#define IS_RCC_PLL_SOURCE(SOURCE) (((SOURCE) == RCC_PLLSource_HSI_Div2) || \
+N                                   ((SOURCE) == RCC_PLLSource_HSE_Div1) || \
+N                                   ((SOURCE) == RCC_PLLSource_HSE_Div2))
+X#define IS_RCC_PLL_SOURCE(SOURCE) (((SOURCE) == RCC_PLLSource_HSI_Div2) ||                                    ((SOURCE) == RCC_PLLSource_HSE_Div1) ||                                    ((SOURCE) == RCC_PLLSource_HSE_Div2))
+N
+N/* PLL multiplication factor */
+N#define RCC_PLLMul_2                     ((u32)0x00000000)
+N#define RCC_PLLMul_3                     ((u32)0x00040000)
+N#define RCC_PLLMul_4                     ((u32)0x00080000)
+N#define RCC_PLLMul_5                     ((u32)0x000C0000)
+N#define RCC_PLLMul_6                     ((u32)0x00100000)
+N#define RCC_PLLMul_7                     ((u32)0x00140000)
+N#define RCC_PLLMul_8                     ((u32)0x00180000)
+N#define RCC_PLLMul_9                     ((u32)0x001C0000)
+N#define RCC_PLLMul_10                    ((u32)0x00200000)
+N#define RCC_PLLMul_11                    ((u32)0x00240000)
+N#define RCC_PLLMul_12                    ((u32)0x00280000)
+N#define RCC_PLLMul_13                    ((u32)0x002C0000)
+N#define RCC_PLLMul_14                    ((u32)0x00300000)
+N#define RCC_PLLMul_15                    ((u32)0x00340000)
+N#define RCC_PLLMul_16                    ((u32)0x00380000)
+N
+N#define IS_RCC_PLL_MUL(MUL) (((MUL) == RCC_PLLMul_2) || ((MUL) == RCC_PLLMul_3)   || \
+N                             ((MUL) == RCC_PLLMul_4) || ((MUL) == RCC_PLLMul_5)   || \
+N                             ((MUL) == RCC_PLLMul_6) || ((MUL) == RCC_PLLMul_7)   || \
+N                             ((MUL) == RCC_PLLMul_8) || ((MUL) == RCC_PLLMul_9)   || \
+N                             ((MUL) == RCC_PLLMul_10) || ((MUL) == RCC_PLLMul_11) || \
+N                             ((MUL) == RCC_PLLMul_12) || ((MUL) == RCC_PLLMul_13) || \
+N                             ((MUL) == RCC_PLLMul_14) || ((MUL) == RCC_PLLMul_15) || \
+N                             ((MUL) == RCC_PLLMul_16))
+X#define IS_RCC_PLL_MUL(MUL) (((MUL) == RCC_PLLMul_2) || ((MUL) == RCC_PLLMul_3)   ||                              ((MUL) == RCC_PLLMul_4) || ((MUL) == RCC_PLLMul_5)   ||                              ((MUL) == RCC_PLLMul_6) || ((MUL) == RCC_PLLMul_7)   ||                              ((MUL) == RCC_PLLMul_8) || ((MUL) == RCC_PLLMul_9)   ||                              ((MUL) == RCC_PLLMul_10) || ((MUL) == RCC_PLLMul_11) ||                              ((MUL) == RCC_PLLMul_12) || ((MUL) == RCC_PLLMul_13) ||                              ((MUL) == RCC_PLLMul_14) || ((MUL) == RCC_PLLMul_15) ||                              ((MUL) == RCC_PLLMul_16))
+N
+N/* System clock source */
+N#define RCC_SYSCLKSource_HSI             ((u32)0x00000000)
+N#define RCC_SYSCLKSource_HSE             ((u32)0x00000001)
+N#define RCC_SYSCLKSource_PLLCLK          ((u32)0x00000002)
+N
+N#define IS_RCC_SYSCLK_SOURCE(SOURCE) (((SOURCE) == RCC_SYSCLKSource_HSI) || \
+N                                      ((SOURCE) == RCC_SYSCLKSource_HSE) || \
+N                                      ((SOURCE) == RCC_SYSCLKSource_PLLCLK))
+X#define IS_RCC_SYSCLK_SOURCE(SOURCE) (((SOURCE) == RCC_SYSCLKSource_HSI) ||                                       ((SOURCE) == RCC_SYSCLKSource_HSE) ||                                       ((SOURCE) == RCC_SYSCLKSource_PLLCLK))
+N
+N/* AHB clock source */
+N#define RCC_SYSCLK_Div1                  ((u32)0x00000000)
+N#define RCC_SYSCLK_Div2                  ((u32)0x00000080)
+N#define RCC_SYSCLK_Div4                  ((u32)0x00000090)
+N#define RCC_SYSCLK_Div8                  ((u32)0x000000A0)
+N#define RCC_SYSCLK_Div16                 ((u32)0x000000B0)
+N#define RCC_SYSCLK_Div64                 ((u32)0x000000C0)
+N#define RCC_SYSCLK_Div128                ((u32)0x000000D0)
+N#define RCC_SYSCLK_Div256                ((u32)0x000000E0)
+N#define RCC_SYSCLK_Div512                ((u32)0x000000F0)
+N
+N#define IS_RCC_HCLK(HCLK) (((HCLK) == RCC_SYSCLK_Div1) || ((HCLK) == RCC_SYSCLK_Div2) || \
+N                           ((HCLK) == RCC_SYSCLK_Div4) || ((HCLK) == RCC_SYSCLK_Div8) || \
+N                           ((HCLK) == RCC_SYSCLK_Div16) || ((HCLK) == RCC_SYSCLK_Div64) || \
+N                           ((HCLK) == RCC_SYSCLK_Div128) || ((HCLK) == RCC_SYSCLK_Div256) || \
+N                           ((HCLK) == RCC_SYSCLK_Div512))
+X#define IS_RCC_HCLK(HCLK) (((HCLK) == RCC_SYSCLK_Div1) || ((HCLK) == RCC_SYSCLK_Div2) ||                            ((HCLK) == RCC_SYSCLK_Div4) || ((HCLK) == RCC_SYSCLK_Div8) ||                            ((HCLK) == RCC_SYSCLK_Div16) || ((HCLK) == RCC_SYSCLK_Div64) ||                            ((HCLK) == RCC_SYSCLK_Div128) || ((HCLK) == RCC_SYSCLK_Div256) ||                            ((HCLK) == RCC_SYSCLK_Div512))
+N
+N/* APB1/APB2 clock source */
+N#define RCC_HCLK_Div1                    ((u32)0x00000000)
+N#define RCC_HCLK_Div2                    ((u32)0x00000400)
+N#define RCC_HCLK_Div4                    ((u32)0x00000500)
+N#define RCC_HCLK_Div8                    ((u32)0x00000600)
+N#define RCC_HCLK_Div16                   ((u32)0x00000700)
+N
+N#define IS_RCC_PCLK(PCLK) (((PCLK) == RCC_HCLK_Div1) || ((PCLK) == RCC_HCLK_Div2) || \
+N                           ((PCLK) == RCC_HCLK_Div4) || ((PCLK) == RCC_HCLK_Div8) || \
+N                           ((PCLK) == RCC_HCLK_Div16))
+X#define IS_RCC_PCLK(PCLK) (((PCLK) == RCC_HCLK_Div1) || ((PCLK) == RCC_HCLK_Div2) ||                            ((PCLK) == RCC_HCLK_Div4) || ((PCLK) == RCC_HCLK_Div8) ||                            ((PCLK) == RCC_HCLK_Div16))
+N
+N/* RCC Interrupt source */
+N#define RCC_IT_LSIRDY                    ((u8)0x01)
+N#define RCC_IT_LSERDY                    ((u8)0x02)
+N#define RCC_IT_HSIRDY                    ((u8)0x04)
+N#define RCC_IT_HSERDY                    ((u8)0x08)
+N#define RCC_IT_PLLRDY                    ((u8)0x10)
+N#define RCC_IT_CSS                       ((u8)0x80)
+N
+N#define IS_RCC_IT(IT) ((((IT) & (u8)0xE0) == 0x00) && ((IT) != 0x00))
+N#define IS_RCC_GET_IT(IT) (((IT) == RCC_IT_LSIRDY) || ((IT) == RCC_IT_LSERDY) || \
+N                           ((IT) == RCC_IT_HSIRDY) || ((IT) == RCC_IT_HSERDY) || \
+N                           ((IT) == RCC_IT_PLLRDY) || ((IT) == RCC_IT_CSS))
+X#define IS_RCC_GET_IT(IT) (((IT) == RCC_IT_LSIRDY) || ((IT) == RCC_IT_LSERDY) ||                            ((IT) == RCC_IT_HSIRDY) || ((IT) == RCC_IT_HSERDY) ||                            ((IT) == RCC_IT_PLLRDY) || ((IT) == RCC_IT_CSS))
+N#define IS_RCC_CLEAR_IT(IT) ((((IT) & (u8)0x60) == 0x00) && ((IT) != 0x00))
+N
+N/* USB clock source */
+N#define RCC_USBCLKSource_PLLCLK_1Div5    ((u8)0x00)
+N#define RCC_USBCLKSource_PLLCLK_Div1     ((u8)0x01)
+N
+N#define IS_RCC_USBCLK_SOURCE(SOURCE) (((SOURCE) == RCC_USBCLKSource_PLLCLK_1Div5) || \
+N                                      ((SOURCE) == RCC_USBCLKSource_PLLCLK_Div1))
+X#define IS_RCC_USBCLK_SOURCE(SOURCE) (((SOURCE) == RCC_USBCLKSource_PLLCLK_1Div5) ||                                       ((SOURCE) == RCC_USBCLKSource_PLLCLK_Div1))
+N
+N/* ADC clock source */
+N#define RCC_PCLK2_Div2                   ((u32)0x00000000)
+N#define RCC_PCLK2_Div4                   ((u32)0x00004000)
+N#define RCC_PCLK2_Div6                   ((u32)0x00008000)
+N#define RCC_PCLK2_Div8                   ((u32)0x0000C000)
+N
+N#define IS_RCC_ADCCLK(ADCCLK) (((ADCCLK) == RCC_PCLK2_Div2) || ((ADCCLK) == RCC_PCLK2_Div4) || \
+N                               ((ADCCLK) == RCC_PCLK2_Div6) || ((ADCCLK) == RCC_PCLK2_Div8))
+X#define IS_RCC_ADCCLK(ADCCLK) (((ADCCLK) == RCC_PCLK2_Div2) || ((ADCCLK) == RCC_PCLK2_Div4) ||                                ((ADCCLK) == RCC_PCLK2_Div6) || ((ADCCLK) == RCC_PCLK2_Div8))
+N
+N/* LSE configuration */
+N#define RCC_LSE_OFF                      ((u8)0x00)
+N#define RCC_LSE_ON                       ((u8)0x01)
+N#define RCC_LSE_Bypass                   ((u8)0x04)
+N
+N#define IS_RCC_LSE(LSE) (((LSE) == RCC_LSE_OFF) || ((LSE) == RCC_LSE_ON) || \
+N                         ((LSE) == RCC_LSE_Bypass))
+X#define IS_RCC_LSE(LSE) (((LSE) == RCC_LSE_OFF) || ((LSE) == RCC_LSE_ON) ||                          ((LSE) == RCC_LSE_Bypass))
+N
+N/* RTC clock source */
+N#define RCC_RTCCLKSource_LSE             ((u32)0x00000100)
+N#define RCC_RTCCLKSource_LSI             ((u32)0x00000200)
+N#define RCC_RTCCLKSource_HSE_Div128      ((u32)0x00000300)
+N
+N#define IS_RCC_RTCCLK_SOURCE(SOURCE) (((SOURCE) == RCC_RTCCLKSource_LSE) || \
+N                                      ((SOURCE) == RCC_RTCCLKSource_LSI) || \
+N                                      ((SOURCE) == RCC_RTCCLKSource_HSE_Div128))
+X#define IS_RCC_RTCCLK_SOURCE(SOURCE) (((SOURCE) == RCC_RTCCLKSource_LSE) ||                                       ((SOURCE) == RCC_RTCCLKSource_LSI) ||                                       ((SOURCE) == RCC_RTCCLKSource_HSE_Div128))
+N
+N/* AHB peripheral */
+N#define RCC_AHBPeriph_DMA1               ((u32)0x00000001)
+N#define RCC_AHBPeriph_DMA2               ((u32)0x00000002)
+N#define RCC_AHBPeriph_SRAM               ((u32)0x00000004)
+N#define RCC_AHBPeriph_FLITF              ((u32)0x00000010)
+N#define RCC_AHBPeriph_CRC                ((u32)0x00000040)
+N#define RCC_AHBPeriph_FSMC               ((u32)0x00000100)
+N#define RCC_AHBPeriph_SDIO               ((u32)0x00000400)
+N
+N#define IS_RCC_AHB_PERIPH(PERIPH) ((((PERIPH) & 0xFFFFFAA8) == 0x00) && ((PERIPH) != 0x00))
+N
+N/* APB2 peripheral */
+N#define RCC_APB2Periph_AFIO              ((u32)0x00000001)
+N#define RCC_APB2Periph_GPIOA             ((u32)0x00000004)
+N#define RCC_APB2Periph_GPIOB             ((u32)0x00000008)
+N#define RCC_APB2Periph_GPIOC             ((u32)0x00000010)
+N#define RCC_APB2Periph_GPIOD             ((u32)0x00000020)
+N#define RCC_APB2Periph_GPIOE             ((u32)0x00000040)
+N#define RCC_APB2Periph_GPIOF             ((u32)0x00000080)
+N#define RCC_APB2Periph_GPIOG             ((u32)0x00000100)
+N#define RCC_APB2Periph_ADC1              ((u32)0x00000200)
+N#define RCC_APB2Periph_ADC2              ((u32)0x00000400)
+N#define RCC_APB2Periph_TIM1              ((u32)0x00000800)
+N#define RCC_APB2Periph_SPI1              ((u32)0x00001000)
+N#define RCC_APB2Periph_TIM8              ((u32)0x00002000)
+N#define RCC_APB2Periph_USART1            ((u32)0x00004000)
+N#define RCC_APB2Periph_ADC3              ((u32)0x00008000)
+N#define RCC_APB2Periph_ALL               ((u32)0x0000FFFD)
+N
+N#define IS_RCC_APB2_PERIPH(PERIPH) ((((PERIPH) & 0xFFFF0002) == 0x00) && ((PERIPH) != 0x00))
+N
+N/* APB1 peripheral */
+N#define RCC_APB1Periph_TIM2              ((u32)0x00000001)
+N#define RCC_APB1Periph_TIM3              ((u32)0x00000002)
+N#define RCC_APB1Periph_TIM4              ((u32)0x00000004)
+N#define RCC_APB1Periph_TIM5              ((u32)0x00000008)
+N#define RCC_APB1Periph_TIM6              ((u32)0x00000010)
+N#define RCC_APB1Periph_TIM7              ((u32)0x00000020)
+N#define RCC_APB1Periph_WWDG              ((u32)0x00000800)
+N#define RCC_APB1Periph_SPI2              ((u32)0x00004000)
+N#define RCC_APB1Periph_SPI3              ((u32)0x00008000)
+N#define RCC_APB1Periph_USART2            ((u32)0x00020000)
+N#define RCC_APB1Periph_USART3            ((u32)0x00040000)
+N#define RCC_APB1Periph_UART4             ((u32)0x00080000)
+N#define RCC_APB1Periph_UART5             ((u32)0x00100000)
+N#define RCC_APB1Periph_I2C1              ((u32)0x00200000)
+N#define RCC_APB1Periph_I2C2              ((u32)0x00400000)
+N#define RCC_APB1Periph_USB               ((u32)0x00800000)
+N#define RCC_APB1Periph_CAN               ((u32)0x02000000)
+N#define RCC_APB1Periph_BKP               ((u32)0x08000000)
+N#define RCC_APB1Periph_PWR               ((u32)0x10000000)
+N#define RCC_APB1Periph_DAC               ((u32)0x20000000)
+N#define RCC_APB1Periph_ALL               ((u32)0x3AFEC83F)
+N
+N#define IS_RCC_APB1_PERIPH(PERIPH) ((((PERIPH) & 0xC50137C0) == 0x00) && ((PERIPH) != 0x00))
+N
+N/* Clock source to output on MCO pin */
+N#define RCC_MCO_NoClock                  ((u8)0x00)
+N#define RCC_MCO_SYSCLK                   ((u8)0x04)
+N#define RCC_MCO_HSI                      ((u8)0x05)
+N#define RCC_MCO_HSE                      ((u8)0x06)
+N#define RCC_MCO_PLLCLK_Div2              ((u8)0x07)
+N
+N#define IS_RCC_MCO(MCO) (((MCO) == RCC_MCO_NoClock) || ((MCO) == RCC_MCO_HSI) || \
+N                         ((MCO) == RCC_MCO_SYSCLK)  || ((MCO) == RCC_MCO_HSE) || \
+N                         ((MCO) == RCC_MCO_PLLCLK_Div2))
+X#define IS_RCC_MCO(MCO) (((MCO) == RCC_MCO_NoClock) || ((MCO) == RCC_MCO_HSI) ||                          ((MCO) == RCC_MCO_SYSCLK)  || ((MCO) == RCC_MCO_HSE) ||                          ((MCO) == RCC_MCO_PLLCLK_Div2))
+N
+N/* RCC Flag */
+N#define RCC_FLAG_HSIRDY                  ((u8)0x20)
+N#define RCC_FLAG_HSERDY                  ((u8)0x31)
+N#define RCC_FLAG_PLLRDY                  ((u8)0x39)
+N#define RCC_FLAG_LSERDY                  ((u8)0x41)
+N#define RCC_FLAG_LSIRDY                  ((u8)0x61)
+N#define RCC_FLAG_PINRST                  ((u8)0x7A)
+N#define RCC_FLAG_PORRST                  ((u8)0x7B)
+N#define RCC_FLAG_SFTRST                  ((u8)0x7C)
+N#define RCC_FLAG_IWDGRST                 ((u8)0x7D)
+N#define RCC_FLAG_WWDGRST                 ((u8)0x7E)
+N#define RCC_FLAG_LPWRRST                 ((u8)0x7F)
+N
+N#define IS_RCC_FLAG(FLAG) (((FLAG) == RCC_FLAG_HSIRDY) || ((FLAG) == RCC_FLAG_HSERDY) || \
+N                           ((FLAG) == RCC_FLAG_PLLRDY) || ((FLAG) == RCC_FLAG_LSERDY) || \
+N                           ((FLAG) == RCC_FLAG_LSIRDY) || ((FLAG) == RCC_FLAG_PINRST) || \
+N                           ((FLAG) == RCC_FLAG_PORRST) || ((FLAG) == RCC_FLAG_SFTRST) || \
+N                           ((FLAG) == RCC_FLAG_IWDGRST)|| ((FLAG) == RCC_FLAG_WWDGRST)|| \
+N                           ((FLAG) == RCC_FLAG_LPWRRST))
+X#define IS_RCC_FLAG(FLAG) (((FLAG) == RCC_FLAG_HSIRDY) || ((FLAG) == RCC_FLAG_HSERDY) ||                            ((FLAG) == RCC_FLAG_PLLRDY) || ((FLAG) == RCC_FLAG_LSERDY) ||                            ((FLAG) == RCC_FLAG_LSIRDY) || ((FLAG) == RCC_FLAG_PINRST) ||                            ((FLAG) == RCC_FLAG_PORRST) || ((FLAG) == RCC_FLAG_SFTRST) ||                            ((FLAG) == RCC_FLAG_IWDGRST)|| ((FLAG) == RCC_FLAG_WWDGRST)||                            ((FLAG) == RCC_FLAG_LPWRRST))
+N
+N#define IS_RCC_CALIBRATION_VALUE(VALUE) ((VALUE) <= 0x1F)
+N
+N/* Exported macro ------------------------------------------------------------*/
+N/* Exported functions ------------------------------------------------------- */
+Nvoid RCC_DeInit(void);
+Nvoid RCC_HSEConfig(u32 RCC_HSE);
+NErrorStatus RCC_WaitForHSEStartUp(void);
+Nvoid RCC_AdjustHSICalibrationValue(u8 HSICalibrationValue);
+Nvoid RCC_HSICmd(FunctionalState NewState);
+Nvoid RCC_PLLConfig(u32 RCC_PLLSource, u32 RCC_PLLMul);
+Nvoid RCC_PLLCmd(FunctionalState NewState);
+Nvoid RCC_SYSCLKConfig(u32 RCC_SYSCLKSource);
+Nu8 RCC_GetSYSCLKSource(void);
+Nvoid RCC_HCLKConfig(u32 RCC_SYSCLK);
+Nvoid RCC_PCLK1Config(u32 RCC_HCLK);
+Nvoid RCC_PCLK2Config(u32 RCC_HCLK);
+Nvoid RCC_ITConfig(u8 RCC_IT, FunctionalState NewState);
+Nvoid RCC_USBCLKConfig(u32 RCC_USBCLKSource);
+Nvoid RCC_ADCCLKConfig(u32 RCC_PCLK2);
+Nvoid RCC_LSEConfig(u8 RCC_LSE);
+Nvoid RCC_LSICmd(FunctionalState NewState);
+Nvoid RCC_RTCCLKConfig(u32 RCC_RTCCLKSource);
+Nvoid RCC_RTCCLKCmd(FunctionalState NewState);
+Nvoid RCC_GetClocksFreq(RCC_ClocksTypeDef* RCC_Clocks);
+Nvoid RCC_AHBPeriphClockCmd(u32 RCC_AHBPeriph, FunctionalState NewState);
+Nvoid RCC_APB2PeriphClockCmd(u32 RCC_APB2Periph, FunctionalState NewState);
+Nvoid RCC_APB1PeriphClockCmd(u32 RCC_APB1Periph, FunctionalState NewState);
+Nvoid RCC_APB2PeriphResetCmd(u32 RCC_APB2Periph, FunctionalState NewState);
+Nvoid RCC_APB1PeriphResetCmd(u32 RCC_APB1Periph, FunctionalState NewState);
+Nvoid RCC_BackupResetCmd(FunctionalState NewState);
+Nvoid RCC_ClockSecuritySystemCmd(FunctionalState NewState);
+Nvoid RCC_MCOConfig(u8 RCC_MCO);
+NFlagStatus RCC_GetFlagStatus(u8 RCC_FLAG);
+Nvoid RCC_ClearFlag(void);
+NITStatus RCC_GetITStatus(u8 RCC_IT);
+Nvoid RCC_ClearITPendingBit(u8 RCC_IT);
+N
+N#endif /* __STM32F10x_RCC_H */
+N
+N/******************* (C) COPYRIGHT 2008 STMicroelectronics *****END OF FILE****/
+L 19 "source\FWLib\src\stm32f10x_gpio.c" 2
+N
+N/* Private typedef -----------------------------------------------------------*/
+N/* Private define ------------------------------------------------------------*/
+N/* ------------ RCC registers bit address in the alias region ----------- */
+N#define AFIO_OFFSET                 (AFIO_BASE - PERIPH_BASE)
+N
+N/* --- EVENTCR Register ---*/
+N/* Alias word address of EVOE bit */
+N#define EVCR_OFFSET                 (AFIO_OFFSET + 0x00)
+N#define EVOE_BitNumber              ((u8)0x07)
+N#define EVCR_EVOE_BB                (PERIPH_BB_BASE + (EVCR_OFFSET * 32) + (EVOE_BitNumber * 4))
+N
+N#define EVCR_PORTPINCONFIG_MASK     ((u16)0xFF80)
+N#define LSB_MASK                    ((u16)0xFFFF)
+N#define DBGAFR_POSITION_MASK        ((u32)0x000F0000)
+N#define DBGAFR_SWJCFG_MASK          ((u32)0xF0FFFFFF)
+N#define DBGAFR_LOCATION_MASK        ((u32)0x00200000)
+N#define DBGAFR_NUMBITS_MASK         ((u32)0x00100000)
+N
+N/* Private macro -------------------------------------------------------------*/
+N/* Private variables ---------------------------------------------------------*/
+N/* Private function prototypes -----------------------------------------------*/
+N/* Private functions ---------------------------------------------------------*/
+N
+N/*******************************************************************************
+N* Function Name  : GPIO_DeInit
+N* Description    : Deinitializes the GPIOx peripheral registers to their default
+N*                  reset values.
+N* Input          : - GPIOx: where x can be (A..G) to select the GPIO peripheral.
+N* Output         : None
+N* Return         : None
+N*******************************************************************************/
+Nvoid GPIO_DeInit(GPIO_TypeDef* GPIOx)
+N{
+N  /* Check the parameters */
+N  assert_param(IS_GPIO_ALL_PERIPH(GPIOx));
+X  ((void)0);
+N  
+N  switch (*(u32*)&GPIOx)
+N  {
+N    case GPIOA_BASE:
+X    case ((((u32)0x40000000) + 0x10000) + 0x0800):
+N      RCC_APB2PeriphResetCmd(RCC_APB2Periph_GPIOA, ENABLE);
+X      RCC_APB2PeriphResetCmd(((u32)0x00000004), ENABLE);
+N      RCC_APB2PeriphResetCmd(RCC_APB2Periph_GPIOA, DISABLE);
+X      RCC_APB2PeriphResetCmd(((u32)0x00000004), DISABLE);
+N      break;
+N
+N    case GPIOB_BASE:
+X    case ((((u32)0x40000000) + 0x10000) + 0x0C00):
+N      RCC_APB2PeriphResetCmd(RCC_APB2Periph_GPIOB, ENABLE);
+X      RCC_APB2PeriphResetCmd(((u32)0x00000008), ENABLE);
+N      RCC_APB2PeriphResetCmd(RCC_APB2Periph_GPIOB, DISABLE);
+X      RCC_APB2PeriphResetCmd(((u32)0x00000008), DISABLE);
+N      break;
+N
+N    case GPIOC_BASE:
+X    case ((((u32)0x40000000) + 0x10000) + 0x1000):
+N      RCC_APB2PeriphResetCmd(RCC_APB2Periph_GPIOC, ENABLE);
+X      RCC_APB2PeriphResetCmd(((u32)0x00000010), ENABLE);
+N      RCC_APB2PeriphResetCmd(RCC_APB2Periph_GPIOC, DISABLE);
+X      RCC_APB2PeriphResetCmd(((u32)0x00000010), DISABLE);
+N      break;
+N
+N    case GPIOD_BASE:
+X    case ((((u32)0x40000000) + 0x10000) + 0x1400):
+N      RCC_APB2PeriphResetCmd(RCC_APB2Periph_GPIOD, ENABLE);
+X      RCC_APB2PeriphResetCmd(((u32)0x00000020), ENABLE);
+N      RCC_APB2PeriphResetCmd(RCC_APB2Periph_GPIOD, DISABLE);
+X      RCC_APB2PeriphResetCmd(((u32)0x00000020), DISABLE);
+N      break;
+N      
+N    case GPIOE_BASE:
+X    case ((((u32)0x40000000) + 0x10000) + 0x1800):
+N      RCC_APB2PeriphResetCmd(RCC_APB2Periph_GPIOE, ENABLE);
+X      RCC_APB2PeriphResetCmd(((u32)0x00000040), ENABLE);
+N      RCC_APB2PeriphResetCmd(RCC_APB2Periph_GPIOE, DISABLE);
+X      RCC_APB2PeriphResetCmd(((u32)0x00000040), DISABLE);
+N      break; 
+N
+N    case GPIOF_BASE:
+X    case ((((u32)0x40000000) + 0x10000) + 0x1C00):
+N      RCC_APB2PeriphResetCmd(RCC_APB2Periph_GPIOF, ENABLE);
+X      RCC_APB2PeriphResetCmd(((u32)0x00000080), ENABLE);
+N      RCC_APB2PeriphResetCmd(RCC_APB2Periph_GPIOF, DISABLE);
+X      RCC_APB2PeriphResetCmd(((u32)0x00000080), DISABLE);
+N      break;
+N
+N    case GPIOG_BASE:
+X    case ((((u32)0x40000000) + 0x10000) + 0x2000):
+N      RCC_APB2PeriphResetCmd(RCC_APB2Periph_GPIOG, ENABLE);
+X      RCC_APB2PeriphResetCmd(((u32)0x00000100), ENABLE);
+N      RCC_APB2PeriphResetCmd(RCC_APB2Periph_GPIOG, DISABLE);
+X      RCC_APB2PeriphResetCmd(((u32)0x00000100), DISABLE);
+N      break;                       
+N
+N    default:
+N      break;
+N  }
+N}
+N
+N/*******************************************************************************
+N* Function Name  : GPIO_AFIODeInit
+N* Description    : Deinitializes the Alternate Functions (remap, event control
+N*                  and EXTI configuration) registers to their default reset
+N*                  values.
+N* Input          : None
+N* Output         : None
+N* Return         : None
+N*******************************************************************************/
+Nvoid GPIO_AFIODeInit(void)
+N{
+N  RCC_APB2PeriphResetCmd(RCC_APB2Periph_AFIO, ENABLE);
+X  RCC_APB2PeriphResetCmd(((u32)0x00000001), ENABLE);
+N  RCC_APB2PeriphResetCmd(RCC_APB2Periph_AFIO, DISABLE);
+X  RCC_APB2PeriphResetCmd(((u32)0x00000001), DISABLE);
+N}
+N
+N/*******************************************************************************
+N* Function Name  : GPIO_Init
+N* Description    : Initializes the GPIOx peripheral according to the specified
+N*                  parameters in the GPIO_InitStruct.
+N* Input          : - GPIOx: where x can be (A..G) to select the GPIO peripheral.
+N*                  - GPIO_InitStruct: pointer to a GPIO_InitTypeDef structure that
+N*                    contains the configuration information for the specified GPIO
+N*                    peripheral.
+N* Output         : None
+N* Return         : None
+N*******************************************************************************/
+Nvoid GPIO_Init(GPIO_TypeDef* GPIOx, GPIO_InitTypeDef* GPIO_InitStruct)
+N{
+N  u32 currentmode = 0x00, currentpin = 0x00, pinpos = 0x00, pos = 0x00;
+N  u32 tmpreg = 0x00, pinmask = 0x00;
+N
+N  /* Check the parameters */
+N  assert_param(IS_GPIO_ALL_PERIPH(GPIOx));
+X  ((void)0);
+N  assert_param(IS_GPIO_MODE(GPIO_InitStruct->GPIO_Mode));
+X  ((void)0);
+N  assert_param(IS_GPIO_PIN(GPIO_InitStruct->GPIO_Pin));  
+X  ((void)0);  
+N  
+N/*---------------------------- GPIO Mode Configuration -----------------------*/
+N  currentmode = ((u32)GPIO_InitStruct->GPIO_Mode) & ((u32)0x0F);
+N
+N  if ((((u32)GPIO_InitStruct->GPIO_Mode) & ((u32)0x10)) != 0x00)
+N  { 
+N    /* Check the parameters */
+N    assert_param(IS_GPIO_SPEED(GPIO_InitStruct->GPIO_Speed));
+X    ((void)0);
+N    /* Output mode */
+N    currentmode |= (u32)GPIO_InitStruct->GPIO_Speed;
+N  }
+N
+N/*---------------------------- GPIO CRL Configuration ------------------------*/
+N  /* Configure the eight low port pins */
+N  if (((u32)GPIO_InitStruct->GPIO_Pin & ((u32)0x00FF)) != 0x00)
+N  {
+N    tmpreg = GPIOx->CRL;
+N
+N    for (pinpos = 0x00; pinpos < 0x08; pinpos++)
+N    {
+N      pos = ((u32)0x01) << pinpos;
+N      /* Get the port pins position */
+N      currentpin = (GPIO_InitStruct->GPIO_Pin) & pos;
+N
+N      if (currentpin == pos)
+N      {
+N        pos = pinpos << 2;
+N        /* Clear the corresponding low control register bits */
+N        pinmask = ((u32)0x0F) << pos;
+N        tmpreg &= ~pinmask;
+N
+N        /* Write the mode configuration in the corresponding bits */
+N        tmpreg |= (currentmode << pos);
+N
+N        /* Reset the corresponding ODR bit */
+N        if (GPIO_InitStruct->GPIO_Mode == GPIO_Mode_IPD)
+N        {
+N          GPIOx->BRR = (((u32)0x01) << pinpos);
+N        }
+N        /* Set the corresponding ODR bit */
+N        if (GPIO_InitStruct->GPIO_Mode == GPIO_Mode_IPU)
+N        {
+N          GPIOx->BSRR = (((u32)0x01) << pinpos);
+N        }
+N      }
+N    }
+N    GPIOx->CRL = tmpreg;
+N  }
+N
+N/*---------------------------- GPIO CRH Configuration ------------------------*/
+N  /* Configure the eight high port pins */
+N  if (GPIO_InitStruct->GPIO_Pin > 0x00FF)
+N  {
+N    tmpreg = GPIOx->CRH;
+N    for (pinpos = 0x00; pinpos < 0x08; pinpos++)
+N    {
+N      pos = (((u32)0x01) << (pinpos + 0x08));
+N      /* Get the port pins position */
+N      currentpin = ((GPIO_InitStruct->GPIO_Pin) & pos);
+N      if (currentpin == pos)
+N      {
+N        pos = pinpos << 2;
+N        /* Clear the corresponding high control register bits */
+N        pinmask = ((u32)0x0F) << pos;
+N        tmpreg &= ~pinmask;
+N
+N        /* Write the mode configuration in the corresponding bits */
+N        tmpreg |= (currentmode << pos);
+N
+N        /* Reset the corresponding ODR bit */
+N        if (GPIO_InitStruct->GPIO_Mode == GPIO_Mode_IPD)
+N        {
+N          GPIOx->BRR = (((u32)0x01) << (pinpos + 0x08));
+N        }
+N        /* Set the corresponding ODR bit */
+N        if (GPIO_InitStruct->GPIO_Mode == GPIO_Mode_IPU)
+N        {
+N          GPIOx->BSRR = (((u32)0x01) << (pinpos + 0x08));
+N        }
+N      }
+N    }
+N    GPIOx->CRH = tmpreg;
+N  }
+N}
+N
+N/*******************************************************************************
+N* Function Name  : GPIO_StructInit
+N* Description    : Fills each GPIO_InitStruct member with its default value.
+N* Input          : - GPIO_InitStruct : pointer to a GPIO_InitTypeDef structure
+N*                    which will be initialized.
+N* Output         : None
+N* Return         : None
+N*******************************************************************************/
+Nvoid GPIO_StructInit(GPIO_InitTypeDef* GPIO_InitStruct)
+N{
+N  /* Reset GPIO init structure parameters values */
+N  GPIO_InitStruct->GPIO_Pin  = GPIO_Pin_All;
+X  GPIO_InitStruct->GPIO_Pin  = ((u16)0xFFFF);
+N  GPIO_InitStruct->GPIO_Speed = GPIO_Speed_2MHz;
+N  GPIO_InitStruct->GPIO_Mode = GPIO_Mode_IN_FLOATING;
+N}
+N
+N/*******************************************************************************
+N* Function Name  : GPIO_ReadInputDataBit
+N* Description    : Reads the specified input port pin.
+N* Input          : - GPIOx: where x can be (A..G) to select the GPIO peripheral.
+N*                : - GPIO_Pin:  specifies the port bit to read.
+N*                    This parameter can be GPIO_Pin_x where x can be (0..15).
+N* Output         : None
+N* Return         : The input port pin value.
+N*******************************************************************************/
+Nu8 GPIO_ReadInputDataBit(GPIO_TypeDef* GPIOx, u16 GPIO_Pin)
+N{
+N  u8 bitstatus = 0x00;
+N  
+N  /* Check the parameters */
+N  assert_param(IS_GPIO_ALL_PERIPH(GPIOx));
+X  ((void)0);
+N  assert_param(IS_GET_GPIO_PIN(GPIO_Pin)); 
+X  ((void)0); 
+N  
+N  if ((GPIOx->IDR & GPIO_Pin) != (u32)Bit_RESET)
+N  {
+N    bitstatus = (u8)Bit_SET;
+N  }
+N  else
+N  {
+N    bitstatus = (u8)Bit_RESET;
+N  }
+N  return bitstatus;
+N}
+N
+N/*******************************************************************************
+N* Function Name  : GPIO_ReadInputData
+N* Description    : Reads the specified GPIO input data port.
+N* Input          : - GPIOx: where x can be (A..G) to select the GPIO peripheral.
+N* Output         : None
+N* Return         : GPIO input data port value.
+N*******************************************************************************/
+Nu16 GPIO_ReadInputData(GPIO_TypeDef* GPIOx)
+N{
+N  /* Check the parameters */
+N  assert_param(IS_GPIO_ALL_PERIPH(GPIOx));
+X  ((void)0);
+N  
+N  return ((u16)GPIOx->IDR);
+N}
+N
+N/*******************************************************************************
+N* Function Name  : GPIO_ReadOutputDataBit
+N* Description    : Reads the specified output data port bit.
+N* Input          : - GPIOx: where x can be (A..G) to select the GPIO peripheral.
+N*                : - GPIO_Pin:  specifies the port bit to read.
+N*                    This parameter can be GPIO_Pin_x where x can be (0..15).
+N* Output         : None
+N* Return         : The output port pin value.
+N*******************************************************************************/
+Nu8 GPIO_ReadOutputDataBit(GPIO_TypeDef* GPIOx, u16 GPIO_Pin)
+N{
+N  u8 bitstatus = 0x00;
+N
+N  /* Check the parameters */
+N  assert_param(IS_GPIO_ALL_PERIPH(GPIOx));
+X  ((void)0);
+N  assert_param(IS_GET_GPIO_PIN(GPIO_Pin)); 
+X  ((void)0); 
+N  
+N  if ((GPIOx->ODR & GPIO_Pin) != (u32)Bit_RESET)
+N  {
+N    bitstatus = (u8)Bit_SET;
+N  }
+N  else
+N  {
+N    bitstatus = (u8)Bit_RESET;
+N  }
+N  return bitstatus;
+N}
+N
+N/*******************************************************************************
+N* Function Name  : GPIO_ReadOutputData
+N* Description    : Reads the specified GPIO output data port.
+N* Input          : - GPIOx: where x can be (A..G) to select the GPIO peripheral.
+N* Output         : None
+N* Return         : GPIO output data port value.
+N*******************************************************************************/
+Nu16 GPIO_ReadOutputData(GPIO_TypeDef* GPIOx)
+N{
+N  /* Check the parameters */
+N  assert_param(IS_GPIO_ALL_PERIPH(GPIOx));
+X  ((void)0);
+N    
+N  return ((u16)GPIOx->ODR);
+N}
+N
+N/*******************************************************************************
+N* Function Name  : GPIO_SetBits
+N* Description    : Sets the selected data port bits.
+N* Input          : - GPIOx: where x can be (A..G) to select the GPIO peripheral.
+N*                  - GPIO_Pin: specifies the port bits to be written.
+N*                    This parameter can be any combination of GPIO_Pin_x where 
+N*                    x can be (0..15).
+N* Output         : None
+N* Return         : None
+N*******************************************************************************/
+Nvoid GPIO_SetBits(GPIO_TypeDef* GPIOx, u16 GPIO_Pin)
+N{
+N  /* Check the parameters */
+N  assert_param(IS_GPIO_ALL_PERIPH(GPIOx));
+X  ((void)0);
+N  assert_param(IS_GPIO_PIN(GPIO_Pin));
+X  ((void)0);
+N  
+N  GPIOx->BSRR = GPIO_Pin;
+N}
+N
+N/*******************************************************************************
+N* Function Name  : GPIO_ResetBits
+N* Description    : Clears the selected data port bits.
+N* Input          : - GPIOx: where x can be (A..G) to select the GPIO peripheral.
+N*                  - GPIO_Pin: specifies the port bits to be written.
+N*                    This parameter can be any combination of GPIO_Pin_x where 
+N*                    x can be (0..15).
+N* Output         : None
+N* Return         : None
+N*******************************************************************************/
+Nvoid GPIO_ResetBits(GPIO_TypeDef* GPIOx, u16 GPIO_Pin)
+N{
+N  /* Check the parameters */
+N  assert_param(IS_GPIO_ALL_PERIPH(GPIOx));
+X  ((void)0);
+N  assert_param(IS_GPIO_PIN(GPIO_Pin));
+X  ((void)0);
+N  
+N  GPIOx->BRR = GPIO_Pin;
+N}
+N
+N/*******************************************************************************
+N* Function Name  : GPIO_WriteBit
+N* Description    : Sets or clears the selected data port bit.
+N* Input          : - GPIOx: where x can be (A..G) to select the GPIO peripheral.
+N*                  - GPIO_Pin: specifies the port bit to be written.
+N*                    This parameter can be one of GPIO_Pin_x where x can be (0..15).
+N*                  - BitVal: specifies the value to be written to the selected bit.
+N*                    This parameter can be one of the BitAction enum values:
+N*                       - Bit_RESET: to clear the port pin
+N*                       - Bit_SET: to set the port pin
+N* Output         : None
+N* Return         : None
+N*******************************************************************************/
+Nvoid GPIO_WriteBit(GPIO_TypeDef* GPIOx, u16 GPIO_Pin, BitAction BitVal)
+N{
+N  /* Check the parameters */
+N  assert_param(IS_GPIO_ALL_PERIPH(GPIOx));
+X  ((void)0);
+N  assert_param(IS_GET_GPIO_PIN(GPIO_Pin));
+X  ((void)0);
+N  assert_param(IS_GPIO_BIT_ACTION(BitVal)); 
+X  ((void)0); 
+N  
+N  if (BitVal != Bit_RESET)
+N  {
+N    GPIOx->BSRR = GPIO_Pin;
+N  }
+N  else
+N  {
+N    GPIOx->BRR = GPIO_Pin;
+N  }
+N}
+N
+N/*******************************************************************************
+N* Function Name  : GPIO_Write
+N* Description    : Writes data to the specified GPIO data port.
+N* Input          : - GPIOx: where x can be (A..G) to select the GPIO peripheral.
+N*                  - PortVal: specifies the value to be written to the port output
+N*                    data register.
+N* Output         : None
+N* Return         : None
+N*******************************************************************************/
+Nvoid GPIO_Write(GPIO_TypeDef* GPIOx, u16 PortVal)
+N{
+N  /* Check the parameters */
+N  assert_param(IS_GPIO_ALL_PERIPH(GPIOx));
+X  ((void)0);
+N  
+N  GPIOx->ODR = PortVal;
+N}
+N
+N/*******************************************************************************
+N* Function Name  : GPIO_PinLockConfig
+N* Description    : Locks GPIO Pins configuration registers.
+N* Input          : - GPIOx: where x can be (A..G) to select the GPIO peripheral.
+N*                  - GPIO_Pin: specifies the port bit to be written.
+N*                    This parameter can be any combination of GPIO_Pin_x where 
+N*                    x can be (0..15).
+N* Output         : None
+N* Return         : None
+N*******************************************************************************/
+Nvoid GPIO_PinLockConfig(GPIO_TypeDef* GPIOx, u16 GPIO_Pin)
+N{
+N  u32 tmp = 0x00010000;
+N  
+N  /* Check the parameters */
+N  assert_param(IS_GPIO_ALL_PERIPH(GPIOx));
+X  ((void)0);
+N  assert_param(IS_GPIO_PIN(GPIO_Pin));
+X  ((void)0);
+N  
+N  tmp |= GPIO_Pin;
+N  /* Set LCKK bit */
+N  GPIOx->LCKR = tmp;
+N  /* Reset LCKK bit */
+N  GPIOx->LCKR =  GPIO_Pin;
+N  /* Set LCKK bit */
+N  GPIOx->LCKR = tmp;
+N  /* Read LCKK bit*/
+N  tmp = GPIOx->LCKR;
+N  /* Read LCKK bit*/
+N  tmp = GPIOx->LCKR;
+N}
+N
+N/*******************************************************************************
+N* Function Name  : GPIO_EventOutputConfig
+N* Description    : Selects the GPIO pin used as Event output.
+N* Input          : - GPIO_PortSource: selects the GPIO port to be used as source
+N*                    for Event output.
+N*                    This parameter can be GPIO_PortSourceGPIOx where x can be
+N*                    (A..E).
+N*                  - GPIO_PinSource: specifies the pin for the Event output.
+N*                    This parameter can be GPIO_PinSourcex where x can be (0..15).
+N* Output         : None
+N* Return         : None
+N*******************************************************************************/
+Nvoid GPIO_EventOutputConfig(u8 GPIO_PortSource, u8 GPIO_PinSource)
+N{
+N  u32 tmpreg = 0x00;
+N
+N  /* Check the parameters */
+N  assert_param(IS_GPIO_EVENTOUT_PORT_SOURCE(GPIO_PortSource));
+X  ((void)0);
+N  assert_param(IS_GPIO_PIN_SOURCE(GPIO_PinSource));
+X  ((void)0);
+N    
+N  tmpreg = AFIO->EVCR;
+X  tmpreg = ((AFIO_TypeDef *) ((((u32)0x40000000) + 0x10000) + 0x0000))->EVCR;
+N  /* Clear the PORT[6:4] and PIN[3:0] bits */
+N  tmpreg &= EVCR_PORTPINCONFIG_MASK;
+X  tmpreg &= ((u16)0xFF80);
+N  tmpreg |= (u32)GPIO_PortSource << 0x04;
+N  tmpreg |= GPIO_PinSource;
+N
+N  AFIO->EVCR = tmpreg;
+X  ((AFIO_TypeDef *) ((((u32)0x40000000) + 0x10000) + 0x0000))->EVCR = tmpreg;
+N}
+N
+N/*******************************************************************************
+N* Function Name  : GPIO_EventOutputCmd
+N* Description    : Enables or disables the Event Output.
+N* Input          : - NewState: new state of the Event output.
+N*                    This parameter can be: ENABLE or DISABLE.
+N* Output         : None
+N* Return         : None
+N*******************************************************************************/
+Nvoid GPIO_EventOutputCmd(FunctionalState NewState)
+N{
+N  /* Check the parameters */
+N  assert_param(IS_FUNCTIONAL_STATE(NewState));
+X  ((void)0);
+N  
+N  *(vu32 *) EVCR_EVOE_BB = (u32)NewState;
+X  *(vu32 *) (((u32)0x42000000) + (((((((u32)0x40000000) + 0x10000) + 0x0000) - ((u32)0x40000000)) + 0x00) * 32) + (((u8)0x07) * 4)) = (u32)NewState;
+N}
+N
+N/*******************************************************************************
+N* Function Name  : GPIO_PinRemapConfig
+N* Description    : Changes the mapping of the specified pin.
+N* Input          : - GPIO_Remap: selects the pin to remap.
+N*                    This parameter can be one of the following values:
+N*                       - GPIO_Remap_SPI1
+N*                       - GPIO_Remap_I2C1
+N*                       - GPIO_Remap_USART1
+N*                       - GPIO_Remap_USART2
+N*                       - GPIO_PartialRemap_USART3
+N*                       - GPIO_FullRemap_USART3
+N*                       - GPIO_PartialRemap_TIM1
+N*                       - GPIO_FullRemap_TIM1
+N*                       - GPIO_PartialRemap1_TIM2
+N*                       - GPIO_PartialRemap2_TIM2
+N*                       - GPIO_FullRemap_TIM2
+N*                       - GPIO_PartialRemap_TIM3
+N*                       - GPIO_FullRemap_TIM3
+N*                       - GPIO_Remap_TIM4
+N*                       - GPIO_Remap1_CAN
+N*                       - GPIO_Remap2_CAN
+N*                       - GPIO_Remap_PD01
+N*                       - GPIO_Remap_TIM5CH4_LSI
+N*                       - GPIO_Remap_ADC1_ETRGINJ
+N*                       - GPIO_Remap_ADC1_ETRGREG
+N*                       - GPIO_Remap_ADC2_ETRGINJ
+N*                       - GPIO_Remap_ADC2_ETRGREG
+N*                       - GPIO_Remap_SWJ_NoJTRST
+N*                       - GPIO_Remap_SWJ_JTAGDisable
+N*                       - GPIO_Remap_SWJ_Disable
+N*                  - NewState: new state of the port pin remapping.
+N*                    This parameter can be: ENABLE or DISABLE.
+N* Output         : None
+N* Return         : None
+N*******************************************************************************/
+Nvoid GPIO_PinRemapConfig(u32 GPIO_Remap, FunctionalState NewState)
+N{
+N  u32 tmp = 0x00, tmp1 = 0x00, tmpreg = 0x00, tmpmask = 0x00;
+N
+N  /* Check the parameters */
+N  assert_param(IS_GPIO_REMAP(GPIO_Remap));
+X  ((void)0);
+N  assert_param(IS_FUNCTIONAL_STATE(NewState));  
+X  ((void)0);  
+N  
+N  tmpreg = AFIO->MAPR;
+X  tmpreg = ((AFIO_TypeDef *) ((((u32)0x40000000) + 0x10000) + 0x0000))->MAPR;
+N
+N  tmpmask = (GPIO_Remap & DBGAFR_POSITION_MASK) >> 0x10;
+X  tmpmask = (GPIO_Remap & ((u32)0x000F0000)) >> 0x10;
+N  tmp = GPIO_Remap & LSB_MASK;
+X  tmp = GPIO_Remap & ((u16)0xFFFF);
+N
+N  if ((GPIO_Remap & (DBGAFR_LOCATION_MASK | DBGAFR_NUMBITS_MASK)) == (DBGAFR_LOCATION_MASK | DBGAFR_NUMBITS_MASK))
+X  if ((GPIO_Remap & (((u32)0x00200000) | ((u32)0x00100000))) == (((u32)0x00200000) | ((u32)0x00100000)))
+N  {
+N    tmpreg &= DBGAFR_SWJCFG_MASK;
+X    tmpreg &= ((u32)0xF0FFFFFF);
+N    AFIO->MAPR &= DBGAFR_SWJCFG_MASK;
+X    ((AFIO_TypeDef *) ((((u32)0x40000000) + 0x10000) + 0x0000))->MAPR &= ((u32)0xF0FFFFFF);
+N  }
+N  else if ((GPIO_Remap & DBGAFR_NUMBITS_MASK) == DBGAFR_NUMBITS_MASK)
+X  else if ((GPIO_Remap & ((u32)0x00100000)) == ((u32)0x00100000))
+N  {
+N    tmp1 = ((u32)0x03) << tmpmask;
+N    tmpreg &= ~tmp1;
+N    tmpreg |= ~DBGAFR_SWJCFG_MASK;
+X    tmpreg |= ~((u32)0xF0FFFFFF);
+N  }
+N  else
+N  {
+N    tmpreg &= ~(tmp << ((GPIO_Remap >> 0x15)*0x10));
+N    tmpreg |= ~DBGAFR_SWJCFG_MASK;
+X    tmpreg |= ~((u32)0xF0FFFFFF);
+N  }
+N
+N  if (NewState != DISABLE)
+N  {
+N    tmpreg |= (tmp << ((GPIO_Remap >> 0x15)*0x10));
+N  }
+N
+N  AFIO->MAPR = tmpreg;
+X  ((AFIO_TypeDef *) ((((u32)0x40000000) + 0x10000) + 0x0000))->MAPR = tmpreg;
+N}
+N
+N/*******************************************************************************
+N* Function Name  : GPIO_EXTILineConfig
+N* Description    : Selects the GPIO pin used as EXTI Line.
+N* Input          : - GPIO_PortSource: selects the GPIO port to be used as
+N*                    source for EXTI lines.
+N*                    This parameter can be GPIO_PortSourceGPIOx where x can be
+N*                    (A..G).
+N*                  - GPIO_PinSource: specifies the EXTI line to be configured.
+N*                   This parameter can be GPIO_PinSourcex where x can be (0..15).
+N* Output         : None
+N* Return         : None
+N*******************************************************************************/
+Nvoid GPIO_EXTILineConfig(u8 GPIO_PortSource, u8 GPIO_PinSource)
+N{
+N  u32 tmp = 0x00;
+N
+N  /* Check the parameters */
+N  assert_param(IS_GPIO_EXTI_PORT_SOURCE(GPIO_PortSource));
+X  ((void)0);
+N  assert_param(IS_GPIO_PIN_SOURCE(GPIO_PinSource));
+X  ((void)0);
+N  
+N  tmp = ((u32)0x0F) << (0x04 * (GPIO_PinSource & (u8)0x03));
+N
+N  AFIO->EXTICR[GPIO_PinSource >> 0x02] &= ~tmp;
+X  ((AFIO_TypeDef *) ((((u32)0x40000000) + 0x10000) + 0x0000))->EXTICR[GPIO_PinSource >> 0x02] &= ~tmp;
+N  AFIO->EXTICR[GPIO_PinSource >> 0x02] |= (((u32)GPIO_PortSource) << (0x04 * (GPIO_PinSource & (u8)0x03)));
+X  ((AFIO_TypeDef *) ((((u32)0x40000000) + 0x10000) + 0x0000))->EXTICR[GPIO_PinSource >> 0x02] |= (((u32)GPIO_PortSource) << (0x04 * (GPIO_PinSource & (u8)0x03)));
+N}
+N
+N/******************* (C) COPYRIGHT 2008 STMicroelectronics *****END OF FILE****/

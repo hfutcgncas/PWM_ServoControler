@@ -1,0 +1,2738 @@
+L 1 "source\FWLib\src\stm32f10x_flash.c"
+N/******************** (C) COPYRIGHT 2008 STMicroelectronics ********************
+N* File Name          : stm32f10x_flash.c
+N* Author             : MCD Application Team
+N* Version            : V2.0.1
+N* Date               : 06/13/2008
+N* Description        : This file provides all the FLASH firmware functions.
+N********************************************************************************
+N* THE PRESENT FIRMWARE WHICH IS FOR GUIDANCE ONLY AIMS AT PROVIDING CUSTOMERS
+N* WITH CODING INFORMATION REGARDING THEIR PRODUCTS IN ORDER FOR THEM TO SAVE TIME.
+N* AS A RESULT, STMICROELECTRONICS SHALL NOT BE HELD LIABLE FOR ANY DIRECT,
+N* INDIRECT OR CONSEQUENTIAL DAMAGES WITH RESPECT TO ANY CLAIMS ARISING FROM THE
+N* CONTENT OF SUCH FIRMWARE AND/OR THE USE MADE BY CUSTOMERS OF THE CODING
+N* INFORMATION CONTAINED HEREIN IN CONNECTION WITH THEIR PRODUCTS.
+N*******************************************************************************/
+N
+N/* Includes ------------------------------------------------------------------*/
+N#include "stm32f10x_flash.h"
+L 1 "D:\Program Files\keil4.14\ARM\INC\ST\STM32F10x\stm32f10x_flash.h" 1
+N/******************** (C) COPYRIGHT 2008 STMicroelectronics ********************
+N* File Name          : stm32f10x_flash.h
+N* Author             : MCD Application Team
+N* Version            : V2.0.1
+N* Date               : 06/13/2008
+N* Description        : This file contains all the functions prototypes for the
+N*                      FLASH firmware library.
+N********************************************************************************
+N* THE PRESENT FIRMWARE WHICH IS FOR GUIDANCE ONLY AIMS AT PROVIDING CUSTOMERS
+N* WITH CODING INFORMATION REGARDING THEIR PRODUCTS IN ORDER FOR THEM TO SAVE TIME.
+N* AS A RESULT, STMICROELECTRONICS SHALL NOT BE HELD LIABLE FOR ANY DIRECT,
+N* INDIRECT OR CONSEQUENTIAL DAMAGES WITH RESPECT TO ANY CLAIMS ARISING FROM THE
+N* CONTENT OF SUCH FIRMWARE AND/OR THE USE MADE BY CUSTOMERS OF THE CODING
+N* INFORMATION CONTAINED HEREIN IN CONNECTION WITH THEIR PRODUCTS.
+N*******************************************************************************/
+N
+N/* Define to prevent recursive inclusion -------------------------------------*/
+N#ifndef __STM32F10x_FLASH_H
+N#define __STM32F10x_FLASH_H
+N
+N/* Includes ------------------------------------------------------------------*/
+N#include "stm32f10x_map.h"
+L 1 "D:\Program Files\keil4.14\ARM\INC\ST\STM32F10x\stm32f10x_map.h" 1
+N/******************** (C) COPYRIGHT 2008 STMicroelectronics ********************
+N* File Name          : stm32f10x_map.h
+N* Author             : MCD Application Team
+N* Version            : V2.0.1
+N* Date               : 06/13/2008
+N* Description        : This file contains all the peripheral register's definitions
+N*                      and memory mapping.
+N********************************************************************************
+N* THE PRESENT FIRMWARE WHICH IS FOR GUIDANCE ONLY AIMS AT PROVIDING CUSTOMERS
+N* WITH CODING INFORMATION REGARDING THEIR PRODUCTS IN ORDER FOR THEM TO SAVE TIME.
+N* AS A RESULT, STMICROELECTRONICS SHALL NOT BE HELD LIABLE FOR ANY DIRECT,
+N* INDIRECT OR CONSEQUENTIAL DAMAGES WITH RESPECT TO ANY CLAIMS ARISING FROM THE
+N* CONTENT OF SUCH FIRMWARE AND/OR THE USE MADE BY CUSTOMERS OF THE CODING
+N* INFORMATION CONTAINED HEREIN IN CONNECTION WITH THEIR PRODUCTS.
+N*******************************************************************************/
+N
+N/* Define to prevent recursive inclusion -------------------------------------*/
+N#ifndef __STM32F10x_MAP_H
+N#define __STM32F10x_MAP_H
+N
+N#ifndef EXT
+N  #define EXT extern
+N#endif /* EXT */
+N
+N/* Includes ------------------------------------------------------------------*/
+N#include "stm32f10x_conf.h"
+L 1 "D:\Program Files\keil4.14\ARM\INC\ST\STM32F10x\stm32f10x_conf.h" 1
+N/******************** (C) COPYRIGHT 2008 STMicroelectronics ********************
+N* File Name          : stm32f10x_conf.h
+N* Author             : MCD Application Team
+N* Version            : V2.0.1
+N* Date               : 06/13/2008
+N* Description        : Library configuration file.
+N********************************************************************************
+N* THE PRESENT FIRMWARE WHICH IS FOR GUIDANCE ONLY AIMS AT PROVIDING CUSTOMERS
+N* WITH CODING INFORMATION REGARDING THEIR PRODUCTS IN ORDER FOR THEM TO SAVE TIME.
+N* AS A RESULT, STMICROELECTRONICS SHALL NOT BE HELD LIABLE FOR ANY DIRECT,
+N* INDIRECT OR CONSEQUENTIAL DAMAGES WITH RESPECT TO ANY CLAIMS ARISING FROM THE
+N* CONTENT OF SUCH FIRMWARE AND/OR THE USE MADE BY CUSTOMERS OF THE CODING
+N* INFORMATION CONTAINED HEREIN IN CONNECTION WITH THEIR PRODUCTS.
+N*******************************************************************************/
+N
+N/* Define to prevent recursive inclusion -------------------------------------*/
+N#ifndef __STM32F10x_CONF_H
+N#define __STM32F10x_CONF_H
+N
+N/* Includes ------------------------------------------------------------------*/
+N#include "stm32f10x_type.h"
+L 1 "D:\Program Files\keil4.14\ARM\INC\ST\STM32F10x\stm32f10x_type.h" 1
+N/******************** (C) COPYRIGHT 2008 STMicroelectronics ********************
+N* File Name          : stm32f10x_type.h
+N* Author             : MCD Application Team
+N* Version            : V2.0.1
+N* Date               : 06/13/2008
+N* Description        : This file contains all the common data types used for the
+N*                      STM32F10x firmware library.
+N********************************************************************************
+N* THE PRESENT FIRMWARE WHICH IS FOR GUIDANCE ONLY AIMS AT PROVIDING CUSTOMERS
+N* WITH CODING INFORMATION REGARDING THEIR PRODUCTS IN ORDER FOR THEM TO SAVE TIME.
+N* AS A RESULT, STMICROELECTRONICS SHALL NOT BE HELD LIABLE FOR ANY DIRECT,
+N* INDIRECT OR CONSEQUENTIAL DAMAGES WITH RESPECT TO ANY CLAIMS ARISING FROM THE
+N* CONTENT OF SUCH FIRMWARE AND/OR THE USE MADE BY CUSTOMERS OF THE CODING
+N* INFORMATION CONTAINED HEREIN IN CONNECTION WITH THEIR PRODUCTS.
+N*******************************************************************************/
+N
+N/* Define to prevent recursive inclusion -------------------------------------*/
+N#ifndef __STM32F10x_TYPE_H
+N#define __STM32F10x_TYPE_H
+N
+N/* Includes ------------------------------------------------------------------*/
+N/* Exported types ------------------------------------------------------------*/
+Ntypedef signed long  s32;
+Ntypedef signed short s16;
+Ntypedef signed char  s8;
+N
+Ntypedef signed long  const sc32;  /* Read Only */
+Ntypedef signed short const sc16;  /* Read Only */
+Ntypedef signed char  const sc8;   /* Read Only */
+N
+Ntypedef volatile signed long  vs32;
+Ntypedef volatile signed short vs16;
+Ntypedef volatile signed char  vs8;
+N
+Ntypedef volatile signed long  const vsc32;  /* Read Only */
+Ntypedef volatile signed short const vsc16;  /* Read Only */
+Ntypedef volatile signed char  const vsc8;   /* Read Only */
+N
+Ntypedef unsigned long  u32;
+Ntypedef unsigned short u16;
+Ntypedef unsigned char  u8;
+N
+Ntypedef unsigned long  const uc32;  /* Read Only */
+Ntypedef unsigned short const uc16;  /* Read Only */
+Ntypedef unsigned char  const uc8;   /* Read Only */
+N
+Ntypedef volatile unsigned long  vu32;
+Ntypedef volatile unsigned short vu16;
+Ntypedef volatile unsigned char  vu8;
+N
+Ntypedef volatile unsigned long  const vuc32;  /* Read Only */
+Ntypedef volatile unsigned short const vuc16;  /* Read Only */
+Ntypedef volatile unsigned char  const vuc8;   /* Read Only */
+N
+Ntypedef enum {FALSE = 0, TRUE = !FALSE} bool;//假的和真的
+N
+Ntypedef enum {RESET = 0, SET = !RESET} FlagStatus, ITStatus;  //重设预设置
+N
+Ntypedef enum {DISABLE = 0, ENABLE = !DISABLE} FunctionalState;//失能预使能
+N#define IS_FUNCTIONAL_STATE(STATE) (((STATE) == DISABLE) || ((STATE) == ENABLE))
+N
+Ntypedef enum {ERROR = 0, SUCCESS = !ERROR} ErrorStatus;	//错误与成功
+N
+N#define U8_MAX     ((u8)255)
+N#define S8_MAX     ((s8)127)
+N#define S8_MIN     ((s8)-128)
+N#define U16_MAX    ((u16)65535u)
+N#define S16_MAX    ((s16)32767)
+N#define S16_MIN    ((s16)-32768)
+N#define U32_MAX    ((u32)4294967295uL)
+N#define S32_MAX    ((s32)2147483647)
+N#define S32_MIN    ((s32)-2147483648)
+N
+N/* Exported constants --------------------------------------------------------*/
+N/* Exported macro ------------------------------------------------------------*/
+N/* Exported functions ------------------------------------------------------- */
+N
+N#endif /* __STM32F10x_TYPE_H */
+N
+N/******************* (C) COPYRIGHT 2008 STMicroelectronics *****END OF FILE****/
+L 22 "D:\Program Files\keil4.14\ARM\INC\ST\STM32F10x\stm32f10x_conf.h" 2
+N
+N/* Exported types ------------------------------------------------------------*/
+N/* Exported constants --------------------------------------------------------*/
+N/* Uncomment the line below to compile the library in DEBUG mode, this will expanse
+N   the "assert_param" macro in the firmware library code (see "Exported macro"
+N   section below) */
+N/* #define DEBUG    1*/
+N
+N/* Comment the line below to disable the specific peripheral inclusion */
+N/************************************* ADC ************************************/
+N#define _ADC
+N#define _ADC1
+N#define _ADC2
+N#define _ADC3
+N
+N/************************************* BKP ************************************/
+N#define _BKP 
+N
+N/************************************* CAN ************************************/
+N#define _CAN
+N
+N/************************************* CRC ************************************/
+N#define _CRC
+N
+N/************************************* DAC ************************************/
+N#define _DAC
+N
+N/************************************* DBGMCU *********************************/
+N#define _DBGMCU
+N
+N/************************************* DMA ************************************/
+N#define _DMA
+N#define _DMA1_Channel1
+N#define _DMA1_Channel2
+N#define _DMA1_Channel3
+N#define _DMA1_Channel4
+N#define _DMA1_Channel5
+N#define _DMA1_Channel6
+N#define _DMA1_Channel7
+N#define _DMA2_Channel1
+N#define _DMA2_Channel2
+N#define _DMA2_Channel3
+N#define _DMA2_Channel4
+N#define _DMA2_Channel5
+N
+N/************************************* EXTI ***********************************/
+N#define _EXTI
+N
+N/************************************* FLASH and Option Bytes *****************/
+N#define _FLASH
+N/* Uncomment the line below to enable FLASH program/erase/protections functions,
+N   otherwise only FLASH configuration (latency, prefetch, half cycle) functions
+N   are enabled */
+N#define _FLASH_PROG
+N
+N/************************************* FSMC ***********************************/
+N#define _FSMC
+N
+N/************************************* GPIO ***********************************/
+N#define _GPIO
+N#define _GPIOA
+N#define _GPIOB
+N#define _GPIOC
+N#define _GPIOD
+N#define _GPIOE
+N#define _GPIOF
+N#define _GPIOG
+N#define _AFIO
+N
+N/************************************* I2C ************************************/
+N#define _I2C
+N#define _I2C1
+N#define _I2C2
+N
+N/************************************* IWDG ***********************************/
+N#define _IWDG
+N
+N/************************************* NVIC ***********************************/
+N#define _NVIC
+N
+N/************************************* PWR ************************************/
+N#define _PWR
+N
+N/************************************* RCC ************************************/
+N#define _RCC
+N
+N/************************************* RTC ************************************/
+N#define _RTC
+N
+N/************************************* SDIO ***********************************/
+N#define _SDIO
+N
+N/************************************* SPI ************************************/
+N#define _SPI
+N#define _SPI1
+N#define _SPI2
+N#define _SPI3
+N
+N/************************************* SysTick ********************************/
+N#define _SysTick
+N
+N/************************************* TIM ************************************/
+N#define _TIM
+N#define _TIM1
+N#define _TIM2
+N#define _TIM3
+N#define _TIM4
+N#define _TIM5
+N#define _TIM6
+N#define _TIM7
+N#define _TIM8
+N
+N/************************************* USART **********************************/
+N#define _USART
+N#define _USART1
+N#define _USART2
+N#define _USART3
+N#define _UART4
+N#define _UART5
+N
+N/************************************* WWDG ***********************************/
+N#define _WWDG
+N
+N/* In the following line adjust the value of External High Speed oscillator (HSE)
+N   used in your application */
+N#define HSE_Value    ((u32)8000000) /* Value of the External oscillator in Hz*/
+N
+N/* Exported macro ------------------------------------------------------------*/
+N#ifdef  DEBUG
+S/*******************************************************************************
+S* Macro Name     : assert_param
+S* Description    : The assert_param macro is used for function's parameters check.
+S*                  It is used only if the library is compiled in DEBUG mode. 
+S* Input          : - expr: If expr is false, it calls assert_failed function
+S*                    which reports the name of the source file and the source
+S*                    line number of the call that failed. 
+S*                    If expr is true, it returns no value.
+S* Return         : None
+S*******************************************************************************/ 
+S  #define assert_param(expr) ((expr) ? (void)0 : assert_failed((u8 *)__FILE__, __LINE__))
+S/* Exported functions ------------------------------------------------------- */
+S  void assert_failed(u8* file, u32 line);
+N#else
+N  #define assert_param(expr) ((void)0)
+N#endif /* DEBUG */
+N
+N#endif /* __STM32F10x_CONF_H */
+N
+N/******************* (C) COPYRIGHT 2008 STMicroelectronics *****END OF FILE****/
+L 27 "D:\Program Files\keil4.14\ARM\INC\ST\STM32F10x\stm32f10x_map.h" 2
+N#include "stm32f10x_type.h"
+N#include "cortexm3_macro.h"
+L 1 "D:\Program Files\keil4.14\ARM\INC\ST\STM32F10x\cortexm3_macro.h" 1
+N/******************** (C) COPYRIGHT 2008 STMicroelectronics ********************
+N* File Name          : cortexm3_macro.h
+N* Author             : MCD Application Team
+N* Version            : V2.0.1
+N* Date               : 06/13/2008
+N* Description        : Header file for cortexm3_macro.s.
+N********************************************************************************
+N* THE PRESENT FIRMWARE WHICH IS FOR GUIDANCE ONLY AIMS AT PROVIDING CUSTOMERS
+N* WITH CODING INFORMATION REGARDING THEIR PRODUCTS IN ORDER FOR THEM TO SAVE TIME.
+N* AS A RESULT, STMICROELECTRONICS SHALL NOT BE HELD LIABLE FOR ANY DIRECT,
+N* INDIRECT OR CONSEQUENTIAL DAMAGES WITH RESPECT TO ANY CLAIMS ARISING FROM THE
+N* CONTENT OF SUCH FIRMWARE AND/OR THE USE MADE BY CUSTOMERS OF THE CODING
+N* INFORMATION CONTAINED HEREIN IN CONNECTION WITH THEIR PRODUCTS.
+N*******************************************************************************/
+N
+N/* Define to prevent recursive inclusion -------------------------------------*/
+N#ifndef __CORTEXM3_MACRO_H
+N#define __CORTEXM3_MACRO_H
+N
+N/* Includes ------------------------------------------------------------------*/
+N#include "stm32f10x_type.h"
+N
+N/* Exported types ------------------------------------------------------------*/
+N/* Exported constants --------------------------------------------------------*/
+N/* Exported macro ------------------------------------------------------------*/
+N/* Exported functions ------------------------------------------------------- */
+Nvoid __WFI(void);
+Nvoid __WFE(void);
+Nvoid __SEV(void);
+Nvoid __ISB(void);
+Nvoid __DSB(void);
+Nvoid __DMB(void);
+Nvoid __SVC(void);
+Nu32 __MRS_CONTROL(void);
+Nvoid __MSR_CONTROL(u32 Control);
+Nu32 __MRS_PSP(void);
+Nvoid __MSR_PSP(u32 TopOfProcessStack);
+Nu32 __MRS_MSP(void);
+Nvoid __MSR_MSP(u32 TopOfMainStack);
+Nvoid __RESETPRIMASK(void);
+Nvoid __SETPRIMASK(void);
+Nu32 __READ_PRIMASK(void);
+Nvoid __RESETFAULTMASK(void);
+Nvoid __SETFAULTMASK(void);
+Nu32 __READ_FAULTMASK(void);
+Nvoid __BASEPRICONFIG(u32 NewPriority);
+Nu32 __GetBASEPRI(void);
+Nu16 __REV_HalfWord(u16 Data);
+Nu32 __REV_Word(u32 Data);
+N
+N#endif /* __CORTEXM3_MACRO_H */
+N
+N/******************* (C) COPYRIGHT 2008 STMicroelectronics *****END OF FILE****/
+L 29 "D:\Program Files\keil4.14\ARM\INC\ST\STM32F10x\stm32f10x_map.h" 2
+N
+N/* Exported types ------------------------------------------------------------*/
+N/******************************************************************************/
+N/*                         Peripheral registers structures                    */
+N/******************************************************************************/
+N
+N/*------------------------ Analog to Digital Converter -----------------------*/
+Ntypedef struct
+N{
+N  vu32 SR;
+N  vu32 CR1;
+N  vu32 CR2;
+N  vu32 SMPR1;
+N  vu32 SMPR2;
+N  vu32 JOFR1;
+N  vu32 JOFR2;
+N  vu32 JOFR3;
+N  vu32 JOFR4;
+N  vu32 HTR;
+N  vu32 LTR;
+N  vu32 SQR1;
+N  vu32 SQR2;
+N  vu32 SQR3;
+N  vu32 JSQR;
+N  vu32 JDR1;
+N  vu32 JDR2;
+N  vu32 JDR3;
+N  vu32 JDR4;
+N  vu32 DR;
+N} ADC_TypeDef;
+N
+N/*------------------------ Backup Registers ----------------------------------*/
+Ntypedef struct
+N{
+N  u32  RESERVED0;
+N  vu16 DR1;
+N  u16  RESERVED1;
+N  vu16 DR2;
+N  u16  RESERVED2;
+N  vu16 DR3;
+N  u16  RESERVED3;
+N  vu16 DR4;
+N  u16  RESERVED4;
+N  vu16 DR5;
+N  u16  RESERVED5;
+N  vu16 DR6;
+N  u16  RESERVED6;
+N  vu16 DR7;
+N  u16  RESERVED7;
+N  vu16 DR8;
+N  u16  RESERVED8;
+N  vu16 DR9;
+N  u16  RESERVED9;
+N  vu16 DR10;
+N  u16  RESERVED10; 
+N  vu16 RTCCR;
+N  u16  RESERVED11;
+N  vu16 CR;
+N  u16  RESERVED12;
+N  vu16 CSR;
+N  u16  RESERVED13[5];
+N  vu16 DR11;
+N  u16  RESERVED14;
+N  vu16 DR12;
+N  u16  RESERVED15;
+N  vu16 DR13;
+N  u16  RESERVED16;
+N  vu16 DR14;
+N  u16  RESERVED17;
+N  vu16 DR15;
+N  u16  RESERVED18;
+N  vu16 DR16;
+N  u16  RESERVED19;
+N  vu16 DR17;
+N  u16  RESERVED20;
+N  vu16 DR18;
+N  u16  RESERVED21;
+N  vu16 DR19;
+N  u16  RESERVED22;
+N  vu16 DR20;
+N  u16  RESERVED23;
+N  vu16 DR21;
+N  u16  RESERVED24;
+N  vu16 DR22;
+N  u16  RESERVED25;
+N  vu16 DR23;
+N  u16  RESERVED26;
+N  vu16 DR24;
+N  u16  RESERVED27;
+N  vu16 DR25;
+N  u16  RESERVED28;
+N  vu16 DR26;
+N  u16  RESERVED29;
+N  vu16 DR27;
+N  u16  RESERVED30;
+N  vu16 DR28;
+N  u16  RESERVED31;
+N  vu16 DR29;
+N  u16  RESERVED32;
+N  vu16 DR30;
+N  u16  RESERVED33; 
+N  vu16 DR31;
+N  u16  RESERVED34;
+N  vu16 DR32;
+N  u16  RESERVED35;
+N  vu16 DR33;
+N  u16  RESERVED36;
+N  vu16 DR34;
+N  u16  RESERVED37;
+N  vu16 DR35;
+N  u16  RESERVED38;
+N  vu16 DR36;
+N  u16  RESERVED39;
+N  vu16 DR37;
+N  u16  RESERVED40;
+N  vu16 DR38;
+N  u16  RESERVED41;
+N  vu16 DR39;
+N  u16  RESERVED42;
+N  vu16 DR40;
+N  u16  RESERVED43;
+N  vu16 DR41;
+N  u16  RESERVED44;
+N  vu16 DR42;
+N  u16  RESERVED45;    
+N} BKP_TypeDef;
+N
+N/*------------------------ Controller Area Network ---------------------------*/
+Ntypedef struct
+N{
+N  vu32 TIR;
+N  vu32 TDTR;
+N  vu32 TDLR;
+N  vu32 TDHR;
+N} CAN_TxMailBox_TypeDef;
+N
+Ntypedef struct
+N{
+N  vu32 RIR;
+N  vu32 RDTR;
+N  vu32 RDLR;
+N  vu32 RDHR;
+N} CAN_FIFOMailBox_TypeDef;
+N
+Ntypedef struct
+N{
+N  vu32 FR1;
+N  vu32 FR2;
+N} CAN_FilterRegister_TypeDef;
+N
+Ntypedef struct
+N{
+N  vu32 MCR;
+N  vu32 MSR;
+N  vu32 TSR;
+N  vu32 RF0R;
+N  vu32 RF1R;
+N  vu32 IER;
+N  vu32 ESR;
+N  vu32 BTR;
+N  u32  RESERVED0[88];
+N  CAN_TxMailBox_TypeDef sTxMailBox[3];
+N  CAN_FIFOMailBox_TypeDef sFIFOMailBox[2];
+N  u32  RESERVED1[12];
+N  vu32 FMR;
+N  vu32 FM1R;
+N  u32  RESERVED2;
+N  vu32 FS1R;
+N  u32  RESERVED3;
+N  vu32 FFA1R;
+N  u32  RESERVED4;
+N  vu32 FA1R;
+N  u32  RESERVED5[8];
+N  CAN_FilterRegister_TypeDef sFilterRegister[14];
+N} CAN_TypeDef;
+N
+N/*------------------------ CRC calculation unit ------------------------------*/
+Ntypedef struct
+N{
+N  vu32 DR;
+N  vu8  IDR;
+N  u8   RESERVED0;
+N  u16  RESERVED1;
+N  vu32 CR;
+N} CRC_TypeDef;
+N
+N
+N/*------------------------ Digital to Analog Converter -----------------------*/
+Ntypedef struct
+N{
+N  vu32 CR;
+N  vu32 SWTRIGR;
+N  vu32 DHR12R1;
+N  vu32 DHR12L1;
+N  vu32 DHR8R1;
+N  vu32 DHR12R2;
+N  vu32 DHR12L2;
+N  vu32 DHR8R2;
+N  vu32 DHR12RD;
+N  vu32 DHR12LD;
+N  vu32 DHR8RD;
+N  vu32 DOR1;
+N  vu32 DOR2;
+N} DAC_TypeDef;
+N
+N/*------------------------ Debug MCU -----------------------------------------*/
+Ntypedef struct
+N{
+N  vu32 IDCODE;
+N  vu32 CR;	
+N}DBGMCU_TypeDef;
+N
+N/*------------------------ DMA Controller ------------------------------------*/
+Ntypedef struct
+N{
+N  vu32 CCR;
+N  vu32 CNDTR;
+N  vu32 CPAR;
+N  vu32 CMAR;
+N} DMA_Channel_TypeDef;
+N
+Ntypedef struct
+N{
+N  vu32 ISR;
+N  vu32 IFCR;
+N} DMA_TypeDef;
+N
+N/*------------------------ External Interrupt/Event Controller ---------------*/
+Ntypedef struct
+N{
+N  vu32 IMR;
+N  vu32 EMR;
+N  vu32 RTSR;
+N  vu32 FTSR;
+N  vu32 SWIER;
+N  vu32 PR;
+N} EXTI_TypeDef;
+N
+N/*------------------------ FLASH and Option Bytes Registers ------------------*/
+Ntypedef struct
+N{
+N  vu32 ACR;
+N  vu32 KEYR;
+N  vu32 OPTKEYR;
+N  vu32 SR;
+N  vu32 CR;
+N  vu32 AR;
+N  vu32 RESERVED;
+N  vu32 OBR;
+N  vu32 WRPR;
+N} FLASH_TypeDef;
+N
+Ntypedef struct
+N{
+N  vu16 RDP;
+N  vu16 USER;
+N  vu16 Data0;
+N  vu16 Data1;
+N  vu16 WRP0;
+N  vu16 WRP1;
+N  vu16 WRP2;
+N  vu16 WRP3;
+N} OB_TypeDef;
+N
+N/*------------------------ Flexible Static Memory Controller -----------------*/
+Ntypedef struct
+N{
+N  vu32 BTCR[8];   
+N} FSMC_Bank1_TypeDef; 
+N
+Ntypedef struct
+N{
+N  vu32 BWTR[7];
+N} FSMC_Bank1E_TypeDef;
+N
+Ntypedef struct
+N{
+N  vu32 PCR2;
+N  vu32 SR2;
+N  vu32 PMEM2;
+N  vu32 PATT2;
+N  u32  RESERVED0;   
+N  vu32 ECCR2; 
+N} FSMC_Bank2_TypeDef;  
+N
+Ntypedef struct
+N{
+N  vu32 PCR3;
+N  vu32 SR3;
+N  vu32 PMEM3;
+N  vu32 PATT3;
+N  u32  RESERVED0;   
+N  vu32 ECCR3; 
+N} FSMC_Bank3_TypeDef; 
+N
+Ntypedef struct
+N{
+N  vu32 PCR4;
+N  vu32 SR4;
+N  vu32 PMEM4;
+N  vu32 PATT4;
+N  vu32 PIO4; 
+N} FSMC_Bank4_TypeDef; 
+N
+N/*------------------------ General Purpose and Alternate Function IO ---------*/
+Ntypedef struct
+N{
+N  vu32 CRL;
+N  vu32 CRH;
+N  vu32 IDR;
+N  vu32 ODR;
+N  vu32 BSRR;
+N  vu32 BRR;
+N  vu32 LCKR;
+N} GPIO_TypeDef;
+N
+Ntypedef struct
+N{
+N  vu32 EVCR;
+N  vu32 MAPR;
+N  vu32 EXTICR[4];
+N} AFIO_TypeDef;
+N
+N/*------------------------ Inter-integrated Circuit Interface ----------------*/
+Ntypedef struct
+N{
+N  vu16 CR1;
+N  u16  RESERVED0;
+N  vu16 CR2;
+N  u16  RESERVED1;
+N  vu16 OAR1;
+N  u16  RESERVED2;
+N  vu16 OAR2;
+N  u16  RESERVED3;
+N  vu16 DR;
+N  u16  RESERVED4;
+N  vu16 SR1;
+N  u16  RESERVED5;
+N  vu16 SR2;
+N  u16  RESERVED6;
+N  vu16 CCR;
+N  u16  RESERVED7;
+N  vu16 TRISE;
+N  u16  RESERVED8;
+N} I2C_TypeDef;
+N
+N/*------------------------ Independent WATCHDOG ------------------------------*/
+Ntypedef struct
+N{
+N  vu32 KR;
+N  vu32 PR;
+N  vu32 RLR;
+N  vu32 SR;
+N} IWDG_TypeDef;
+N
+N/*------------------------ Nested Vectored Interrupt Controller --------------*/
+Ntypedef struct
+N{
+N  vu32 ISER[2];
+N  u32  RESERVED0[30];
+N  vu32 ICER[2];
+N  u32  RSERVED1[30];
+N  vu32 ISPR[2];
+N  u32  RESERVED2[30];
+N  vu32 ICPR[2];
+N  u32  RESERVED3[30];
+N  vu32 IABR[2];
+N  u32  RESERVED4[62];
+N  vu32 IPR[15];
+N} NVIC_TypeDef;
+N
+Ntypedef struct
+N{
+N  vuc32 CPUID;
+N  vu32 ICSR;
+N  vu32 VTOR;
+N  vu32 AIRCR;
+N  vu32 SCR;
+N  vu32 CCR;
+N  vu32 SHPR[3];
+N  vu32 SHCSR;
+N  vu32 CFSR;
+N  vu32 HFSR;
+N  vu32 DFSR;
+N  vu32 MMFAR;
+N  vu32 BFAR;
+N  vu32 AFSR;
+N} SCB_TypeDef;
+N
+N/*------------------------ Power Control -------------------------------------*/
+Ntypedef struct
+N{
+N  vu32 CR;
+N  vu32 CSR;
+N} PWR_TypeDef;
+N
+N/*------------------------ Reset and Clock Control ---------------------------*/
+Ntypedef struct
+N{
+N  vu32 CR;
+N  vu32 CFGR;
+N  vu32 CIR;
+N  vu32 APB2RSTR;
+N  vu32 APB1RSTR;
+N  vu32 AHBENR;
+N  vu32 APB2ENR;
+N  vu32 APB1ENR;
+N  vu32 BDCR;
+N  vu32 CSR;
+N} RCC_TypeDef;
+N
+N/*------------------------ Real-Time Clock -----------------------------------*/
+Ntypedef struct
+N{
+N  vu16 CRH;
+N  u16  RESERVED0;
+N  vu16 CRL;
+N  u16  RESERVED1;
+N  vu16 PRLH;
+N  u16  RESERVED2;
+N  vu16 PRLL;
+N  u16  RESERVED3;
+N  vu16 DIVH;
+N  u16  RESERVED4;
+N  vu16 DIVL;
+N  u16  RESERVED5;
+N  vu16 CNTH;
+N  u16  RESERVED6;
+N  vu16 CNTL;
+N  u16  RESERVED7;
+N  vu16 ALRH;
+N  u16  RESERVED8;
+N  vu16 ALRL;
+N  u16  RESERVED9;
+N} RTC_TypeDef;
+N
+N/*------------------------ SD host Interface ---------------------------------*/
+Ntypedef struct
+N{
+N  vu32 POWER;
+N  vu32 CLKCR;
+N  vu32 ARG;
+N  vu32 CMD;
+N  vuc32 RESPCMD;
+N  vuc32 RESP1;
+N  vuc32 RESP2;
+N  vuc32 RESP3;
+N  vuc32 RESP4;
+N  vu32 DTIMER;
+N  vu32 DLEN;
+N  vu32 DCTRL;
+N  vuc32 DCOUNT;
+N  vuc32 STA;
+N  vu32 ICR;
+N  vu32 MASK;
+N  u32  RESERVED0[2];
+N  vuc32 FIFOCNT;
+N  u32  RESERVED1[13];
+N  vu32 FIFO;
+N} SDIO_TypeDef;
+N
+N/*------------------------ Serial Peripheral Interface -----------------------*/
+Ntypedef struct
+N{
+N  vu16 CR1;
+N  u16  RESERVED0;
+N  vu16 CR2;
+N  u16  RESERVED1;
+N  vu16 SR;
+N  u16  RESERVED2;
+N  vu16 DR;
+N  u16  RESERVED3;
+N  vu16 CRCPR;
+N  u16  RESERVED4;
+N  vu16 RXCRCR;
+N  u16  RESERVED5;
+N  vu16 TXCRCR;
+N  u16  RESERVED6;
+N  vu16 I2SCFGR;
+N  u16  RESERVED7;
+N  vu16 I2SPR;
+N  u16  RESERVED8;  
+N} SPI_TypeDef;
+N
+N/*------------------------ SystemTick ----------------------------------------*/
+Ntypedef struct
+N{
+N  vu32 CTRL;
+N  vu32 LOAD;
+N  vu32 VAL;
+N  vuc32 CALIB;
+N} SysTick_TypeDef;
+N
+N/*------------------------ TIM -----------------------------------------------*/
+Ntypedef struct
+N{
+N  vu16 CR1;
+N  u16  RESERVED0;
+N  vu16 CR2;
+N  u16  RESERVED1;
+N  vu16 SMCR;
+N  u16  RESERVED2;
+N  vu16 DIER;
+N  u16  RESERVED3;
+N  vu16 SR;
+N  u16  RESERVED4;
+N  vu16 EGR;
+N  u16  RESERVED5;
+N  vu16 CCMR1;
+N  u16  RESERVED6;
+N  vu16 CCMR2;
+N  u16  RESERVED7;
+N  vu16 CCER;
+N  u16  RESERVED8;
+N  vu16 CNT;
+N  u16  RESERVED9;
+N  vu16 PSC;
+N  u16  RESERVED10;
+N  vu16 ARR;
+N  u16  RESERVED11;
+N  vu16 RCR;
+N  u16  RESERVED12;
+N  vu16 CCR1;
+N  u16  RESERVED13;
+N  vu16 CCR2;
+N  u16  RESERVED14;
+N  vu16 CCR3;
+N  u16  RESERVED15;
+N  vu16 CCR4;
+N  u16  RESERVED16;
+N  vu16 BDTR;
+N  u16  RESERVED17;
+N  vu16 DCR;
+N  u16  RESERVED18;
+N  vu16 DMAR;
+N  u16  RESERVED19;
+N} TIM_TypeDef;
+N
+N/*----------------- Universal Synchronous Asynchronous Receiver Transmitter --*/
+Ntypedef struct
+N{
+N  vu16 SR;
+N  u16  RESERVED0;
+N  vu16 DR;
+N  u16  RESERVED1;
+N  vu16 BRR;
+N  u16  RESERVED2;
+N  vu16 CR1;
+N  u16  RESERVED3;
+N  vu16 CR2;
+N  u16  RESERVED4;
+N  vu16 CR3;
+N  u16  RESERVED5;
+N  vu16 GTPR;
+N  u16  RESERVED6;
+N} USART_TypeDef;
+N
+N/*------------------------ Window WATCHDOG -----------------------------------*/
+Ntypedef struct
+N{
+N  vu32 CR;
+N  vu32 CFR;
+N  vu32 SR;
+N} WWDG_TypeDef;
+N
+N/******************************************************************************/
+N/*                         Peripheral memory map                              */
+N/******************************************************************************/
+N/* Peripheral and SRAM base address in the alias region */
+N#define PERIPH_BB_BASE        ((u32)0x42000000)
+N#define SRAM_BB_BASE          ((u32)0x22000000)
+N
+N/* Peripheral and SRAM base address in the bit-band region */
+N#define SRAM_BASE             ((u32)0x20000000)
+N#define PERIPH_BASE           ((u32)0x40000000)
+N
+N/* FSMC registers base address */
+N#define FSMC_R_BASE           ((u32)0xA0000000)
+N
+N/* Peripheral memory map */
+N#define APB1PERIPH_BASE       PERIPH_BASE
+N#define APB2PERIPH_BASE       (PERIPH_BASE + 0x10000)
+N#define AHBPERIPH_BASE        (PERIPH_BASE + 0x20000)
+N
+N#define TIM2_BASE             (APB1PERIPH_BASE + 0x0000)
+N#define TIM3_BASE             (APB1PERIPH_BASE + 0x0400)
+N#define TIM4_BASE             (APB1PERIPH_BASE + 0x0800)
+N#define TIM5_BASE             (APB1PERIPH_BASE + 0x0C00)
+N#define TIM6_BASE             (APB1PERIPH_BASE + 0x1000)
+N#define TIM7_BASE             (APB1PERIPH_BASE + 0x1400)
+N#define RTC_BASE              (APB1PERIPH_BASE + 0x2800)
+N#define WWDG_BASE             (APB1PERIPH_BASE + 0x2C00)
+N#define IWDG_BASE             (APB1PERIPH_BASE + 0x3000)
+N#define SPI2_BASE             (APB1PERIPH_BASE + 0x3800)
+N#define SPI3_BASE             (APB1PERIPH_BASE + 0x3C00)
+N#define USART2_BASE           (APB1PERIPH_BASE + 0x4400)
+N#define USART3_BASE           (APB1PERIPH_BASE + 0x4800)
+N#define UART4_BASE            (APB1PERIPH_BASE + 0x4C00)
+N#define UART5_BASE            (APB1PERIPH_BASE + 0x5000)
+N#define I2C1_BASE             (APB1PERIPH_BASE + 0x5400)
+N#define I2C2_BASE             (APB1PERIPH_BASE + 0x5800)
+N#define CAN_BASE              (APB1PERIPH_BASE + 0x6400)
+N#define BKP_BASE              (APB1PERIPH_BASE + 0x6C00)
+N#define PWR_BASE              (APB1PERIPH_BASE + 0x7000)
+N#define DAC_BASE              (APB1PERIPH_BASE + 0x7400)
+N
+N#define AFIO_BASE             (APB2PERIPH_BASE + 0x0000)
+N#define EXTI_BASE             (APB2PERIPH_BASE + 0x0400)
+N#define GPIOA_BASE            (APB2PERIPH_BASE + 0x0800)
+N#define GPIOB_BASE            (APB2PERIPH_BASE + 0x0C00)
+N#define GPIOC_BASE            (APB2PERIPH_BASE + 0x1000)
+N#define GPIOD_BASE            (APB2PERIPH_BASE + 0x1400)
+N#define GPIOE_BASE            (APB2PERIPH_BASE + 0x1800)
+N#define GPIOF_BASE            (APB2PERIPH_BASE + 0x1C00)
+N#define GPIOG_BASE            (APB2PERIPH_BASE + 0x2000)
+N#define ADC1_BASE             (APB2PERIPH_BASE + 0x2400)
+N#define ADC2_BASE             (APB2PERIPH_BASE + 0x2800)
+N#define TIM1_BASE             (APB2PERIPH_BASE + 0x2C00)
+N#define SPI1_BASE             (APB2PERIPH_BASE + 0x3000)
+N#define TIM8_BASE             (APB2PERIPH_BASE + 0x3400)
+N#define USART1_BASE           (APB2PERIPH_BASE + 0x3800)
+N#define ADC3_BASE             (APB2PERIPH_BASE + 0x3C00)
+N
+N#define SDIO_BASE             (PERIPH_BASE + 0x18000)
+N
+N#define DMA1_BASE             (AHBPERIPH_BASE + 0x0000)
+N#define DMA1_Channel1_BASE    (AHBPERIPH_BASE + 0x0008)
+N#define DMA1_Channel2_BASE    (AHBPERIPH_BASE + 0x001C)
+N#define DMA1_Channel3_BASE    (AHBPERIPH_BASE + 0x0030)
+N#define DMA1_Channel4_BASE    (AHBPERIPH_BASE + 0x0044)
+N#define DMA1_Channel5_BASE    (AHBPERIPH_BASE + 0x0058)
+N#define DMA1_Channel6_BASE    (AHBPERIPH_BASE + 0x006C)
+N#define DMA1_Channel7_BASE    (AHBPERIPH_BASE + 0x0080)
+N#define DMA2_BASE             (AHBPERIPH_BASE + 0x0400)
+N#define DMA2_Channel1_BASE    (AHBPERIPH_BASE + 0x0408)
+N#define DMA2_Channel2_BASE    (AHBPERIPH_BASE + 0x041C)
+N#define DMA2_Channel3_BASE    (AHBPERIPH_BASE + 0x0430)
+N#define DMA2_Channel4_BASE    (AHBPERIPH_BASE + 0x0444)
+N#define DMA2_Channel5_BASE    (AHBPERIPH_BASE + 0x0458)
+N#define RCC_BASE              (AHBPERIPH_BASE + 0x1000)
+N#define CRC_BASE              (AHBPERIPH_BASE + 0x3000)
+N
+N/* Flash registers base address */
+N#define FLASH_R_BASE          (AHBPERIPH_BASE + 0x2000)
+N/* Flash Option Bytes base address */
+N#define OB_BASE               ((u32)0x1FFFF800)
+N
+N/* FSMC Bankx registers base address */
+N#define FSMC_Bank1_R_BASE     (FSMC_R_BASE + 0x0000)
+N#define FSMC_Bank1E_R_BASE    (FSMC_R_BASE + 0x0104)
+N#define FSMC_Bank2_R_BASE     (FSMC_R_BASE + 0x0060)
+N#define FSMC_Bank3_R_BASE     (FSMC_R_BASE + 0x0080)
+N#define FSMC_Bank4_R_BASE     (FSMC_R_BASE + 0x00A0)
+N
+N/* Debug MCU registers base address */
+N#define DBGMCU_BASE          ((u32)0xE0042000)
+N
+N/* System Control Space memory map */
+N#define SCS_BASE              ((u32)0xE000E000)
+N
+N#define SysTick_BASE          (SCS_BASE + 0x0010)
+N#define NVIC_BASE             (SCS_BASE + 0x0100)
+N#define SCB_BASE              (SCS_BASE + 0x0D00)
+N
+N/******************************************************************************/
+N/*                         Peripheral declaration                             */
+N/******************************************************************************/
+N
+N/*------------------------ Non Debug Mode ------------------------------------*/
+N#ifndef DEBUG
+N#ifdef _TIM2
+N  #define TIM2                ((TIM_TypeDef *) TIM2_BASE)
+N#endif /*_TIM2 */
+N
+N#ifdef _TIM3
+N  #define TIM3                ((TIM_TypeDef *) TIM3_BASE)
+N#endif /*_TIM3 */
+N
+N#ifdef _TIM4
+N  #define TIM4                ((TIM_TypeDef *) TIM4_BASE)
+N#endif /*_TIM4 */
+N
+N#ifdef _TIM5
+N  #define TIM5                ((TIM_TypeDef *) TIM5_BASE)
+N#endif /*_TIM5 */
+N
+N#ifdef _TIM6
+N  #define TIM6                ((TIM_TypeDef *) TIM6_BASE)
+N#endif /*_TIM6 */
+N
+N#ifdef _TIM7
+N  #define TIM7                ((TIM_TypeDef *) TIM7_BASE)
+N#endif /*_TIM7 */
+N
+N#ifdef _RTC
+N  #define RTC                 ((RTC_TypeDef *) RTC_BASE)
+N#endif /*_RTC */
+N
+N#ifdef _WWDG
+N  #define WWDG                ((WWDG_TypeDef *) WWDG_BASE)
+N#endif /*_WWDG */
+N
+N#ifdef _IWDG
+N  #define IWDG                ((IWDG_TypeDef *) IWDG_BASE)
+N#endif /*_IWDG */
+N
+N#ifdef _SPI2
+N  #define SPI2                ((SPI_TypeDef *) SPI2_BASE)
+N#endif /*_SPI2 */
+N
+N#ifdef _SPI3
+N  #define SPI3                ((SPI_TypeDef *) SPI3_BASE)
+N#endif /*_SPI3 */
+N
+N#ifdef _USART2
+N  #define USART2              ((USART_TypeDef *) USART2_BASE)
+N#endif /*_USART2 */
+N
+N#ifdef _USART3
+N  #define USART3              ((USART_TypeDef *) USART3_BASE)
+N#endif /*_USART3 */
+N
+N#ifdef _UART4
+N  #define UART4              ((USART_TypeDef *) UART4_BASE)
+N#endif /*_UART4 */
+N
+N#ifdef _UART5
+N  #define UART5              ((USART_TypeDef *) UART5_BASE)
+N#endif /*_USART5 */
+N
+N#ifdef _I2C1
+N  #define I2C1                ((I2C_TypeDef *) I2C1_BASE)
+N#endif /*_I2C1 */
+N
+N#ifdef _I2C2
+N  #define I2C2                ((I2C_TypeDef *) I2C2_BASE)
+N#endif /*_I2C2 */
+N
+N#ifdef _CAN
+N  #define CAN                 ((CAN_TypeDef *) CAN_BASE)
+N#endif /*_CAN */
+N
+N#ifdef _BKP
+N  #define BKP                 ((BKP_TypeDef *) BKP_BASE)
+N#endif /*_BKP */
+N
+N#ifdef _PWR
+N  #define PWR                 ((PWR_TypeDef *) PWR_BASE)
+N#endif /*_PWR */
+N
+N#ifdef _DAC
+N  #define DAC                 ((DAC_TypeDef *) DAC_BASE)
+N#endif /*_DAC */
+N
+N#ifdef _AFIO
+N  #define AFIO                ((AFIO_TypeDef *) AFIO_BASE)
+N#endif /*_AFIO */
+N
+N#ifdef _EXTI
+N  #define EXTI                ((EXTI_TypeDef *) EXTI_BASE)
+N#endif /*_EXTI */
+N
+N#ifdef _GPIOA
+N  #define GPIOA               ((GPIO_TypeDef *) GPIOA_BASE)
+N#endif /*_GPIOA */
+N
+N#ifdef _GPIOB
+N  #define GPIOB               ((GPIO_TypeDef *) GPIOB_BASE)
+N#endif /*_GPIOB */
+N
+N#ifdef _GPIOC
+N  #define GPIOC               ((GPIO_TypeDef *) GPIOC_BASE)
+N#endif /*_GPIOC */
+N
+N#ifdef _GPIOD
+N  #define GPIOD               ((GPIO_TypeDef *) GPIOD_BASE)
+N#endif /*_GPIOD */
+N
+N#ifdef _GPIOE
+N  #define GPIOE               ((GPIO_TypeDef *) GPIOE_BASE)
+N#endif /*_GPIOE */
+N
+N#ifdef _GPIOF
+N  #define GPIOF               ((GPIO_TypeDef *) GPIOF_BASE)
+N#endif /*_GPIOF */
+N
+N#ifdef _GPIOG
+N  #define GPIOG               ((GPIO_TypeDef *) GPIOG_BASE)
+N#endif /*_GPIOG */
+N
+N#ifdef _ADC1
+N  #define ADC1                ((ADC_TypeDef *) ADC1_BASE)
+N#endif /*_ADC1 */
+N
+N#ifdef _ADC2
+N  #define ADC2                ((ADC_TypeDef *) ADC2_BASE)
+N#endif /*_ADC2 */
+N
+N#ifdef _TIM1
+N  #define TIM1                ((TIM_TypeDef *) TIM1_BASE)
+N#endif /*_TIM1 */
+N
+N#ifdef _SPI1
+N  #define SPI1                ((SPI_TypeDef *) SPI1_BASE)
+N#endif /*_SPI1 */
+N
+N#ifdef _TIM8
+N  #define TIM8                ((TIM_TypeDef *) TIM8_BASE)
+N#endif /*_TIM8 */
+N
+N#ifdef _USART1
+N  #define USART1              ((USART_TypeDef *) USART1_BASE)
+N#endif /*_USART1 */
+N
+N#ifdef _ADC3
+N  #define ADC3                ((ADC_TypeDef *) ADC3_BASE)
+N#endif /*_ADC3 */
+N
+N#ifdef _SDIO
+N  #define SDIO                ((SDIO_TypeDef *) SDIO_BASE)
+N#endif /*_SDIO */
+N
+N#ifdef _DMA
+N  #define DMA1                ((DMA_TypeDef *) DMA1_BASE)
+N  #define DMA2                ((DMA_TypeDef *) DMA2_BASE)
+N#endif /*_DMA */
+N
+N#ifdef _DMA1_Channel1
+N  #define DMA1_Channel1       ((DMA_Channel_TypeDef *) DMA1_Channel1_BASE)
+N#endif /*_DMA1_Channel1 */
+N
+N#ifdef _DMA1_Channel2
+N  #define DMA1_Channel2       ((DMA_Channel_TypeDef *) DMA1_Channel2_BASE)
+N#endif /*_DMA1_Channel2 */
+N
+N#ifdef _DMA1_Channel3
+N  #define DMA1_Channel3       ((DMA_Channel_TypeDef *) DMA1_Channel3_BASE)
+N#endif /*_DMA1_Channel3 */
+N
+N#ifdef _DMA1_Channel4
+N  #define DMA1_Channel4       ((DMA_Channel_TypeDef *) DMA1_Channel4_BASE)
+N#endif /*_DMA1_Channel4 */
+N
+N#ifdef _DMA1_Channel5
+N  #define DMA1_Channel5       ((DMA_Channel_TypeDef *) DMA1_Channel5_BASE)
+N#endif /*_DMA1_Channel5 */
+N
+N#ifdef _DMA1_Channel6
+N  #define DMA1_Channel6       ((DMA_Channel_TypeDef *) DMA1_Channel6_BASE)
+N#endif /*_DMA1_Channel6 */
+N
+N#ifdef _DMA1_Channel7
+N  #define DMA1_Channel7       ((DMA_Channel_TypeDef *) DMA1_Channel7_BASE)
+N#endif /*_DMA1_Channel7 */
+N
+N#ifdef _DMA2_Channel1
+N  #define DMA2_Channel1       ((DMA_Channel_TypeDef *) DMA2_Channel1_BASE)
+N#endif /*_DMA2_Channel1 */
+N
+N#ifdef _DMA2_Channel2
+N  #define DMA2_Channel2       ((DMA_Channel_TypeDef *) DMA2_Channel2_BASE)
+N#endif /*_DMA2_Channel2 */
+N
+N#ifdef _DMA2_Channel3
+N  #define DMA2_Channel3       ((DMA_Channel_TypeDef *) DMA2_Channel3_BASE)
+N#endif /*_DMA2_Channel3 */
+N
+N#ifdef _DMA2_Channel4
+N  #define DMA2_Channel4       ((DMA_Channel_TypeDef *) DMA2_Channel4_BASE)
+N#endif /*_DMA2_Channel4 */
+N
+N#ifdef _DMA2_Channel5
+N  #define DMA2_Channel5       ((DMA_Channel_TypeDef *) DMA2_Channel5_BASE)
+N#endif /*_DMA2_Channel5 */
+N
+N#ifdef _RCC
+N  #define RCC                 ((RCC_TypeDef *) RCC_BASE)
+N#endif /*_RCC */
+N
+N#ifdef _CRC
+N  #define CRC                 ((CRC_TypeDef *) CRC_BASE)
+N#endif /*_CRC */
+N
+N#ifdef _FLASH
+N  #define FLASH               ((FLASH_TypeDef *) FLASH_R_BASE)
+N  #define OB                  ((OB_TypeDef *) OB_BASE) 
+N#endif /*_FLASH */
+N
+N#ifdef _FSMC
+N  #define FSMC_Bank1          ((FSMC_Bank1_TypeDef *) FSMC_Bank1_R_BASE)
+N  #define FSMC_Bank1E         ((FSMC_Bank1E_TypeDef *) FSMC_Bank1E_R_BASE)
+N  #define FSMC_Bank2          ((FSMC_Bank2_TypeDef *) FSMC_Bank2_R_BASE)
+N  #define FSMC_Bank3          ((FSMC_Bank3_TypeDef *) FSMC_Bank3_R_BASE)
+N  #define FSMC_Bank4          ((FSMC_Bank4_TypeDef *) FSMC_Bank4_R_BASE)
+N#endif /*_FSMC */
+N
+N#ifdef _DBGMCU
+N  #define DBGMCU              ((DBGMCU_TypeDef *) DBGMCU_BASE)
+N#endif /*_DBGMCU */
+N
+N#ifdef _SysTick
+N  #define SysTick             ((SysTick_TypeDef *) SysTick_BASE)
+N#endif /*_SysTick */
+N
+N#ifdef _NVIC
+N  #define NVIC                ((NVIC_TypeDef *) NVIC_BASE)
+N  #define SCB                 ((SCB_TypeDef *) SCB_BASE)  
+N#endif /*_NVIC */
+N
+N/*------------------------ Debug Mode ----------------------------------------*/
+N#else   /* DEBUG */
+S#ifdef _TIM2
+S  EXT TIM_TypeDef             *TIM2;
+S#endif /*_TIM2 */
+S
+S#ifdef _TIM3
+S  EXT TIM_TypeDef             *TIM3;
+S#endif /*_TIM3 */
+S
+S#ifdef _TIM4
+S  EXT TIM_TypeDef             *TIM4;
+S#endif /*_TIM4 */
+S
+S#ifdef _TIM5
+S  EXT TIM_TypeDef             *TIM5;
+S#endif /*_TIM5 */
+S
+S#ifdef _TIM6
+S  EXT TIM_TypeDef             *TIM6;
+S#endif /*_TIM6 */
+S
+S#ifdef _TIM7
+S  EXT TIM_TypeDef             *TIM7;
+S#endif /*_TIM7 */
+S
+S#ifdef _RTC
+S  EXT RTC_TypeDef             *RTC;
+S#endif /*_RTC */
+S
+S#ifdef _WWDG
+S  EXT WWDG_TypeDef            *WWDG;
+S#endif /*_WWDG */
+S
+S#ifdef _IWDG
+S  EXT IWDG_TypeDef            *IWDG;
+S#endif /*_IWDG */
+S
+S#ifdef _SPI2
+S  EXT SPI_TypeDef             *SPI2;
+S#endif /*_SPI2 */
+S
+S#ifdef _SPI3
+S  EXT SPI_TypeDef             *SPI3;
+S#endif /*_SPI3 */
+S
+S#ifdef _USART2
+S  EXT USART_TypeDef           *USART2;
+S#endif /*_USART2 */
+S
+S#ifdef _USART3
+S  EXT USART_TypeDef           *USART3;
+S#endif /*_USART3 */
+S
+S#ifdef _UART4
+S  EXT USART_TypeDef           *UART4;
+S#endif /*_UART4 */
+S
+S#ifdef _UART5
+S  EXT USART_TypeDef           *UART5;
+S#endif /*_UART5 */
+S
+S#ifdef _I2C1
+S  EXT I2C_TypeDef             *I2C1;
+S#endif /*_I2C1 */
+S
+S#ifdef _I2C2
+S  EXT I2C_TypeDef             *I2C2;
+S#endif /*_I2C2 */
+S
+S#ifdef _CAN
+S  EXT CAN_TypeDef             *CAN;
+S#endif /*_CAN */
+S
+S#ifdef _BKP
+S  EXT BKP_TypeDef             *BKP;
+S#endif /*_BKP */
+S
+S#ifdef _PWR
+S  EXT PWR_TypeDef             *PWR;
+S#endif /*_PWR */
+S
+S#ifdef _DAC
+S  EXT DAC_TypeDef             *DAC;
+S#endif /*_DAC */
+S
+S#ifdef _AFIO
+S  EXT AFIO_TypeDef            *AFIO;
+S#endif /*_AFIO */
+S
+S#ifdef _EXTI
+S  EXT EXTI_TypeDef            *EXTI;
+S#endif /*_EXTI */
+S
+S#ifdef _GPIOA
+S  EXT GPIO_TypeDef            *GPIOA;
+S#endif /*_GPIOA */
+S
+S#ifdef _GPIOB
+S  EXT GPIO_TypeDef            *GPIOB;
+S#endif /*_GPIOB */
+S
+S#ifdef _GPIOC
+S  EXT GPIO_TypeDef            *GPIOC;
+S#endif /*_GPIOC */
+S
+S#ifdef _GPIOD
+S  EXT GPIO_TypeDef            *GPIOD;
+S#endif /*_GPIOD */
+S
+S#ifdef _GPIOE
+S  EXT GPIO_TypeDef            *GPIOE;
+S#endif /*_GPIOE */
+S
+S#ifdef _GPIOF
+S  EXT GPIO_TypeDef            *GPIOF;
+S#endif /*_GPIOF */
+S
+S#ifdef _GPIOG
+S  EXT GPIO_TypeDef            *GPIOG;
+S#endif /*_GPIOG */
+S
+S#ifdef _ADC1
+S  EXT ADC_TypeDef             *ADC1;
+S#endif /*_ADC1 */
+S
+S#ifdef _ADC2
+S  EXT ADC_TypeDef             *ADC2;
+S#endif /*_ADC2 */
+S
+S#ifdef _TIM1
+S  EXT TIM_TypeDef             *TIM1;
+S#endif /*_TIM1 */
+S
+S#ifdef _SPI1
+S  EXT SPI_TypeDef             *SPI1;
+S#endif /*_SPI1 */
+S
+S#ifdef _TIM8
+S  EXT TIM_TypeDef             *TIM8;
+S#endif /*_TIM8 */
+S
+S#ifdef _USART1
+S  EXT USART_TypeDef           *USART1;
+S#endif /*_USART1 */
+S
+S#ifdef _ADC3
+S  EXT ADC_TypeDef             *ADC3;
+S#endif /*_ADC3 */
+S
+S#ifdef _SDIO
+S  EXT SDIO_TypeDef            *SDIO;
+S#endif /*_SDIO */
+S
+S#ifdef _DMA
+S  EXT DMA_TypeDef             *DMA1;
+S  EXT DMA_TypeDef             *DMA2;
+S#endif /*_DMA */
+S
+S#ifdef _DMA1_Channel1
+S  EXT DMA_Channel_TypeDef     *DMA1_Channel1;
+S#endif /*_DMA1_Channel1 */
+S
+S#ifdef _DMA1_Channel2
+S  EXT DMA_Channel_TypeDef     *DMA1_Channel2;
+S#endif /*_DMA1_Channel2 */
+S
+S#ifdef _DMA1_Channel3
+S  EXT DMA_Channel_TypeDef     *DMA1_Channel3;
+S#endif /*_DMA1_Channel3 */
+S
+S#ifdef _DMA1_Channel4
+S  EXT DMA_Channel_TypeDef     *DMA1_Channel4;
+S#endif /*_DMA1_Channel4 */
+S
+S#ifdef _DMA1_Channel5
+S  EXT DMA_Channel_TypeDef     *DMA1_Channel5;
+S#endif /*_DMA1_Channel5 */
+S
+S#ifdef _DMA1_Channel6
+S  EXT DMA_Channel_TypeDef     *DMA1_Channel6;
+S#endif /*_DMA1_Channel6 */
+S
+S#ifdef _DMA1_Channel7
+S  EXT DMA_Channel_TypeDef     *DMA1_Channel7;
+S#endif /*_DMA1_Channel7 */
+S
+S#ifdef _DMA2_Channel1
+S  EXT DMA_Channel_TypeDef     *DMA2_Channel1;
+S#endif /*_DMA2_Channel1 */
+S
+S#ifdef _DMA2_Channel2
+S  EXT DMA_Channel_TypeDef     *DMA2_Channel2;
+S#endif /*_DMA2_Channel2 */
+S
+S#ifdef _DMA2_Channel3
+S  EXT DMA_Channel_TypeDef     *DMA2_Channel3;
+S#endif /*_DMA2_Channel3 */
+S
+S#ifdef _DMA2_Channel4
+S  EXT DMA_Channel_TypeDef     *DMA2_Channel4;
+S#endif /*_DMA2_Channel4 */
+S
+S#ifdef _DMA2_Channel5
+S  EXT DMA_Channel_TypeDef     *DMA2_Channel5;
+S#endif /*_DMA2_Channel5 */
+S
+S#ifdef _RCC
+S  EXT RCC_TypeDef             *RCC;
+S#endif /*_RCC */
+S
+S#ifdef _CRC
+S  EXT CRC_TypeDef             *CRC;
+S#endif /*_CRC */
+S
+S#ifdef _FLASH
+S  EXT FLASH_TypeDef            *FLASH;
+S  EXT OB_TypeDef               *OB;  
+S#endif /*_FLASH */
+S
+S#ifdef _FSMC
+S  EXT FSMC_Bank1_TypeDef      *FSMC_Bank1;
+S  EXT FSMC_Bank1E_TypeDef     *FSMC_Bank1E;
+S  EXT FSMC_Bank2_TypeDef      *FSMC_Bank2;
+S  EXT FSMC_Bank3_TypeDef      *FSMC_Bank3;
+S  EXT FSMC_Bank4_TypeDef      *FSMC_Bank4;
+S#endif /*_FSMC */
+S
+S#ifdef _DBGMCU
+S  EXT DBGMCU_TypeDef          *DBGMCU;
+S#endif /*_DBGMCU */
+S
+S#ifdef _SysTick
+S  EXT SysTick_TypeDef         *SysTick;
+S#endif /*_SysTick */
+S
+S#ifdef _NVIC
+S  EXT NVIC_TypeDef            *NVIC;
+S  EXT SCB_TypeDef             *SCB;
+S#endif /*_NVIC */
+S
+N#endif  /* DEBUG */
+N
+N/* Exported constants --------------------------------------------------------*/
+N/* Exported macro ------------------------------------------------------------*/
+N/* Exported functions ------------------------------------------------------- */
+N
+N#endif /* __STM32F10x_MAP_H */
+N
+N/******************* (C) COPYRIGHT 2008 STMicroelectronics *****END OF FILE****/
+L 23 "D:\Program Files\keil4.14\ARM\INC\ST\STM32F10x\stm32f10x_flash.h" 2
+N
+N/* Exported types ------------------------------------------------------------*/
+N#ifdef _FLASH_PROG
+N/* FLASH Status */
+Ntypedef enum
+N{ 
+N  FLASH_BUSY = 1,
+N  FLASH_ERROR_PG,
+N  FLASH_ERROR_WRP,
+N  FLASH_COMPLETE,
+N  FLASH_TIMEOUT
+N}FLASH_Status;
+N#endif
+N
+N/* Flash Latency -------------------------------------------------------------*/
+N#define FLASH_Latency_0                ((u32)0x00000000)  /* FLASH Zero Latency cycle */
+N#define FLASH_Latency_1                ((u32)0x00000001)  /* FLASH One Latency cycle */
+N#define FLASH_Latency_2                ((u32)0x00000002)  /* FLASH Two Latency cycles */
+N
+N#define IS_FLASH_LATENCY(LATENCY) (((LATENCY) == FLASH_Latency_0) || \
+N                                   ((LATENCY) == FLASH_Latency_1) || \
+N                                   ((LATENCY) == FLASH_Latency_2))
+X#define IS_FLASH_LATENCY(LATENCY) (((LATENCY) == FLASH_Latency_0) ||                                    ((LATENCY) == FLASH_Latency_1) ||                                    ((LATENCY) == FLASH_Latency_2))
+N
+N/* Half Cycle Enable/Disable -------------------------------------------------*/
+N#define FLASH_HalfCycleAccess_Enable   ((u32)0x00000008)  /* FLASH Half Cycle Enable */
+N#define FLASH_HalfCycleAccess_Disable  ((u32)0x00000000)  /* FLASH Half Cycle Disable */
+N
+N#define IS_FLASH_HALFCYCLEACCESS_STATE(STATE) (((STATE) == FLASH_HalfCycleAccess_Enable) || \
+N                                               ((STATE) == FLASH_HalfCycleAccess_Disable)) 
+X#define IS_FLASH_HALFCYCLEACCESS_STATE(STATE) (((STATE) == FLASH_HalfCycleAccess_Enable) ||                                                ((STATE) == FLASH_HalfCycleAccess_Disable)) 
+N
+N
+N/* Prefetch Buffer Enable/Disable --------------------------------------------*/
+N#define FLASH_PrefetchBuffer_Enable    ((u32)0x00000010)  /* FLASH Prefetch Buffer Enable */
+N#define FLASH_PrefetchBuffer_Disable   ((u32)0x00000000)  /* FLASH Prefetch Buffer Disable */
+N
+N#define IS_FLASH_PREFETCHBUFFER_STATE(STATE) (((STATE) == FLASH_PrefetchBuffer_Enable) || \
+N                                              ((STATE) == FLASH_PrefetchBuffer_Disable)) 
+X#define IS_FLASH_PREFETCHBUFFER_STATE(STATE) (((STATE) == FLASH_PrefetchBuffer_Enable) ||                                               ((STATE) == FLASH_PrefetchBuffer_Disable)) 
+N
+N#ifdef _FLASH_PROG
+N/* Option Bytes Write Protection ---------------------------------------------*/
+N/* Values to be used with STM32F10Xxx Medium-density devices: FLASH memory density
+N   ranges between 32 and 128 Kbytes with page size equal to 1 Kbytes */
+N#define FLASH_WRProt_Pages0to3         ((u32)0x00000001) /* Write protection of page 0 to 3 */
+N#define FLASH_WRProt_Pages4to7         ((u32)0x00000002) /* Write protection of page 4 to 7 */
+N#define FLASH_WRProt_Pages8to11        ((u32)0x00000004) /* Write protection of page 8 to 11 */
+N#define FLASH_WRProt_Pages12to15       ((u32)0x00000008) /* Write protection of page 12 to 15 */
+N#define FLASH_WRProt_Pages16to19       ((u32)0x00000010) /* Write protection of page 16 to 19 */
+N#define FLASH_WRProt_Pages20to23       ((u32)0x00000020) /* Write protection of page 20 to 23 */
+N#define FLASH_WRProt_Pages24to27       ((u32)0x00000040) /* Write protection of page 24 to 27 */
+N#define FLASH_WRProt_Pages28to31       ((u32)0x00000080) /* Write protection of page 28 to 31 */
+N#define FLASH_WRProt_Pages32to35       ((u32)0x00000100) /* Write protection of page 32 to 35 */
+N#define FLASH_WRProt_Pages36to39       ((u32)0x00000200) /* Write protection of page 36 to 39 */
+N#define FLASH_WRProt_Pages40to43       ((u32)0x00000400) /* Write protection of page 40 to 43 */
+N#define FLASH_WRProt_Pages44to47       ((u32)0x00000800) /* Write protection of page 44 to 47 */
+N#define FLASH_WRProt_Pages48to51       ((u32)0x00001000) /* Write protection of page 48 to 51 */
+N#define FLASH_WRProt_Pages52to55       ((u32)0x00002000) /* Write protection of page 52 to 55 */
+N#define FLASH_WRProt_Pages56to59       ((u32)0x00004000) /* Write protection of page 56 to 59 */
+N#define FLASH_WRProt_Pages60to63       ((u32)0x00008000) /* Write protection of page 60 to 63 */
+N#define FLASH_WRProt_Pages64to67       ((u32)0x00010000) /* Write protection of page 64 to 67 */
+N#define FLASH_WRProt_Pages68to71       ((u32)0x00020000) /* Write protection of page 68 to 71 */
+N#define FLASH_WRProt_Pages72to75       ((u32)0x00040000) /* Write protection of page 72 to 75 */
+N#define FLASH_WRProt_Pages76to79       ((u32)0x00080000) /* Write protection of page 76 to 79 */
+N#define FLASH_WRProt_Pages80to83       ((u32)0x00100000) /* Write protection of page 80 to 83 */
+N#define FLASH_WRProt_Pages84to87       ((u32)0x00200000) /* Write protection of page 84 to 87 */
+N#define FLASH_WRProt_Pages88to91       ((u32)0x00400000) /* Write protection of page 88 to 91 */
+N#define FLASH_WRProt_Pages92to95       ((u32)0x00800000) /* Write protection of page 92 to 95 */
+N#define FLASH_WRProt_Pages96to99       ((u32)0x01000000) /* Write protection of page 96 to 99 */
+N#define FLASH_WRProt_Pages100to103     ((u32)0x02000000) /* Write protection of page 100 to 103 */
+N#define FLASH_WRProt_Pages104to107     ((u32)0x04000000) /* Write protection of page 104 to 107 */
+N#define FLASH_WRProt_Pages108to111     ((u32)0x08000000) /* Write protection of page 108 to 111 */
+N#define FLASH_WRProt_Pages112to115     ((u32)0x10000000) /* Write protection of page 112 to 115 */
+N#define FLASH_WRProt_Pages116to119     ((u32)0x20000000) /* Write protection of page 115 to 119 */
+N#define FLASH_WRProt_Pages120to123     ((u32)0x40000000) /* Write protection of page 120 to 123 */
+N#define FLASH_WRProt_Pages124to127     ((u32)0x80000000) /* Write protection of page 124 to 127 */
+N/* Values to be used with STM32F10Xxx High-density devices: FLASH memory density
+N   ranges between 256 and 512 Kbytes with page size equal to 2 Kbytes */
+N#define FLASH_WRProt_Pages0to1         ((u32)0x00000001) /* Write protection of page 0 to 1 */
+N#define FLASH_WRProt_Pages2to3         ((u32)0x00000002) /* Write protection of page 2 to 3 */
+N#define FLASH_WRProt_Pages4to5         ((u32)0x00000004) /* Write protection of page 4 to 5 */
+N#define FLASH_WRProt_Pages6to7         ((u32)0x00000008) /* Write protection of page 6 to 7 */
+N#define FLASH_WRProt_Pages8to9         ((u32)0x00000010) /* Write protection of page 8 to 9 */
+N#define FLASH_WRProt_Pages10to11       ((u32)0x00000020) /* Write protection of page 10 to 11 */
+N#define FLASH_WRProt_Pages12to13       ((u32)0x00000040) /* Write protection of page 12 to 13 */
+N#define FLASH_WRProt_Pages14to15       ((u32)0x00000080) /* Write protection of page 14 to 15 */
+N#define FLASH_WRProt_Pages16to17       ((u32)0x00000100) /* Write protection of page 16 to 17 */
+N#define FLASH_WRProt_Pages18to19       ((u32)0x00000200) /* Write protection of page 18 to 19 */
+N#define FLASH_WRProt_Pages20to21       ((u32)0x00000400) /* Write protection of page 20 to 21 */
+N#define FLASH_WRProt_Pages22to23       ((u32)0x00000800) /* Write protection of page 22 to 23 */
+N#define FLASH_WRProt_Pages24to25       ((u32)0x00001000) /* Write protection of page 24 to 25 */
+N#define FLASH_WRProt_Pages26to27       ((u32)0x00002000) /* Write protection of page 26 to 27 */
+N#define FLASH_WRProt_Pages28to29       ((u32)0x00004000) /* Write protection of page 28 to 29 */
+N#define FLASH_WRProt_Pages30to31       ((u32)0x00008000) /* Write protection of page 30 to 31 */
+N#define FLASH_WRProt_Pages32to33       ((u32)0x00010000) /* Write protection of page 32 to 33 */
+N#define FLASH_WRProt_Pages34to35       ((u32)0x00020000) /* Write protection of page 34 to 35 */
+N#define FLASH_WRProt_Pages36to37       ((u32)0x00040000) /* Write protection of page 36 to 37 */
+N#define FLASH_WRProt_Pages38to39       ((u32)0x00080000) /* Write protection of page 38 to 39 */
+N#define FLASH_WRProt_Pages40to41       ((u32)0x00100000) /* Write protection of page 40 to 41 */
+N#define FLASH_WRProt_Pages42to43       ((u32)0x00200000) /* Write protection of page 42 to 43 */
+N#define FLASH_WRProt_Pages44to45       ((u32)0x00400000) /* Write protection of page 44 to 45 */
+N#define FLASH_WRProt_Pages46to47       ((u32)0x00800000) /* Write protection of page 46 to 47 */
+N#define FLASH_WRProt_Pages48to49       ((u32)0x01000000) /* Write protection of page 48 to 49 */
+N#define FLASH_WRProt_Pages50to51       ((u32)0x02000000) /* Write protection of page 50 to 51 */
+N#define FLASH_WRProt_Pages52to53       ((u32)0x04000000) /* Write protection of page 52 to 53 */
+N#define FLASH_WRProt_Pages54to55       ((u32)0x08000000) /* Write protection of page 54 to 55 */
+N#define FLASH_WRProt_Pages56to57       ((u32)0x10000000) /* Write protection of page 56 to 57 */
+N#define FLASH_WRProt_Pages58to59       ((u32)0x20000000) /* Write protection of page 58 to 59 */
+N#define FLASH_WRProt_Pages60to61       ((u32)0x40000000) /* Write protection of page 60 to 61 */
+N#define FLASH_WRProt_Pages62to255      ((u32)0x80000000) /* Write protection of page 62 to 255 */
+N#define FLASH_WRProt_AllPages          ((u32)0xFFFFFFFF) /* Write protection of all Pages */
+N
+N#define IS_FLASH_WRPROT_PAGE(PAGE) (((PAGE) != 0x00000000))
+N
+N#define IS_FLASH_ADDRESS(ADDRESS) (((ADDRESS) >= 0x08000000) && ((ADDRESS) < 0x0807FFFF))
+N#define IS_OB_DATA_ADDRESS(ADDRESS) (((ADDRESS) == 0x1FFFF804) || ((ADDRESS) == 0x1FFFF806))
+N
+N/* Option Bytes IWatchdog ----------------------------------------------------*/
+N#define OB_IWDG_SW                     ((u16)0x0001)  /* Software IWDG selected */
+N#define OB_IWDG_HW                     ((u16)0x0000)  /* Hardware IWDG selected */
+N
+N#define IS_OB_IWDG_SOURCE(SOURCE) (((SOURCE) == OB_IWDG_SW) || ((SOURCE) == OB_IWDG_HW))
+N
+N/* Option Bytes nRST_STOP ----------------------------------------------------*/
+N#define OB_STOP_NoRST                  ((u16)0x0002) /* No reset generated when entering in STOP */
+N#define OB_STOP_RST                    ((u16)0x0000) /* Reset generated when entering in STOP */
+N
+N#define IS_OB_STOP_SOURCE(SOURCE) (((SOURCE) == OB_STOP_NoRST) || ((SOURCE) == OB_STOP_RST))
+N
+N/* Option Bytes nRST_STDBY ---------------------------------------------------*/
+N#define OB_STDBY_NoRST                 ((u16)0x0004) /* No reset generated when entering in STANDBY */
+N#define OB_STDBY_RST                   ((u16)0x0000) /* Reset generated when entering in STANDBY */
+N
+N#define IS_OB_STDBY_SOURCE(SOURCE) (((SOURCE) == OB_STDBY_NoRST) || ((SOURCE) == OB_STDBY_RST))
+N
+N/* FLASH Interrupts ----------------------------------------------------------*/
+N#define FLASH_IT_ERROR                 ((u32)0x00000400)  /* FPEC error interrupt source */
+N#define FLASH_IT_EOP                   ((u32)0x00001000)  /* End of FLASH Operation Interrupt source */
+N
+N#define IS_FLASH_IT(IT) ((((IT) & (u32)0xFFFFEBFF) == 0x00000000) && (((IT) != 0x00000000)))
+N
+N/* FLASH Flags ---------------------------------------------------------------*/
+N#define FLASH_FLAG_BSY                 ((u32)0x00000001)  /* FLASH Busy flag */
+N#define FLASH_FLAG_EOP                 ((u32)0x00000020)  /* FLASH End of Operation flag */
+N#define FLASH_FLAG_PGERR               ((u32)0x00000004)  /* FLASH Program error flag */
+N#define FLASH_FLAG_WRPRTERR            ((u32)0x00000010)  /* FLASH Write protected error flag */
+N#define FLASH_FLAG_OPTERR              ((u32)0x00000001)  /* FLASH Option Byte error flag */
+N 
+N#define IS_FLASH_CLEAR_FLAG(FLAG) ((((FLAG) & (u32)0xFFFFFFCA) == 0x00000000) && ((FLAG) != 0x00000000))
+N
+N#define IS_FLASH_GET_FLAG(FLAG)  (((FLAG) == FLASH_FLAG_BSY) || ((FLAG) == FLASH_FLAG_EOP) || \
+N                                  ((FLAG) == FLASH_FLAG_PGERR) || ((FLAG) == FLASH_FLAG_WRPRTERR) || \
+N                                  ((FLAG) == FLASH_FLAG_OPTERR))
+X#define IS_FLASH_GET_FLAG(FLAG)  (((FLAG) == FLASH_FLAG_BSY) || ((FLAG) == FLASH_FLAG_EOP) ||                                   ((FLAG) == FLASH_FLAG_PGERR) || ((FLAG) == FLASH_FLAG_WRPRTERR) ||                                   ((FLAG) == FLASH_FLAG_OPTERR))
+N#endif
+N								 
+N/* Exported constants --------------------------------------------------------*/
+N/* Exported macro ------------------------------------------------------------*/
+N/* Exported functions ------------------------------------------------------- */
+Nvoid FLASH_SetLatency(u32 FLASH_Latency);
+Nvoid FLASH_HalfCycleAccessCmd(u32 FLASH_HalfCycleAccess);
+Nvoid FLASH_PrefetchBufferCmd(u32 FLASH_PrefetchBuffer);
+N
+N#ifdef _FLASH_PROG
+Nvoid FLASH_Unlock(void);
+Nvoid FLASH_Lock(void);
+NFLASH_Status FLASH_ErasePage(u32 Page_Address);
+NFLASH_Status FLASH_EraseAllPages(void);
+NFLASH_Status FLASH_EraseOptionBytes(void);
+NFLASH_Status FLASH_ProgramWord(u32 Address, u32 Data);
+NFLASH_Status FLASH_ProgramHalfWord(u32 Address, u16 Data);
+NFLASH_Status FLASH_ProgramOptionByteData(u32 Address, u8 Data);
+NFLASH_Status FLASH_EnableWriteProtection(u32 FLASH_Pages);
+NFLASH_Status FLASH_ReadOutProtection(FunctionalState NewState);
+NFLASH_Status FLASH_UserOptionByteConfig(u16 OB_IWDG, u16 OB_STOP, u16 OB_STDBY);
+Nu32 FLASH_GetUserOptionByte(void);
+Nu32 FLASH_GetWriteProtectionOptionByte(void);
+NFlagStatus FLASH_GetReadOutProtectionStatus(void);
+NFlagStatus FLASH_GetPrefetchBufferStatus(void);
+Nvoid FLASH_ITConfig(u16 FLASH_IT, FunctionalState NewState);
+NFlagStatus FLASH_GetFlagStatus(u16 FLASH_FLAG);
+Nvoid FLASH_ClearFlag(u16 FLASH_FLAG);
+NFLASH_Status FLASH_GetStatus(void);
+NFLASH_Status FLASH_WaitForLastOperation(u32 Timeout);
+N#endif
+N
+N#endif /* __STM32F10x_FLASH_H */
+N
+N/******************* (C) COPYRIGHT 2008 STMicroelectronics *****END OF FILE****/
+L 18 "source\FWLib\src\stm32f10x_flash.c" 2
+N
+N/* Private typedef -----------------------------------------------------------*/
+N/* Private define ------------------------------------------------------------*/
+N/* Flash Access Control Register bits */
+N#define ACR_LATENCY_Mask         ((u32)0x00000038)
+N#define ACR_HLFCYA_Mask          ((u32)0xFFFFFFF7)
+N#define ACR_PRFTBE_Mask          ((u32)0xFFFFFFEF)
+N
+N#ifdef _FLASH_PROG
+N/* Flash Access Control Register bits */
+N#define ACR_PRFTBS_Mask          ((u32)0x00000020) 
+N
+N/* Flash Control Register bits */
+N#define CR_PG_Set                ((u32)0x00000001)
+N#define CR_PG_Reset              ((u32)0x00001FFE) 
+N
+N#define CR_PER_Set               ((u32)0x00000002)
+N#define CR_PER_Reset             ((u32)0x00001FFD)
+N
+N#define CR_MER_Set               ((u32)0x00000004)
+N#define CR_MER_Reset             ((u32)0x00001FFB)
+N
+N#define CR_OPTPG_Set             ((u32)0x00000010)
+N#define CR_OPTPG_Reset           ((u32)0x00001FEF)
+N
+N#define CR_OPTER_Set             ((u32)0x00000020)
+N#define CR_OPTER_Reset           ((u32)0x00001FDF)
+N
+N#define CR_STRT_Set              ((u32)0x00000040)
+N							 
+N#define CR_LOCK_Set              ((u32)0x00000080)
+N
+N/* FLASH Mask */
+N#define RDPRT_Mask               ((u32)0x00000002)
+N#define WRP0_Mask                ((u32)0x000000FF)
+N#define WRP1_Mask                ((u32)0x0000FF00)
+N#define WRP2_Mask                ((u32)0x00FF0000)
+N#define WRP3_Mask                ((u32)0xFF000000)
+N
+N/* FLASH Keys */
+N#define RDP_Key                  ((u16)0x00A5)
+N#define FLASH_KEY1               ((u32)0x45670123)
+N#define FLASH_KEY2               ((u32)0xCDEF89AB)
+N
+N/* Delay definition */   
+N#define EraseTimeout             ((u32)0x00000FFF)
+N#define ProgramTimeout           ((u32)0x0000000F)
+N#endif
+N
+N/* Private macro -------------------------------------------------------------*/
+N/* Private variables ---------------------------------------------------------*/
+N/* Private function prototypes -----------------------------------------------*/
+N#ifdef _FLASH_PROG
+Nstatic void delay(void);
+N#endif
+N
+N/* Private functions ---------------------------------------------------------*/
+N/*******************************************************************************
+N* Function Name  : FLASH_SetLatency
+N* Description    : Sets the code latency value.
+N* Input          : - FLASH_Latency: specifies the FLASH Latency value.
+N*                    This parameter can be one of the following values:
+N*                       - FLASH_Latency_0: FLASH Zero Latency cycle
+N*                       - FLASH_Latency_1: FLASH One Latency cycle
+N*                       - FLASH_Latency_2: FLASH Two Latency cycles
+N* Output         : None
+N* Return         : None
+N*******************************************************************************/
+Nvoid FLASH_SetLatency(u32 FLASH_Latency)
+N{
+N  /* Check the parameters */
+N  assert_param(IS_FLASH_LATENCY(FLASH_Latency));
+X  ((void)0);
+N  
+N  /* Sets the Latency value */
+N  FLASH->ACR &= ACR_LATENCY_Mask;
+X  ((FLASH_TypeDef *) ((((u32)0x40000000) + 0x20000) + 0x2000))->ACR &= ((u32)0x00000038);
+N  FLASH->ACR |= FLASH_Latency;
+X  ((FLASH_TypeDef *) ((((u32)0x40000000) + 0x20000) + 0x2000))->ACR |= FLASH_Latency;
+N}
+N
+N/*******************************************************************************
+N* Function Name  : FLASH_HalfCycleAccessCmd
+N* Description    : Enables or disables the Half cycle flash access.
+N* Input          : - FLASH_HalfCycle: specifies the FLASH Half cycle Access mode.
+N*                    This parameter can be one of the following values:
+N*                       - FLASH_HalfCycleAccess_Enable: FLASH Half Cycle Enable
+N*                       - FLASH_HalfCycleAccess_Disable: FLASH Half Cycle Disable
+N* Output         : None
+N* Return         : None
+N*******************************************************************************/
+Nvoid FLASH_HalfCycleAccessCmd(u32 FLASH_HalfCycleAccess)
+N{
+N  /* Check the parameters */
+N  assert_param(IS_FLASH_HALFCYCLEACCESS_STATE(FLASH_HalfCycleAccess));
+X  ((void)0);
+N  
+N  /* Enable or disable the Half cycle access */
+N  FLASH->ACR &= ACR_HLFCYA_Mask;
+X  ((FLASH_TypeDef *) ((((u32)0x40000000) + 0x20000) + 0x2000))->ACR &= ((u32)0xFFFFFFF7);
+N  FLASH->ACR |= FLASH_HalfCycleAccess;
+X  ((FLASH_TypeDef *) ((((u32)0x40000000) + 0x20000) + 0x2000))->ACR |= FLASH_HalfCycleAccess;
+N}
+N
+N/*******************************************************************************
+N* Function Name  : FLASH_PrefetchBufferCmd
+N* Description    : Enables or disables the Prefetch Buffer.
+N* Input          : - FLASH_PrefetchBuffer: specifies the Prefetch buffer status.
+N*                    This parameter can be one of the following values:
+N*                       - FLASH_PrefetchBuffer_Enable: FLASH Prefetch Buffer Enable
+N*                       - FLASH_PrefetchBuffer_Disable: FLASH Prefetch Buffer Disable
+N* Output         : None
+N* Return         : None
+N*******************************************************************************/
+Nvoid FLASH_PrefetchBufferCmd(u32 FLASH_PrefetchBuffer)
+N{
+N  /* Check the parameters */
+N  assert_param(IS_FLASH_PREFETCHBUFFER_STATE(FLASH_PrefetchBuffer));
+X  ((void)0);
+N  
+N  /* Enable or disable the Prefetch Buffer */
+N  FLASH->ACR &= ACR_PRFTBE_Mask;
+X  ((FLASH_TypeDef *) ((((u32)0x40000000) + 0x20000) + 0x2000))->ACR &= ((u32)0xFFFFFFEF);
+N  FLASH->ACR |= FLASH_PrefetchBuffer;
+X  ((FLASH_TypeDef *) ((((u32)0x40000000) + 0x20000) + 0x2000))->ACR |= FLASH_PrefetchBuffer;
+N}
+N
+N#ifdef _FLASH_PROG
+N/*******************************************************************************
+N* Function Name  : FLASH_Unlock
+N* Description    : Unlocks the FLASH Program Erase Controller.
+N* Input          : None
+N* Output         : None
+N* Return         : None
+N*******************************************************************************/
+Nvoid FLASH_Unlock(void)
+N{
+N  /* Authorize the FPEC Access */
+N  FLASH->KEYR = FLASH_KEY1;
+X  ((FLASH_TypeDef *) ((((u32)0x40000000) + 0x20000) + 0x2000))->KEYR = ((u32)0x45670123);
+N  FLASH->KEYR = FLASH_KEY2;
+X  ((FLASH_TypeDef *) ((((u32)0x40000000) + 0x20000) + 0x2000))->KEYR = ((u32)0xCDEF89AB);
+N}
+N
+N/*******************************************************************************
+N* Function Name  : FLASH_Lock
+N* Description    : Locks the FLASH Program Erase Controller.
+N* Input          : None
+N* Output         : None
+N* Return         : None
+N*******************************************************************************/
+Nvoid FLASH_Lock(void)
+N{
+N  /* Set the Lock Bit to lock the FPEC and the FCR */
+N  FLASH->CR |= CR_LOCK_Set;
+X  ((FLASH_TypeDef *) ((((u32)0x40000000) + 0x20000) + 0x2000))->CR |= ((u32)0x00000080);
+N}
+N
+N/*******************************************************************************
+N* Function Name  : FLASH_ErasePage
+N* Description    : Erases a specified FLASH page.
+N* Input          : - Page_Address: The page address to be erased.
+N* Output         : None
+N* Return         : FLASH Status: The returned value can be: FLASH_BUSY, 
+N*                  FLASH_ERROR_PG, FLASH_ERROR_WRP, FLASH_COMPLETE or 
+N*                  FLASH_TIMEOUT.
+N*******************************************************************************/
+NFLASH_Status FLASH_ErasePage(u32 Page_Address)
+N{
+N  FLASH_Status status = FLASH_COMPLETE;
+N
+N  /* Check the parameters */
+N  assert_param(IS_FLASH_ADDRESS(Page_Address));
+X  ((void)0);
+N
+N  /* Wait for last operation to be completed */
+N  status = FLASH_WaitForLastOperation(EraseTimeout);
+X  status = FLASH_WaitForLastOperation(((u32)0x00000FFF));
+N  
+N  if(status == FLASH_COMPLETE)
+N  { 
+N    /* if the previous operation is completed, proceed to erase the page */
+N    FLASH->CR|= CR_PER_Set;
+X    ((FLASH_TypeDef *) ((((u32)0x40000000) + 0x20000) + 0x2000))->CR|= ((u32)0x00000002);
+N    FLASH->AR = Page_Address; 
+X    ((FLASH_TypeDef *) ((((u32)0x40000000) + 0x20000) + 0x2000))->AR = Page_Address; 
+N    FLASH->CR|= CR_STRT_Set;
+X    ((FLASH_TypeDef *) ((((u32)0x40000000) + 0x20000) + 0x2000))->CR|= ((u32)0x00000040);
+N    
+N    /* Wait for last operation to be completed */
+N    status = FLASH_WaitForLastOperation(EraseTimeout);
+X    status = FLASH_WaitForLastOperation(((u32)0x00000FFF));
+N
+N    if(status != FLASH_BUSY)
+N    {
+N      /* if the erase operation is completed, disable the PER Bit */
+N      FLASH->CR &= CR_PER_Reset;
+X      ((FLASH_TypeDef *) ((((u32)0x40000000) + 0x20000) + 0x2000))->CR &= ((u32)0x00001FFD);
+N    }
+N  }
+N  /* Return the Erase Status */
+N  return status;
+N}
+N
+N/*******************************************************************************
+N* Function Name  : FLASH_EraseAllPages
+N* Description    : Erases all FLASH pages.
+N* Input          : None
+N* Output         : None
+N* Return         : FLASH Status: The returned value can be: FLASH_BUSY, 
+N*                  FLASH_ERROR_PG, FLASH_ERROR_WRP, FLASH_COMPLETE or 
+N*                  FLASH_TIMEOUT.
+N*******************************************************************************/
+NFLASH_Status FLASH_EraseAllPages(void)
+N{
+N  FLASH_Status status = FLASH_COMPLETE;
+N
+N  /* Wait for last operation to be completed */
+N  status = FLASH_WaitForLastOperation(EraseTimeout);
+X  status = FLASH_WaitForLastOperation(((u32)0x00000FFF));
+N  
+N  if(status == FLASH_COMPLETE)
+N  {
+N    /* if the previous operation is completed, proceed to erase all pages */
+N     FLASH->CR |= CR_MER_Set;
+X     ((FLASH_TypeDef *) ((((u32)0x40000000) + 0x20000) + 0x2000))->CR |= ((u32)0x00000004);
+N     FLASH->CR |= CR_STRT_Set;
+X     ((FLASH_TypeDef *) ((((u32)0x40000000) + 0x20000) + 0x2000))->CR |= ((u32)0x00000040);
+N    
+N    /* Wait for last operation to be completed */
+N    status = FLASH_WaitForLastOperation(EraseTimeout);
+X    status = FLASH_WaitForLastOperation(((u32)0x00000FFF));
+N
+N    if(status != FLASH_BUSY)
+N    {
+N      /* if the erase operation is completed, disable the MER Bit */
+N      FLASH->CR &= CR_MER_Reset;
+X      ((FLASH_TypeDef *) ((((u32)0x40000000) + 0x20000) + 0x2000))->CR &= ((u32)0x00001FFB);
+N    }
+N  }	   
+N  /* Return the Erase Status */
+N  return status;
+N}
+N
+N/*******************************************************************************
+N* Function Name  : FLASH_EraseOptionBytes
+N* Description    : Erases the FLASH option bytes.
+N* Input          : None
+N* Output         : None
+N* Return         : FLASH Status: The returned value can be: FLASH_BUSY, 
+N*                  FLASH_ERROR_PG, FLASH_ERROR_WRP, FLASH_COMPLETE or 
+N*                  FLASH_TIMEOUT.
+N*******************************************************************************/
+NFLASH_Status FLASH_EraseOptionBytes(void)
+N{
+N  FLASH_Status status = FLASH_COMPLETE;
+N  
+N  /* Wait for last operation to be completed */
+N  status = FLASH_WaitForLastOperation(EraseTimeout);
+X  status = FLASH_WaitForLastOperation(((u32)0x00000FFF));
+N
+N  if(status == FLASH_COMPLETE)
+N  {
+N    /* Authorize the small information block programming */
+N    FLASH->OPTKEYR = FLASH_KEY1;
+X    ((FLASH_TypeDef *) ((((u32)0x40000000) + 0x20000) + 0x2000))->OPTKEYR = ((u32)0x45670123);
+N    FLASH->OPTKEYR = FLASH_KEY2;
+X    ((FLASH_TypeDef *) ((((u32)0x40000000) + 0x20000) + 0x2000))->OPTKEYR = ((u32)0xCDEF89AB);
+N    
+N    /* if the previous operation is completed, proceed to erase the option bytes */
+N    FLASH->CR |= CR_OPTER_Set;
+X    ((FLASH_TypeDef *) ((((u32)0x40000000) + 0x20000) + 0x2000))->CR |= ((u32)0x00000020);
+N    FLASH->CR |= CR_STRT_Set;
+X    ((FLASH_TypeDef *) ((((u32)0x40000000) + 0x20000) + 0x2000))->CR |= ((u32)0x00000040);
+N
+N    /* Wait for last operation to be completed */
+N    status = FLASH_WaitForLastOperation(EraseTimeout);
+X    status = FLASH_WaitForLastOperation(((u32)0x00000FFF));
+N    
+N    if(status == FLASH_COMPLETE)
+N    {
+N      /* if the erase operation is completed, disable the OPTER Bit */
+N      FLASH->CR &= CR_OPTER_Reset;
+X      ((FLASH_TypeDef *) ((((u32)0x40000000) + 0x20000) + 0x2000))->CR &= ((u32)0x00001FDF);
+N       
+N      /* Enable the Option Bytes Programming operation */
+N      FLASH->CR |= CR_OPTPG_Set;
+X      ((FLASH_TypeDef *) ((((u32)0x40000000) + 0x20000) + 0x2000))->CR |= ((u32)0x00000010);
+N
+N      /* Enable the readout access */
+N      OB->RDP= RDP_Key; 
+X      ((OB_TypeDef *) ((u32)0x1FFFF800))->RDP= ((u16)0x00A5); 
+N
+N      /* Wait for last operation to be completed */
+N      status = FLASH_WaitForLastOperation(ProgramTimeout);
+X      status = FLASH_WaitForLastOperation(((u32)0x0000000F));
+N 
+N      if(status != FLASH_BUSY)
+N      {
+N        /* if the program operation is completed, disable the OPTPG Bit */
+N        FLASH->CR &= CR_OPTPG_Reset;
+X        ((FLASH_TypeDef *) ((((u32)0x40000000) + 0x20000) + 0x2000))->CR &= ((u32)0x00001FEF);
+N      }
+N    }
+N    else
+N    {
+N      if (status != FLASH_BUSY)
+N      {
+N        /* Disable the OPTPG Bit */
+N        FLASH->CR &= CR_OPTPG_Reset;
+X        ((FLASH_TypeDef *) ((((u32)0x40000000) + 0x20000) + 0x2000))->CR &= ((u32)0x00001FEF);
+N      }
+N    }  
+N  }
+N  /* Return the erase status */
+N  return status;
+N}
+N
+N/*******************************************************************************
+N* Function Name  : FLASH_ProgramWord
+N* Description    : Programs a word at a specified address.
+N* Input          : - Address: specifies the address to be programmed.
+N*                  - Data: specifies the data to be programmed.
+N* Output         : None
+N* Return         : FLASH Status: The returned value can be: FLASH_BUSY, 
+N*                  FLASH_ERROR_PG, FLASH_ERROR_WRP, FLASH_COMPLETE or 
+N*                  FLASH_TIMEOUT. 
+N*******************************************************************************/
+NFLASH_Status FLASH_ProgramWord(u32 Address, u32 Data)
+N{
+N  FLASH_Status status = FLASH_COMPLETE;
+N
+N  /* Check the parameters */
+N  assert_param(IS_FLASH_ADDRESS(Address));
+X  ((void)0);
+N
+N  /* Wait for last operation to be completed */
+N  status = FLASH_WaitForLastOperation(ProgramTimeout);
+X  status = FLASH_WaitForLastOperation(((u32)0x0000000F));
+N  
+N  if(status == FLASH_COMPLETE)
+N  {
+N    /* if the previous operation is completed, proceed to program the new first 
+N    half word */
+N    FLASH->CR |= CR_PG_Set;
+X    ((FLASH_TypeDef *) ((((u32)0x40000000) + 0x20000) + 0x2000))->CR |= ((u32)0x00000001);
+N  
+N    *(vu16*)Address = (u16)Data;
+N
+N    /* Wait for last operation to be completed */
+N    status = FLASH_WaitForLastOperation(ProgramTimeout);
+X    status = FLASH_WaitForLastOperation(((u32)0x0000000F));
+N 
+N    if(status == FLASH_COMPLETE)
+N    {
+N      /* if the previous operation is completed, proceed to program the new second 
+N      half word */
+N      *(vu16*)(Address + 2) = Data >> 16;
+N    
+N      /* Wait for last operation to be completed */
+N      status = FLASH_WaitForLastOperation(ProgramTimeout);
+X      status = FLASH_WaitForLastOperation(((u32)0x0000000F));
+N        
+N      if(status != FLASH_BUSY)
+N      {
+N        /* Disable the PG Bit */
+N        FLASH->CR &= CR_PG_Reset;
+X        ((FLASH_TypeDef *) ((((u32)0x40000000) + 0x20000) + 0x2000))->CR &= ((u32)0x00001FFE);
+N      }
+N    }
+N    else
+N    {
+N      if (status != FLASH_BUSY)
+N      {
+N        /* Disable the PG Bit */
+N        FLASH->CR &= CR_PG_Reset;
+X        ((FLASH_TypeDef *) ((((u32)0x40000000) + 0x20000) + 0x2000))->CR &= ((u32)0x00001FFE);
+N      }
+N     }
+N  }
+N  /* Return the Program Status */
+N  return status;
+N}
+N
+N/*******************************************************************************
+N* Function Name  : FLASH_ProgramHalfWord
+N* Description    : Programs a half word at a specified address.
+N* Input          : - Address: specifies the address to be programmed.
+N*                  - Data: specifies the data to be programmed.
+N* Output         : None
+N* Return         : FLASH Status: The returned value can be: FLASH_BUSY, 
+N*                  FLASH_ERROR_PG, FLASH_ERROR_WRP, FLASH_COMPLETE or 
+N*                  FLASH_TIMEOUT. 
+N*******************************************************************************/
+NFLASH_Status FLASH_ProgramHalfWord(u32 Address, u16 Data)
+N{
+N  FLASH_Status status = FLASH_COMPLETE;
+N
+N  /* Check the parameters */
+N  assert_param(IS_FLASH_ADDRESS(Address));
+X  ((void)0);
+N
+N  /* Wait for last operation to be completed */
+N  status = FLASH_WaitForLastOperation(ProgramTimeout);
+X  status = FLASH_WaitForLastOperation(((u32)0x0000000F));
+N  
+N  if(status == FLASH_COMPLETE)
+N  {
+N    /* if the previous operation is completed, proceed to program the new data */
+N    FLASH->CR |= CR_PG_Set;
+X    ((FLASH_TypeDef *) ((((u32)0x40000000) + 0x20000) + 0x2000))->CR |= ((u32)0x00000001);
+N  
+N    *(vu16*)Address = Data;
+N    /* Wait for last operation to be completed */
+N    status = FLASH_WaitForLastOperation(ProgramTimeout);
+X    status = FLASH_WaitForLastOperation(((u32)0x0000000F));
+N
+N    if(status != FLASH_BUSY)
+N    {
+N      /* if the program operation is completed, disable the PG Bit */
+N      FLASH->CR &= CR_PG_Reset;
+X      ((FLASH_TypeDef *) ((((u32)0x40000000) + 0x20000) + 0x2000))->CR &= ((u32)0x00001FFE);
+N    }
+N  } 
+N  /* Return the Program Status */
+N  return status;
+N}
+N
+N/*******************************************************************************
+N* Function Name  : FLASH_ProgramOptionByteData
+N* Description    : Programs a half word at a specified Option Byte Data address.
+N* Input          : - Address: specifies the address to be programmed.
+N*                    This parameter can be 0x1FFFF804 or 0x1FFFF806. 
+N*                  - Data: specifies the data to be programmed.
+N* Output         : None
+N* Return         : FLASH Status: The returned value can be: FLASH_BUSY, 
+N*                  FLASH_ERROR_PG, FLASH_ERROR_WRP, FLASH_COMPLETE or 
+N*                  FLASH_TIMEOUT. 
+N*******************************************************************************/
+NFLASH_Status FLASH_ProgramOptionByteData(u32 Address, u8 Data)
+N{
+N  FLASH_Status status = FLASH_COMPLETE;
+N
+N  /* Check the parameters */
+N  assert_param(IS_OB_DATA_ADDRESS(Address));
+X  ((void)0);
+N
+N  status = FLASH_WaitForLastOperation(ProgramTimeout);
+X  status = FLASH_WaitForLastOperation(((u32)0x0000000F));
+N
+N  if(status == FLASH_COMPLETE)
+N  {
+N    /* Authorize the small information block programming */
+N    FLASH->OPTKEYR = FLASH_KEY1;
+X    ((FLASH_TypeDef *) ((((u32)0x40000000) + 0x20000) + 0x2000))->OPTKEYR = ((u32)0x45670123);
+N    FLASH->OPTKEYR = FLASH_KEY2;
+X    ((FLASH_TypeDef *) ((((u32)0x40000000) + 0x20000) + 0x2000))->OPTKEYR = ((u32)0xCDEF89AB);
+N
+N    /* Enables the Option Bytes Programming operation */
+N    FLASH->CR |= CR_OPTPG_Set; 
+X    ((FLASH_TypeDef *) ((((u32)0x40000000) + 0x20000) + 0x2000))->CR |= ((u32)0x00000010); 
+N    *(vu16*)Address = Data;
+N    
+N    /* Wait for last operation to be completed */
+N    status = FLASH_WaitForLastOperation(ProgramTimeout);
+X    status = FLASH_WaitForLastOperation(((u32)0x0000000F));
+N
+N    if(status != FLASH_BUSY)
+N    {
+N      /* if the program operation is completed, disable the OPTPG Bit */
+N      FLASH->CR &= CR_OPTPG_Reset;
+X      ((FLASH_TypeDef *) ((((u32)0x40000000) + 0x20000) + 0x2000))->CR &= ((u32)0x00001FEF);
+N    }
+N  }    
+N  /* Return the Option Byte Data Program Status */
+N  return status;      
+N}
+N
+N/*******************************************************************************
+N* Function Name  : FLASH_EnableWriteProtection
+N* Description    : Write protects the desired pages
+N* Input          : - FLASH_Pages: specifies the address of the pages to be 
+N*                    write protected. This parameter can be:
+N*                    - For STM32F10Xxx Medium-density devices (FLASH page size equal to 1 KB)
+N*                       - A value between FLASH_WRProt_Pages0to3 and 
+N*                         FLASH_WRProt_Pages124to127
+N*                    - For STM32F10Xxx High-density devices (FLASH page size equal to 2 KB) 
+N*                       - A value between FLASH_WRProt_Pages0to1 and
+N*                         FLASH_WRProt_Pages60to61 or FLASH_WRProt_Pages62to255 
+N*                       - FLASH_WRProt_AllPages
+N* Output         : None
+N* Return         : FLASH Status: The returned value can be: FLASH_BUSY, 
+N*                  FLASH_ERROR_PG, FLASH_ERROR_WRP, FLASH_COMPLETE or 
+N*                  FLASH_TIMEOUT.
+N*******************************************************************************/
+NFLASH_Status FLASH_EnableWriteProtection(u32 FLASH_Pages)
+N{
+N  u16 WRP0_Data = 0xFFFF, WRP1_Data = 0xFFFF, WRP2_Data = 0xFFFF, WRP3_Data = 0xFFFF;
+N  
+N  FLASH_Status status = FLASH_COMPLETE;
+N  
+N  /* Check the parameters */
+N  assert_param(IS_FLASH_WRPROT_PAGE(FLASH_Pages));
+X  ((void)0);
+N  
+N  FLASH_Pages = (u32)(~FLASH_Pages);
+N  WRP0_Data = (vu16)(FLASH_Pages & WRP0_Mask);
+X  WRP0_Data = (vu16)(FLASH_Pages & ((u32)0x000000FF));
+N  WRP1_Data = (vu16)((FLASH_Pages & WRP1_Mask) >> 8);
+X  WRP1_Data = (vu16)((FLASH_Pages & ((u32)0x0000FF00)) >> 8);
+N  WRP2_Data = (vu16)((FLASH_Pages & WRP2_Mask) >> 16);
+X  WRP2_Data = (vu16)((FLASH_Pages & ((u32)0x00FF0000)) >> 16);
+N  WRP3_Data = (vu16)((FLASH_Pages & WRP3_Mask) >> 24);
+X  WRP3_Data = (vu16)((FLASH_Pages & ((u32)0xFF000000)) >> 24);
+N  
+N  /* Wait for last operation to be completed */
+N  status = FLASH_WaitForLastOperation(ProgramTimeout);
+X  status = FLASH_WaitForLastOperation(((u32)0x0000000F));
+N  
+N  if(status == FLASH_COMPLETE)
+N  {
+N    /* Authorizes the small information block programming */
+N    FLASH->OPTKEYR = FLASH_KEY1;
+X    ((FLASH_TypeDef *) ((((u32)0x40000000) + 0x20000) + 0x2000))->OPTKEYR = ((u32)0x45670123);
+N    FLASH->OPTKEYR = FLASH_KEY2;
+X    ((FLASH_TypeDef *) ((((u32)0x40000000) + 0x20000) + 0x2000))->OPTKEYR = ((u32)0xCDEF89AB);
+N    FLASH->CR |= CR_OPTPG_Set;
+X    ((FLASH_TypeDef *) ((((u32)0x40000000) + 0x20000) + 0x2000))->CR |= ((u32)0x00000010);
+N
+N    if(WRP0_Data != 0xFF)
+N    {
+N      OB->WRP0 = WRP0_Data;
+X      ((OB_TypeDef *) ((u32)0x1FFFF800))->WRP0 = WRP0_Data;
+N      
+N      /* Wait for last operation to be completed */
+N      status = FLASH_WaitForLastOperation(ProgramTimeout);
+X      status = FLASH_WaitForLastOperation(((u32)0x0000000F));
+N    }
+N    if((status == FLASH_COMPLETE) && (WRP1_Data != 0xFF))
+N    {
+N      OB->WRP1 = WRP1_Data;
+X      ((OB_TypeDef *) ((u32)0x1FFFF800))->WRP1 = WRP1_Data;
+N      
+N      /* Wait for last operation to be completed */
+N      status = FLASH_WaitForLastOperation(ProgramTimeout);
+X      status = FLASH_WaitForLastOperation(((u32)0x0000000F));
+N    }
+N
+N    if((status == FLASH_COMPLETE) && (WRP2_Data != 0xFF))
+N    {
+N      OB->WRP2 = WRP2_Data;
+X      ((OB_TypeDef *) ((u32)0x1FFFF800))->WRP2 = WRP2_Data;
+N      
+N      /* Wait for last operation to be completed */
+N      status = FLASH_WaitForLastOperation(ProgramTimeout);
+X      status = FLASH_WaitForLastOperation(((u32)0x0000000F));
+N    }
+N    
+N    if((status == FLASH_COMPLETE)&& (WRP3_Data != 0xFF))
+N    {
+N      OB->WRP3 = WRP3_Data;
+X      ((OB_TypeDef *) ((u32)0x1FFFF800))->WRP3 = WRP3_Data;
+N     
+N      /* Wait for last operation to be completed */
+N      status = FLASH_WaitForLastOperation(ProgramTimeout);
+X      status = FLASH_WaitForLastOperation(((u32)0x0000000F));
+N    }
+N          
+N    if(status != FLASH_BUSY)
+N    {
+N      /* if the program operation is completed, disable the OPTPG Bit */
+N      FLASH->CR &= CR_OPTPG_Reset;
+X      ((FLASH_TypeDef *) ((((u32)0x40000000) + 0x20000) + 0x2000))->CR &= ((u32)0x00001FEF);
+N    }
+N  } 
+N  /* Return the write protection operation Status */
+N  return status;       
+N}
+N
+N/*******************************************************************************
+N* Function Name  : FLASH_ReadOutProtection
+N* Description    : Enables or disables the read out protection.
+N*                  If the user has already programmed the other option bytes before 
+N*                  calling this function, he must re-program them since this 
+N*                  function erases all option bytes.
+N* Input          : - Newstate: new state of the ReadOut Protection.
+N*                    This parameter can be: ENABLE or DISABLE.
+N* Output         : None
+N* Return         : FLASH Status: The returned value can be: FLASH_BUSY, 
+N*                  FLASH_ERROR_PG, FLASH_ERROR_WRP, FLASH_COMPLETE or 
+N*                  FLASH_TIMEOUT.
+N*******************************************************************************/
+NFLASH_Status FLASH_ReadOutProtection(FunctionalState NewState)
+N{
+N  FLASH_Status status = FLASH_COMPLETE;
+N
+N  /* Check the parameters */
+N  assert_param(IS_FUNCTIONAL_STATE(NewState));
+X  ((void)0);
+N
+N  status = FLASH_WaitForLastOperation(EraseTimeout);
+X  status = FLASH_WaitForLastOperation(((u32)0x00000FFF));
+N
+N  if(status == FLASH_COMPLETE)
+N  {
+N    /* Authorizes the small information block programming */
+N    FLASH->OPTKEYR = FLASH_KEY1;
+X    ((FLASH_TypeDef *) ((((u32)0x40000000) + 0x20000) + 0x2000))->OPTKEYR = ((u32)0x45670123);
+N    FLASH->OPTKEYR = FLASH_KEY2;
+X    ((FLASH_TypeDef *) ((((u32)0x40000000) + 0x20000) + 0x2000))->OPTKEYR = ((u32)0xCDEF89AB);
+N
+N    FLASH->CR |= CR_OPTER_Set;
+X    ((FLASH_TypeDef *) ((((u32)0x40000000) + 0x20000) + 0x2000))->CR |= ((u32)0x00000020);
+N    FLASH->CR |= CR_STRT_Set;
+X    ((FLASH_TypeDef *) ((((u32)0x40000000) + 0x20000) + 0x2000))->CR |= ((u32)0x00000040);
+N
+N    /* Wait for last operation to be completed */
+N    status = FLASH_WaitForLastOperation(EraseTimeout);
+X    status = FLASH_WaitForLastOperation(((u32)0x00000FFF));
+N
+N    if(status == FLASH_COMPLETE)
+N    {
+N      /* if the erase operation is completed, disable the OPTER Bit */
+N      FLASH->CR &= CR_OPTER_Reset;
+X      ((FLASH_TypeDef *) ((((u32)0x40000000) + 0x20000) + 0x2000))->CR &= ((u32)0x00001FDF);
+N
+N      /* Enable the Option Bytes Programming operation */
+N      FLASH->CR |= CR_OPTPG_Set; 
+X      ((FLASH_TypeDef *) ((((u32)0x40000000) + 0x20000) + 0x2000))->CR |= ((u32)0x00000010); 
+N
+N      if(NewState != DISABLE)
+N      {
+N        OB->RDP = 0x00;
+X        ((OB_TypeDef *) ((u32)0x1FFFF800))->RDP = 0x00;
+N      }
+N      else
+N      {
+N        OB->RDP = RDP_Key;  
+X        ((OB_TypeDef *) ((u32)0x1FFFF800))->RDP = ((u16)0x00A5);  
+N      }
+N
+N      /* Wait for last operation to be completed */
+N      status = FLASH_WaitForLastOperation(EraseTimeout); 
+X      status = FLASH_WaitForLastOperation(((u32)0x00000FFF)); 
+N    
+N      if(status != FLASH_BUSY)
+N      {
+N        /* if the program operation is completed, disable the OPTPG Bit */
+N        FLASH->CR &= CR_OPTPG_Reset;
+X        ((FLASH_TypeDef *) ((((u32)0x40000000) + 0x20000) + 0x2000))->CR &= ((u32)0x00001FEF);
+N      }
+N    }
+N    else 
+N    {
+N      if(status != FLASH_BUSY)
+N      {
+N        /* Disable the OPTER Bit */
+N        FLASH->CR &= CR_OPTER_Reset;
+X        ((FLASH_TypeDef *) ((((u32)0x40000000) + 0x20000) + 0x2000))->CR &= ((u32)0x00001FDF);
+N      }
+N    }
+N  }
+N  /* Return the protection operation Status */
+N  return status;      
+N}
+N  	
+N/*******************************************************************************
+N* Function Name  : FLASH_UserOptionByteConfig
+N* Description    : Programs the FLASH User Option Byte: IWDG_SW / RST_STOP /
+N*                  RST_STDBY.
+N* Input          : - OB_IWDG: Selects the IWDG mode
+N*                     This parameter can be one of the following values:
+N*                     - OB_IWDG_SW: Software IWDG selected
+N*                     - OB_IWDG_HW: Hardware IWDG selected
+N*                  - OB_STOP: Reset event when entering STOP mode.
+N*                     This parameter can be one of the following values:
+N*                     - OB_STOP_NoRST: No reset generated when entering in STOP
+N*                     - OB_STOP_RST: Reset generated when entering in STOP
+N*                  - OB_STDBY: Reset event when entering Standby mode.
+N*                    This parameter can be one of the following values:
+N*                     - OB_STDBY_NoRST: No reset generated when entering in STANDBY
+N*                     - OB_STDBY_RST: Reset generated when entering in STANDBY
+N* Output         : None
+N* Return         : FLASH Status: The returned value can be: FLASH_BUSY, 
+N*                  FLASH_ERROR_PG, FLASH_ERROR_WRP, FLASH_COMPLETE or 
+N*                  FLASH_TIMEOUT.
+N*******************************************************************************/
+NFLASH_Status FLASH_UserOptionByteConfig(u16 OB_IWDG, u16 OB_STOP, u16 OB_STDBY)
+N{
+N  FLASH_Status status = FLASH_COMPLETE; 
+N
+N  /* Check the parameters */
+N  assert_param(IS_OB_IWDG_SOURCE(OB_IWDG));
+X  ((void)0);
+N  assert_param(IS_OB_STOP_SOURCE(OB_STOP));
+X  ((void)0);
+N  assert_param(IS_OB_STDBY_SOURCE(OB_STDBY));
+X  ((void)0);
+N
+N  /* Authorize the small information block programming */
+N  FLASH->OPTKEYR = FLASH_KEY1;
+X  ((FLASH_TypeDef *) ((((u32)0x40000000) + 0x20000) + 0x2000))->OPTKEYR = ((u32)0x45670123);
+N  FLASH->OPTKEYR = FLASH_KEY2;
+X  ((FLASH_TypeDef *) ((((u32)0x40000000) + 0x20000) + 0x2000))->OPTKEYR = ((u32)0xCDEF89AB);
+N  
+N  /* Wait for last operation to be completed */
+N  status = FLASH_WaitForLastOperation(ProgramTimeout);
+X  status = FLASH_WaitForLastOperation(((u32)0x0000000F));
+N  
+N  if(status == FLASH_COMPLETE)
+N  {  
+N    /* Enable the Option Bytes Programming operation */
+N    FLASH->CR |= CR_OPTPG_Set; 
+X    ((FLASH_TypeDef *) ((((u32)0x40000000) + 0x20000) + 0x2000))->CR |= ((u32)0x00000010); 
+N           
+N    OB->USER = ( OB_IWDG | OB_STOP |OB_STDBY) | (u16)0xF8; 
+X    ((OB_TypeDef *) ((u32)0x1FFFF800))->USER = ( OB_IWDG | OB_STOP |OB_STDBY) | (u16)0xF8; 
+N  
+N    /* Wait for last operation to be completed */
+N    status = FLASH_WaitForLastOperation(ProgramTimeout);
+X    status = FLASH_WaitForLastOperation(((u32)0x0000000F));
+N
+N    if(status != FLASH_BUSY)
+N    {
+N      /* if the program operation is completed, disable the OPTPG Bit */
+N      FLASH->CR &= CR_OPTPG_Reset;
+X      ((FLASH_TypeDef *) ((((u32)0x40000000) + 0x20000) + 0x2000))->CR &= ((u32)0x00001FEF);
+N    }
+N  }    
+N  /* Return the Option Byte program Status */
+N  return status;
+N}
+N
+N/*******************************************************************************
+N* Function Name  : FLASH_GetUserOptionByte
+N* Description    : Returns the FLASH User Option Bytes values.
+N* Input          : None
+N* Output         : None
+N* Return         : The FLASH User Option Bytes values:IWDG_SW(Bit0), RST_STOP(Bit1)
+N*                  and RST_STDBY(Bit2).
+N*******************************************************************************/
+Nu32 FLASH_GetUserOptionByte(void)
+N{
+N  /* Return the User Option Byte */
+N  return (u32)(FLASH->OBR >> 2);
+X  return (u32)(((FLASH_TypeDef *) ((((u32)0x40000000) + 0x20000) + 0x2000))->OBR >> 2);
+N}
+N
+N/*******************************************************************************
+N* Function Name  : FLASH_GetWriteProtectionOptionByte
+N* Description    : Returns the FLASH Write Protection Option Bytes Register value.
+N* Input          : None
+N* Output         : None
+N* Return         : The FLASH Write Protection  Option Bytes Register value
+N*******************************************************************************/
+Nu32 FLASH_GetWriteProtectionOptionByte(void)
+N{
+N  /* Return the Falsh write protection Register value */
+N  return (u32)(FLASH->WRPR);
+X  return (u32)(((FLASH_TypeDef *) ((((u32)0x40000000) + 0x20000) + 0x2000))->WRPR);
+N}
+N
+N/*******************************************************************************
+N* Function Name  : FLASH_GetReadOutProtectionStatus
+N* Description    : Checks whether the FLASH Read Out Protection Status is set 
+N*                  or not.
+N* Input          : None
+N* Output         : None
+N* Return         : FLASH ReadOut Protection Status(SET or RESET)
+N*******************************************************************************/
+NFlagStatus FLASH_GetReadOutProtectionStatus(void)
+N{
+N  FlagStatus readoutstatus = RESET;
+N
+N  if ((FLASH->OBR & RDPRT_Mask) != (u32)RESET)
+X  if ((((FLASH_TypeDef *) ((((u32)0x40000000) + 0x20000) + 0x2000))->OBR & ((u32)0x00000002)) != (u32)RESET)
+N  {
+N    readoutstatus = SET;
+N  }
+N  else
+N  {
+N    readoutstatus = RESET;
+N  }
+N  return readoutstatus;
+N}
+N
+N/*******************************************************************************
+N* Function Name  : FLASH_GetPrefetchBufferStatus
+N* Description    : Checks whether the FLASH Prefetch Buffer status is set or not.
+N* Input          : None
+N* Output         : None
+N* Return         : FLASH Prefetch Buffer Status (SET or RESET).
+N*******************************************************************************/
+NFlagStatus FLASH_GetPrefetchBufferStatus(void)
+N{
+N  FlagStatus bitstatus = RESET;
+N  
+N  if ((FLASH->ACR & ACR_PRFTBS_Mask) != (u32)RESET)
+X  if ((((FLASH_TypeDef *) ((((u32)0x40000000) + 0x20000) + 0x2000))->ACR & ((u32)0x00000020)) != (u32)RESET)
+N  {
+N    bitstatus = SET;
+N  }
+N  else
+N  {
+N    bitstatus = RESET;
+N  }
+N  /* Return the new state of FLASH Prefetch Buffer Status (SET or RESET) */
+N  return bitstatus; 
+N}
+N
+N/*******************************************************************************
+N* Function Name  : FLASH_ITConfig
+N* Description    : Enables or disables the specified FLASH interrupts.
+N* Input          : - FLASH_IT: specifies the FLASH interrupt sources to be 
+N*                    enabled or disabled.
+N*                    This parameter can be any combination of the following values:
+N*                       - FLASH_IT_ERROR: FLASH Error Interrupt
+N*                       - FLASH_IT_EOP: FLASH end of operation Interrupt
+N* Output         : None
+N* Return         : None 
+N*******************************************************************************/
+Nvoid FLASH_ITConfig(u16 FLASH_IT, FunctionalState NewState)
+N{
+N  /* Check the parameters */
+N  assert_param(IS_FLASH_IT(FLASH_IT)); 
+X  ((void)0); 
+N  assert_param(IS_FUNCTIONAL_STATE(NewState));
+X  ((void)0);
+N
+N  if(NewState != DISABLE)
+N  {
+N    /* Enable the interrupt sources */
+N    FLASH->CR |= FLASH_IT;
+X    ((FLASH_TypeDef *) ((((u32)0x40000000) + 0x20000) + 0x2000))->CR |= FLASH_IT;
+N  }
+N  else
+N  {
+N    /* Disable the interrupt sources */
+N    FLASH->CR &= ~(u32)FLASH_IT;
+X    ((FLASH_TypeDef *) ((((u32)0x40000000) + 0x20000) + 0x2000))->CR &= ~(u32)FLASH_IT;
+N  }
+N}
+N
+N/*******************************************************************************
+N* Function Name  : FLASH_GetFlagStatus
+N* Description    : Checks whether the specified FLASH flag is set or not.
+N* Input          : - FLASH_FLAG: specifies the FLASH flag to check.
+N*                     This parameter can be one of the following values:
+N*                    - FLASH_FLAG_BSY: FLASH Busy flag           
+N*                    - FLASH_FLAG_PGERR: FLASH Program error flag       
+N*                    - FLASH_FLAG_WRPRTERR: FLASH Write protected error flag      
+N*                    - FLASH_FLAG_EOP: FLASH End of Operation flag           
+N*                    - FLASH_FLAG_OPTERR:  FLASH Option Byte error flag     
+N* Output         : None
+N* Return         : The new state of FLASH_FLAG (SET or RESET).
+N*******************************************************************************/
+NFlagStatus FLASH_GetFlagStatus(u16 FLASH_FLAG)
+N{
+N  FlagStatus bitstatus = RESET;
+N
+N  /* Check the parameters */
+N  assert_param(IS_FLASH_GET_FLAG(FLASH_FLAG)) ;
+X  ((void)0) ;
+N
+N  if(FLASH_FLAG == FLASH_FLAG_OPTERR) 
+X  if(FLASH_FLAG == ((u32)0x00000001)) 
+N  {
+N    if((FLASH->OBR & FLASH_FLAG_OPTERR) != (u32)RESET)
+X    if((((FLASH_TypeDef *) ((((u32)0x40000000) + 0x20000) + 0x2000))->OBR & ((u32)0x00000001)) != (u32)RESET)
+N    {
+N      bitstatus = SET;
+N    }
+N    else
+N    {
+N      bitstatus = RESET;
+N    }
+N  }
+N  else
+N  {
+N   if((FLASH->SR & FLASH_FLAG) != (u32)RESET)
+X   if((((FLASH_TypeDef *) ((((u32)0x40000000) + 0x20000) + 0x2000))->SR & FLASH_FLAG) != (u32)RESET)
+N    {
+N      bitstatus = SET;
+N    }
+N    else
+N    {
+N      bitstatus = RESET;
+N    }
+N  }
+N  /* Return the new state of FLASH_FLAG (SET or RESET) */
+N  return bitstatus;
+N}
+N
+N/*******************************************************************************
+N* Function Name  : FLASH_ClearFlag
+N* Description    : Clears the FLASH抯 pending flags.
+N* Input          : - FLASH_FLAG: specifies the FLASH flags to clear.
+N*                    This parameter can be any combination of the following values:
+N*                    - FLASH_FLAG_BSY: FLASH Busy flag           
+N*                    - FLASH_FLAG_PGERR: FLASH Program error flag       
+N*                    - FLASH_FLAG_WRPRTERR: FLASH Write protected error flag      
+N*                    - FLASH_FLAG_EOP: FLASH End of Operation flag           
+N* Output         : None
+N* Return         : None
+N*******************************************************************************/
+Nvoid FLASH_ClearFlag(u16 FLASH_FLAG)
+N{
+N  /* Check the parameters */
+N  assert_param(IS_FLASH_CLEAR_FLAG(FLASH_FLAG)) ;
+X  ((void)0) ;
+N  
+N  /* Clear the flags */
+N  FLASH->SR = FLASH_FLAG;
+X  ((FLASH_TypeDef *) ((((u32)0x40000000) + 0x20000) + 0x2000))->SR = FLASH_FLAG;
+N}
+N
+N/*******************************************************************************
+N* Function Name  : FLASH_GetStatus
+N* Description    : Returns the FLASH Status.
+N* Input          : None
+N* Output         : None
+N* Return         : FLASH Status: The returned value can be: FLASH_BUSY, 
+N*                  FLASH_ERROR_PG, FLASH_ERROR_WRP or FLASH_COMPLETE
+N*******************************************************************************/
+NFLASH_Status FLASH_GetStatus(void)
+N{
+N  FLASH_Status flashstatus = FLASH_COMPLETE;
+N  
+N  if((FLASH->SR & FLASH_FLAG_BSY) == FLASH_FLAG_BSY) 
+X  if((((FLASH_TypeDef *) ((((u32)0x40000000) + 0x20000) + 0x2000))->SR & ((u32)0x00000001)) == ((u32)0x00000001)) 
+N  {
+N    flashstatus = FLASH_BUSY;
+N  }
+N  else 
+N  {  
+N    if(FLASH->SR & FLASH_FLAG_PGERR)
+X    if(((FLASH_TypeDef *) ((((u32)0x40000000) + 0x20000) + 0x2000))->SR & ((u32)0x00000004))
+N    { 
+N      flashstatus = FLASH_ERROR_PG;
+N    }
+N    else 
+N    {
+N      if(FLASH->SR & FLASH_FLAG_WRPRTERR)
+X      if(((FLASH_TypeDef *) ((((u32)0x40000000) + 0x20000) + 0x2000))->SR & ((u32)0x00000010))
+N      {
+N        flashstatus = FLASH_ERROR_WRP;
+N      }
+N      else
+N      {
+N        flashstatus = FLASH_COMPLETE;
+N      }
+N    }
+N  }
+N  /* Return the Flash Status */
+N  return flashstatus;
+N}
+N
+N/*******************************************************************************
+N* Function Name  : FLASH_WaitForLastOperation
+N* Description    : Waits for a Flash operation to complete or a TIMEOUT to occur.
+N* Input          : - Timeout: FLASH progamming Timeout
+N* Output         : None
+N* Return         : FLASH Status: The returned value can be: FLASH_BUSY, 
+N*                  FLASH_ERROR_PG, FLASH_ERROR_WRP, FLASH_COMPLETE or 
+N*                  FLASH_TIMEOUT.
+N*******************************************************************************/
+NFLASH_Status FLASH_WaitForLastOperation(u32 Timeout)
+N{ 
+N  FLASH_Status status = FLASH_COMPLETE;
+N   
+N  /* Check for the Flash Status */
+N  status = FLASH_GetStatus();
+N
+N  /* Wait for a Flash operation to complete or a TIMEOUT to occur */
+N  while((status == FLASH_BUSY) && (Timeout != 0x00))
+N  {
+N    delay();
+N    status = FLASH_GetStatus();
+N    Timeout--;
+N  }
+N
+N  if(Timeout == 0x00 )
+N  {
+N    status = FLASH_TIMEOUT;
+N  }
+N
+N  /* Return the operation status */
+N  return status;
+N}
+N
+N/*******************************************************************************
+N* Function Name  : delay
+N* Description    : Inserts a time delay.
+N* Input          : None
+N* Output         : None
+N* Return         : None
+N*******************************************************************************/
+Nstatic void delay(void)
+N{
+N  vu32 i = 0;
+N
+N  for(i = 0xFF; i != 0; i--)
+N  {
+N  }
+N}
+N#endif
+N
+N/******************* (C) COPYRIGHT 2008 STMicroelectronics *****END OF FILE****/

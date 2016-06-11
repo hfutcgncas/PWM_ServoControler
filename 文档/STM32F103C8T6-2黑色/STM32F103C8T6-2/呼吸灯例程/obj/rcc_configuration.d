@@ -1,0 +1,14 @@
+.\obj\rcc_configuration.o: source\wlib\SYS\RCC_Configuration.c
+.\obj\rcc_configuration.o: .\source\FWLib\inc\stm32f10x_lib.h
+.\obj\rcc_configuration.o: .\source\FWLib\inc\stm32f10x_map.h
+.\obj\rcc_configuration.o: .\user\stm32f10x_conf.h
+.\obj\rcc_configuration.o: .\source\FWLib\inc\stm32f10x_type.h
+.\obj\rcc_configuration.o: .\source\FWLib\inc\cortexm3_macro.h
+.\obj\rcc_configuration.o: .\source\FWLib\inc\stm32f10x_flash.h
+.\obj\rcc_configuration.o: .\source\FWLib\inc\stm32f10x_gpio.h
+.\obj\rcc_configuration.o: .\source\FWLib\inc\stm32f10x_nvic.h
+.\obj\rcc_configuration.o: .\source\FWLib\inc\stm32f10x_rcc.h
+.\obj\rcc_configuration.o: .\source\FWLib\inc\stm32f10x_systick.h
+.\obj\rcc_configuration.o: .\source\FWLib\inc\stm32f10x_tim.h
+.\obj\rcc_configuration.o: .\source\FWLib\inc\stm32f10x_usart.h
+.\obj\rcc_configuration.o: source\wlib\SYS\RCC_Configuration.h
