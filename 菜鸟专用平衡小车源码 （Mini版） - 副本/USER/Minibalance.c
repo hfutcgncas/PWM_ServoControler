@@ -10,7 +10,7 @@ u8 Way_Angle=2;                             //获取角度的算法，1：四元数  2：卡尔
 u8 Flag_Qian,Flag_Hou,Flag_Left,Flag_Right,Flag_sudu=2; //蓝牙遥控相关的变量
 u8 Flag_Stop=0,Flag_Show=1;                 //停止标志位和 显示标志位 默认停止 显示打开
 int Encoder_Left,Encoder_Right;             //左右编码器的脉冲计数
-int Moto1,Moto2;                            //电机PWM变量 应是Motor的 向Moto致敬	
+
 int Temperature;                            //显示温度
 int Voltage;                                //电池电压采样相关的变量
 float Angle_Balance,Gyro_Balance,Gyro_Turn; //平衡倾角 平衡陀螺仪 转向陀螺仪
@@ -28,9 +28,10 @@ int main(void)
 	LED_Init();                     //初始化与 LED 连接的硬件接口
 	KEY_Init();                     //按键初始化
 	//OLED_Init();                    //OLED初始化
-	uart_init(72,115200);           //初始化串口1
+	uart_init(72,9600);           //初始化串口1
   uart2_init(36,9600);            //串口2初始化
-	MiniBalance_PWM_Init(PWM_AMP-1,30-1);   //=====初始化PWM ，用于驱动电机  频率72M/(7199+1)/30 = 333Hz 
+	//MiniBalance_PWM_Init(PWM_AMP-1,30-1);   //=====初始化PWM ，用于驱动电机  频率72M/(7199+1)/30 = 333Hz 
+  MiniBalance_PWM_InitV2(PWM_AMP-1,30-1);   //=====初始化PWM ，用于驱动电机  频率72M/(7199+1)/30 = 333Hz 
 //	Encoder_Init_TIM2();            //=====编码器接口
 //	Encoder_Init_TIM3();            //初始化编码器2 
 //	IIC_Init();                     //模拟IIC初始化

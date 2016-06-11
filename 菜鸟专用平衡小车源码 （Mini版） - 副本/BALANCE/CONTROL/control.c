@@ -7,6 +7,7 @@
 **************************************************************************/
 extern int PWM_AMP;
 
+int Moto1,Moto2,Moto3,Moto4;                            //电机PWM变量 应是Motor的 向Moto致敬	
 
 STmotorCMD motorCMD[NumOfMotor]; //电机的控制参数
 
@@ -40,11 +41,14 @@ int TIM1_UP_IRQHandler(void)
 		//	Moto2 = PWMOut(waveOut( 0.5, 1, (30/180*PI),  0, SysTime));
 			Moto1 = PWMOut(&motorCMD[0],SysTime);
 			Moto2 = PWMOut(&motorCMD[1],SysTime);
-			Xianfu_Pwm();                                            //===PWM限幅
+			Moto3 = PWMOut(&motorCMD[2],SysTime);
+			Moto4 = PWMOut(&motorCMD[3],SysTime);
+		//	Xianfu_Pwm();                                            //===PWM限幅
   //    if(Turn_Off(Angle_Balance,Voltage)==0)   //===如果不存在异常
 //printf("PWMOUT A : %d",Moto1 );	
-//printf("PWMOUT B : %d",Moto2 );	
- 			Set_Pwm(Moto1,Moto2);                                    //===赋值给PWM寄存器  
+//printf("PWMOUT B : %d",Moto2 );
+		//	if(SysTime%1000==0)printf("PWMOUT A : %d",Moto1 );
+ 			Set_Pwm(Moto1,Moto2,Moto3,Moto4);                                    //===赋值给PWM寄存器  
 	}       	
 	 return 0;	  
 } 
@@ -98,10 +102,10 @@ int MyMotorInt()
 	{
 		motorCMD[i].Mode = STOP;
 		motorCMD[i].Pos = 0;
-		motorCMD[i].A = 0;
-		motorCMD[i].Fq = 1;
-		motorCMD[i].Offset = 0;
-		motorCMD[i].phi = 0;
+		motorCMD[i].A = 0.5;//摆动幅度
+		motorCMD[i].Fq = 0.5;//摆动频率
+		motorCMD[i].Offset = 0;//中心偏执
+		motorCMD[i].phi = 0;//像角偏置
 		motorCMD[i].PWM_out =(int)( 1500*unit);
 	}
 	return 1;
@@ -123,12 +127,12 @@ int PWMOut( STmotorCMD* pMotor,int t)
 			break; // STOP 时保持原信号不变。
 
 		case POS:
-			pMotor->PWM_out = (int)((1500 + pMotor->Pos*(1500-900))*unit);
-			break;;
+			pMotor->PWM_out = (int)((1500 + pMotor->Pos*(1500-500))*unit);
+			break;
 
 		case WAVE:
 			pMotor->Pos = waveOut( pMotor->A, pMotor->Fq, pMotor->phi, pMotor->Offset, t);
-			pMotor->PWM_out = (int)((1500 + pMotor->Pos*(1500-900))*unit);
+			pMotor->PWM_out = (int)((1500 + pMotor->Pos*(1500-500))*unit);
 			break;
 
 	}
@@ -221,14 +225,16 @@ int turn(int encoder_left,int encoder_right,float gyro)//转向控制
 入口参数：左轮PWM、右轮PWM
 返回  值：无
 **************************************************************************/
-void Set_Pwm(int moto1,int moto2)
+void Set_Pwm(int moto1,int moto2,int moto3,int moto4)
 {
-			if(moto1<0)			AIN2=1,			AIN1=0;
-			else 	          AIN2=0,			AIN1=1;
+//			if(moto1<0)			AIN2=1,			AIN1=0;
+//			else 	          AIN2=0,			AIN1=1;
 			PWMA=myabs(moto1);
-		  if(moto2>0)	BIN1=1,			BIN2=0;
-			else        BIN1=0,			BIN2=1;
+//		  if(moto2>0)	BIN1=1,			BIN2=0;
+//			else        BIN1=0,			BIN2=1;
 			PWMB=myabs(moto2);	
+			PWMC=myabs(moto3);	
+			PWMD=myabs(moto4);	
 }
 
 /**************************************************************************
@@ -269,10 +275,10 @@ u8 Turn_Off(float angle, int voltage)
 			if(angle<-40||angle>40||1==Flag_Stop)
 			{	                                                 //===倾角大于40度关闭电机
       temp=1;                                            //===Flag_Stop置1关闭电机
-			AIN1=0;                                            //===可自行增加主板温度过高时关闭电机
-			AIN2=0;
-			BIN1=0;
-			BIN2=0;
+//			AIN1=0;                                            //===可自行增加主板温度过高时关闭电机
+//			AIN2=0;
+//			BIN1=0;
+//			BIN2=0;
       }
 			else
       temp=0;
